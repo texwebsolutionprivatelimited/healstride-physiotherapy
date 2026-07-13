@@ -8,7 +8,7 @@ const AboutHero = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://www.lxhausys.com/us/blog/wp-content/uploads/2023/01/scientific-laboratory-countertop_thump-1.jpg"
+          src="/about.jpg"
           alt="About Heal Stride"
           className="w-full h-full object-cover"
         />

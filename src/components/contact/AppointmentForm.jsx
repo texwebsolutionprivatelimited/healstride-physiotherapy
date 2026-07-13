@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 import { motion } from "framer-motion";
 
 const AppointmentForm = () => {
@@ -14,6 +16,8 @@ const AppointmentForm = () => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,26 +25,39 @@ const AppointmentForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      setLoading(true);
 
-    setSubmitted(true);
+      await addDoc(collection(db, "appointments"), {
+        ...formData,
+        status: "pending",
+        createdAt: serverTimestamp(),
+      });
 
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      condition: "",
-      date: "",
-      time: "",
-      message: "",
-    });
+      setSubmitted(true);
 
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 4000);
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        condition: "",
+        date: "",
+        time: "",
+        message: "",
+      });
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 4000);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -170,9 +187,10 @@ const AppointmentForm = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               type="submit"
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+              disabled={loading}
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50"
             >
-              Book Appointment
+              {loading ? "Booking..." : "Book Appointment"}
             </motion.button>
           </form>
         </motion.div>
