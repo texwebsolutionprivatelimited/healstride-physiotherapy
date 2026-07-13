@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+import AdminDashboard from "./components/admin/AdminDashboard";
 import Navbar from "./components/common/Navbar/Navbar";
 import Hero from "./components/home/Hero";
 import GoogleRating from "./components/home/GoogleRating";
@@ -14,20 +16,35 @@ import Footer from "./components/common/Navbar/Footer/Footer";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <GoogleRating />
-      <TreatmentSlider />
-      <WhyChooseUs />
-      <OurServices />
-      <Conditions />
-      <GalleryPreview />
-      <Specialists />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </>
+    <Routes>
+      {/* Main Website */}
+      <Route
+        path="/"
+        element={
+          <>
+            <Navbar />
+            <Hero />
+            <GoogleRating />
+            <TreatmentSlider />
+            <Services />
+            <WhyChooseUs />
+            <OurServices />
+            <Conditions />
+            <GalleryPreview />
+            <Specialists />
+            <Testimonials />
+            <Contact />
+            <Footer />
+          </>
+        }
+      />
+
+      {/* Admin Dashboard */}
+      <Route
+        path="/admin"
+        element={<AdminDashboard />}
+      />
+    </Routes>
   );
 }
 
