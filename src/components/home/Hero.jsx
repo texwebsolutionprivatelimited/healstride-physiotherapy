@@ -1,5 +1,6 @@
 import { FaPhoneAlt, FaCalendarCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import heroBg from "../../assets/images/hero-bg.jpg";
 
@@ -62,15 +63,25 @@ const Hero = () => {
               duration: 0.8,
             }}
           >
-            <button className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 rounded-xl flex items-center gap-3 shadow-xl transition duration-300">
+
+            {/* Book Appointment */}
+            <Link
+              to="/contact"
+              className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 rounded-xl flex items-center gap-3 shadow-xl transition duration-300"
+            >
               <FaCalendarCheck />
               Book Appointment
-            </button>
+            </Link>
 
-            <button className="border border-white bg-white/10 backdrop-blur-md text-white hover:bg-white/20 px-8 py-4 rounded-xl flex items-center gap-3 transition duration-300">
+            {/* Call Now */}
+            <a
+              href="tel:+919569274008"
+              className="border border-white bg-white/10 backdrop-blur-md text-white hover:bg-white/20 px-8 py-4 rounded-xl flex items-center gap-3 transition duration-300"
+            >
               <FaPhoneAlt />
               Call Now
-            </button>
+            </a>
+
           </motion.div>
 
         </motion.div>

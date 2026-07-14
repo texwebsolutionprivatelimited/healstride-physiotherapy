@@ -1,5 +1,5 @@
 import { FaAward, FaArrowRight } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 import doctor1 from "../../assets/images/doctors/doctor1.jpg";
 import doctor2 from "../../assets/images/doctors/doctor2.jpg";
 import doctor3 from "../../assets/images/doctors/doctor3.jpg";
@@ -99,13 +99,16 @@ const Specialists = () => {
 
                 </div>
 
-                <button className="mt-8 text-teal-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
-
+                <Link
+                  to={`/doctors/${doctor.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/[().]/g, "")}`}
+                  className="mt-8 text-teal-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all"
+                >
                   View Profile
-
                   <FaArrowRight />
-
-                </button>
+                </Link>
 
               </div>
 

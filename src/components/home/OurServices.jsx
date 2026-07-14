@@ -5,6 +5,7 @@ import {
   FaBolt,
   FaHeartbeat,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 import treatment1 from "../../assets/images/treatment1.jpg";
 import treatment2 from "../../assets/images/treatment2.jpg";
@@ -68,83 +69,86 @@ const OurServices = () => {
     >
       <div className="max-w-7xl mx-auto px-6">
 
-    <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-    >
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
 
-        <p className="uppercase tracking-[6px] text-teal-600 font-semibold">
+          <p className="uppercase tracking-[6px] text-teal-600 font-semibold">
             OUR SERVICES
-        </p>
+          </p>
 
-        <h2 className="text-5xl font-bold mt-4 text-slate-900">
+          <h2 className="text-5xl font-bold mt-4 text-slate-900">
             Advanced Physiotherapy Services
-        </h2>
+          </h2>
 
-        <div className="w-24 h-1 bg-teal-600 rounded-full mx-auto mt-6 mb-6"></div>
+          <div className="w-24 h-1 bg-teal-600 rounded-full mx-auto mt-6 mb-6"></div>
 
-        <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-8">
+          <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-8">
 
             HealStride offers evidence-based physiotherapy treatments designed to
             reduce pain, restore movement, and improve your quality of life.
 
-        </p>
+          </p>
 
-    </motion.div>
-    <motion.div
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
-  className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
->
-  {services.map((service, index) => (
-    <motion.div
-      key={index}
-      whileHover={{ y: -10 }}
-      transition={{ duration: 0.3 }}
-      className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-    >
-      {/* Image */}
-      <div className="relative overflow-hidden h-60">
-        <img
-          src={service.image}
-          alt={service.title}
-          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-        />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              {/* Image */}
+              <div className="relative overflow-hidden h-60">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                />
 
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
 
-        {/* Icon */}
-        <div className="absolute top-5 left-5 bg-teal-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg">
-          {service.icon}
-        </div>
+                {/* Icon */}
+                <div className="absolute top-5 left-5 bg-teal-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg">
+                  {service.icon}
+                </div>
 
-        {/* Title */}
-        <h3 className="absolute bottom-5 left-5 text-white text-2xl font-bold">
-          {service.title}
-        </h3>
+                {/* Title */}
+                <h3 className="absolute bottom-5 left-5 text-white text-2xl font-bold">
+                  {service.title}
+                </h3>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <p className="text-gray-600 leading-7">
+                  {service.description}
+                </p>
+
+                <Link
+                  to="/services"
+                  className="mt-6 inline-block text-teal-600 font-semibold hover:text-teal-800 transition"
+                >
+                  Learn More →
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
       </div>
-
-      {/* Content */}
-      <div className="p-6">
-        <p className="text-gray-600 leading-7">
-          {service.description}
-        </p>
-
-        <button className="mt-6 text-teal-600 font-semibold hover:text-teal-800 transition">
-          Learn More →
-        </button>
-      </div>
-    </motion.div>
-  ))}
-</motion.div>
-
-</div>
     </section>
   );
 };

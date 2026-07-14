@@ -1,49 +1,69 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/common/Navbar/Navbar";
-import Hero from "./components/home/Hero";
-import GoogleRating from "./components/home/GoogleRating";
-import TreatmentSlider from "./components/home/TreatmentSlider";
-import Services from "./components/home/Services";
-import WhyChooseUs from "./components/home/WhyChooseUs";
-import OurServices from "./components/home/OurServices";
-import Conditions from "./components/home/Conditions";
-import GalleryPreview from "./components/home/GalleryPreview";
-import Specialists from "./components/home/Specialists";
-import Testimonials from "./components/home/Testimonials";
-import Contact from "./components/contact/Contact";
 import Footer from "./components/common/Navbar/Footer/Footer";
+import ScrollToTop from "./components/common/ScrollToTop";
 
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
+import DoctorProfile from "./pages/DoctorProfile";
+
+import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import Appointments from "./components/admin/Appointments";
+import Patients from "./components/admin/Patients";
+import Settings from "./components/admin/Settings";
 import AdminLogin from "./components/admin/AdminLogin";
 
-function HomePage() {
+function App() {
+  const location = useLocation();
+
+  const isAdminPage =
+    location.pathname.startsWith("/admin") ||
+    location.pathname === "/adminlogin";
+
   return (
     <>
-      <Navbar />
-      <Hero />
-      <GoogleRating />
-      <TreatmentSlider />
-      <Services />
-      <WhyChooseUs />
-      <OurServices />
-      <Conditions />
-      <GalleryPreview />
-      <Specialists />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </>
-  );
-}
+      <ScrollToTop />
 
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/adminlogin" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminDashboard />} />
-    </Routes>
+      {!isAdminPage && <Navbar />}
+
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/doctors/:doctorName"
+          element={<DoctorProfile />}
+        />
+
+        {/* Admin Login */}
+        <Route path="/adminlogin" element={<AdminLogin />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route
+            path="appointments"
+            element={<Appointments />}
+          />
+          <Route
+            path="patients"
+            element={<Patients />}
+          />
+          <Route
+            path="settings"
+            element={<Settings />}
+          />
+        </Route>
+      </Routes>
+
+      {!isAdminPage && <Footer />}
+    </>
   );
 }
 
