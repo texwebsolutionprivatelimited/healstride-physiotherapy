@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import AdminDashboard from "./components/admin/AdminDashboard";
+
 import Navbar from "./components/common/Navbar/Navbar";
 import Hero from "./components/home/Hero";
 import GoogleRating from "./components/home/GoogleRating";
@@ -14,36 +14,35 @@ import Testimonials from "./components/home/Testimonials";
 import Contact from "./components/contact/Contact";
 import Footer from "./components/common/Navbar/Footer/Footer";
 
+import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminLogin from "./components/admin/AdminLogin";
+
+function HomePage() {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <GoogleRating />
+      <TreatmentSlider />
+      <Services />
+      <WhyChooseUs />
+      <OurServices />
+      <Conditions />
+      <GalleryPreview />
+      <Specialists />
+      <Testimonials />
+      <Contact />
+      <Footer />
+    </>
+  );
+}
+
 function App() {
   return (
     <Routes>
-      {/* Main Website */}
-      <Route
-        path="/"
-        element={
-          <>
-            <Navbar />
-            <Hero />
-            <GoogleRating />
-            <TreatmentSlider />
-            <Services />
-            <WhyChooseUs />
-            <OurServices />
-            <Conditions />
-            <GalleryPreview />
-            <Specialists />
-            <Testimonials />
-            <Contact />
-            <Footer />
-          </>
-        }
-      />
-
-      {/* Admin Dashboard */}
-      <Route
-        path="/admin"
-        element={<AdminDashboard />}
-      />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/adminlogin" element={<AdminLogin />} />
+      <Route path="/admin" element={<AdminDashboard />} />
     </Routes>
   );
 }
