@@ -16,6 +16,7 @@ import Appointments from "./components/admin/Appointments";
 import Patients from "./components/admin/Patients";
 import Settings from "./components/admin/Settings";
 import AdminLogin from "./components/admin/AdminLogin";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -45,7 +46,14 @@ function App() {
         <Route path="/adminlogin" element={<AdminLogin />} />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+  path="/admin"
+  element={
+    <ProtectedRoute>
+      <AdminLayout />
+    </ProtectedRoute>
+  }
+>
           <Route index element={<AdminDashboard />} />
           <Route
             path="appointments"
