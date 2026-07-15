@@ -7,6 +7,7 @@ import OurServices from "../components/home/OurServices";
 import Specialists from "../components/home/Specialists";
 import Testimonials from "../components/home/Testimonials";
 import WhyChooseUs from "../components/home/WhyChooseUs";
+import BlogSection from "../components/home/BlogSection";
 import AppointmentForm from "../components/contact/AppointmentForm";
 import TreatmentSlider from "../components/home/TreatmentSlider";
 
@@ -21,6 +22,7 @@ const Home = () => {
       <Conditions /> 
       <GalleryPreview /> 
       <Specialists /> 
+      <BlogSection />
        <AppointmentForm />
       <Testimonials /> 
        
