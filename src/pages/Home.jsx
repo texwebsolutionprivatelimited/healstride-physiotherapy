@@ -10,6 +10,7 @@ import WhyChooseUs from "../components/home/WhyChooseUs";
 import BlogSection from "../components/home/BlogSection";
 import AppointmentForm from "../components/contact/AppointmentForm";
 import TreatmentSlider from "../components/home/TreatmentSlider";
+import WhatsAppFloat from "../components/common/WhatsAppFloat";
 
 const Home = () => {
   return (
@@ -25,6 +26,8 @@ const Home = () => {
       <BlogSection />
        <AppointmentForm />
       <Testimonials /> 
+
+      <WhatsAppFloat />
        
     </>
   );

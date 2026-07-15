@@ -20,41 +20,52 @@ import { motion } from "framer-motion";
 const services = [
   {
     title: "Physiotherapy",
+    slug: "physiotherapy",
     description:
       "Personalized rehabilitation programs to restore movement and reduce pain.",
     image: treatment1,
     icon: <FaHandsHelping />,
   },
+
   {
     title: "Dry Needling",
+    slug: "dry-needling",
     description:
       "Relieves muscle tension and trigger points for faster recovery.",
     image: treatment2,
     icon: <FaHeartbeat />,
   },
+
   {
     title: "Cupping Therapy",
+    slug: "cupping-therapy",
     description:
       "Traditional therapy that improves blood circulation and reduces pain.",
     image: treatment3,
     icon: <FaBolt />,
   },
+
   {
     title: "IASTM Therapy",
+    slug: "iastm-therapy",
     description:
       "Advanced soft tissue treatment for improved mobility and healing.",
     image: treatment7,
     icon: <FaRunning />,
   },
+
   {
     title: "Exercise Therapy",
+    slug: "exercise-therapy",
     description:
       "Customized strengthening and mobility exercises for every patient.",
     image: treatment5,
     icon: <FaDumbbell />,
   },
+
   {
     title: "Sports Rehabilitation",
+    slug: "sports-rehabilitation",
     description:
       "Helping athletes recover from injuries and return stronger.",
     image: treatment4,
@@ -139,7 +150,14 @@ const OurServices = () => {
 
                 <Link
                   to="/services"
-                  className="mt-6 inline-block text-teal-600 font-semibold hover:text-teal-800 transition"
+                  className="
+  mt-6 
+  inline-block 
+  text-teal-600 
+  font-semibold 
+  hover:text-teal-800 
+  transition
+  "
                 >
                   Learn More →
                 </Link>

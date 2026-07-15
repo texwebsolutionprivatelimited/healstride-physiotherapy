@@ -24,7 +24,7 @@ const Hero = () => {
       <div className="absolute inset-0 backdrop-blur-[2px]"></div>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-6">
+      <div className="relative z-10 flex items-center justify-center min-h-[90vh] sm:min-h-screen px-4 sm:px-6 lg:px-8">
 
         <motion.div
           className="max-w-6xl mx-auto text-center"
@@ -35,27 +35,75 @@ const Hero = () => {
             ease: "easeOut",
           }}
         >
+
           {/* Clinic Name */}
-          <p className="text-teal-200 font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight mb-8">
+          <p
+            className="
+      text-teal-200
+      font-extrabold
+      text-3xl
+      sm:text-4xl
+      md:text-5xl
+      lg:text-7xl
+      leading-tight
+      mb-6
+      sm:mb-8
+      "
+          >
             HealStride Physiotherapy &
             <br />
             Wellness Centre
           </p>
 
           {/* Tagline */}
-          <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
+          <h1
+            className="
+      text-white
+      text-2xl
+      sm:text-3xl
+      md:text-5xl
+      lg:text-6xl
+      font-semibold
+      leading-tight
+      "
+          >
             Pain-Free Life Starts Here.
           </h1>
 
           {/* Description */}
-          <p className="mt-8 text-gray-200 text-xl leading-9 max-w-4xl mx-auto">
+          <p
+            className="
+      mt-5
+      sm:mt-6
+      md:mt-8
+      text-gray-200
+      text-sm
+      sm:text-base
+      md:text-lg
+      lg:text-xl
+      leading-7
+      md:leading-9
+      max-w-4xl
+      mx-auto
+      px-2
+      "
+          >
             Personalized physiotherapy treatments designed to help you
             recover, move better, and live pain-free with expert care.
           </p>
 
           {/* Buttons */}
           <motion.div
-            className="flex justify-center gap-6 mt-14 flex-wrap"
+            className="
+      flex
+      flex-col
+      sm:flex-row
+      justify-center
+      gap-4
+      sm:gap-6
+      mt-8
+      md:mt-12
+      "
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -67,7 +115,25 @@ const Hero = () => {
             {/* Book Appointment */}
             <Link
               to="/contact"
-              className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 rounded-xl flex items-center gap-3 shadow-xl transition duration-300"
+              className="
+        bg-teal-600
+        hover:bg-teal-700
+        text-white
+        px-6
+        sm:px-8
+        py-3
+        sm:py-4
+        rounded-xl
+        flex
+        items-center
+        justify-center
+        gap-3
+        shadow-xl
+        transition
+        duration-300
+        w-full
+        sm:w-auto
+        "
             >
               <FaCalendarCheck />
               Book Appointment
@@ -76,7 +142,27 @@ const Hero = () => {
             {/* Call Now */}
             <a
               href="tel:+919569274008"
-              className="border border-white bg-white/10 backdrop-blur-md text-white hover:bg-white/20 px-8 py-4 rounded-xl flex items-center gap-3 transition duration-300"
+              className="
+        border
+        border-white
+        bg-white/10
+        backdrop-blur-md
+        text-white
+        hover:bg-white/20
+        px-6
+        sm:px-8
+        py-3
+        sm:py-4
+        rounded-xl
+        flex
+        items-center
+        justify-center
+        gap-3
+        transition
+        duration-300
+        w-full
+        sm:w-auto
+        "
             >
               <FaPhoneAlt />
               Call Now

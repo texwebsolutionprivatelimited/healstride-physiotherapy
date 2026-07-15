@@ -7,13 +7,15 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white">
 
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
 
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
 
           {/* Clinic Info */}
 
@@ -23,7 +25,7 @@ const Footer = () => {
               HealStride
             </h2>
 
-            <p className="text-gray-300 leading-8">
+            <p className="text-gray-300 leading-7 text-sm sm:text-base">
               Helping you recover faster with personalized
               physiotherapy, rehabilitation, and wellness
               treatments delivered by experienced specialists.
@@ -33,21 +35,21 @@ const Footer = () => {
 
               <a
                 href="#"
-                className="w-11 h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition"
+                className="w-11 h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition duration-300 hover:scale-110"
               >
                 <FaFacebookF />
               </a>
 
               <a
                 href="#"
-                className="w-11 h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition"
+                className="w-11 h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition duration-300 hover:scale-110"
               >
                 <FaInstagram />
               </a>
 
               <a
                 href="#"
-                className="w-11 h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition"
+                className="w-11 h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition duration-300 hover:scale-110"
               >
                 <FaLinkedinIn />
               </a>
@@ -60,49 +62,61 @@ const Footer = () => {
 
           <div>
 
-            <h3 className="text-2xl font-semibold mb-6">
+            <h3 className="text-xl md:text-2xl font-semibold mb-6">
               Quick Links
             </h3>
 
-            <ul className="space-y-4 text-gray-300">
+            <ul className="space-y-3 text-gray-300">
 
               <li>
-                <a href="#" className="hover:text-teal-400 transition">
+                <Link
+                  to="/"
+                  className="hover:text-teal-400 transition"
+                >
                   Home
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#about" className="hover:text-teal-400 transition">
+                <Link
+                  to="/about"
+                  className="hover:text-teal-400 transition"
+                >
                   About
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#services" className="hover:text-teal-400 transition">
+                <Link
+                  to="/services"
+                  className="hover:text-teal-400 transition"
+                >
                   Services
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#contact" className="hover:text-teal-400 transition">
+                <Link
+                  to="/contact"
+                  className="hover:text-teal-400 transition"
+                >
                   Contact
-                </a>
+                </Link>
               </li>
 
             </ul>
 
           </div>
 
-          {/* Services */}
+          {/* Treatments */}
 
           <div>
 
-            <h3 className="text-2xl font-semibold mb-6">
+            <h3 className="text-xl md:text-2xl font-semibold mb-6">
               Treatments
             </h3>
 
-            <ul className="space-y-4 text-gray-300">
+            <ul className="space-y-3 text-gray-300">
 
               <li>Knee Pain</li>
               <li>Back Pain</li>
@@ -118,28 +132,30 @@ const Footer = () => {
 
           <div>
 
-            <h3 className="text-2xl font-semibold mb-6">
+            <h3 className="text-xl md:text-2xl font-semibold mb-6">
               Contact
             </h3>
 
-            <div className="space-y-6 text-gray-300">
+            <div className="space-y-5 text-gray-300">
 
-              <div className="flex gap-4">
-                <FaPhoneAlt className="text-teal-400 mt-1" />
-                <span>+91 XXXXX XXXXX</span>
+              <div className="flex gap-3 items-start">
+                <FaPhoneAlt className="text-teal-400 mt-1 shrink-0" />
+                <span>+91 95692 74008</span>
               </div>
 
-              <div className="flex gap-4">
-                <FaEnvelope className="text-teal-400 mt-1" />
-                <span>healstride@gmail.com</span>
+              <div className="flex gap-3 items-start">
+                <FaEnvelope className="text-teal-400 mt-1 shrink-0" />
+                <span className="break-all">
+                  healstride@gmail.com
+                </span>
               </div>
 
-              <div className="flex gap-4">
-                <FaMapMarkerAlt className="text-teal-400 mt-1" />
+              <div className="flex gap-3 items-start">
+                <FaMapMarkerAlt className="text-teal-400 mt-1 shrink-0" />
                 <span>
-                  HealStride Physiotherapy &
-                  Wellness Centre,
-                  Hyderabad, Telangana
+                  HealStride Physiotherapy & Wellness Centre,
+                  Arera Colony, Bhopal,
+                  Madhya Pradesh 462016
                 </span>
               </div>
 
@@ -155,7 +171,7 @@ const Footer = () => {
 
       <div className="border-t border-slate-700">
 
-        <div className="max-w-7xl mx-auto px-6 py-6 text-center text-gray-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-gray-400 text-sm">
 
           © {new Date().getFullYear()} HealStride Physiotherapy &
           Wellness Centre. All Rights Reserved.
