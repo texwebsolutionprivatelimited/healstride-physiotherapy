@@ -14,6 +14,7 @@ const AppointmentForm = () => {
     date: "",
     time: "",
     message: "",
+    status: "Pending",
   });
 
   const [loading, setLoading] = useState(false);

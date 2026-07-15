@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useEffect, useMemo, useState } from "react";
 import {
   collection,
@@ -17,6 +18,7 @@ import {
   Trash2,
   Pencil,
   Menu,
+  Eye,
   X,
 } from "lucide-react";
 import { db } from "../../firebase/firebase";
@@ -38,6 +40,8 @@ const StatCard = ({ icon, label, value }) => (
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [query, setQuery] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -70,6 +74,7 @@ const AdminDashboard = () => {
         status: "confirmed",
       });
 
+      toast.success("Appointment confirmed");
       setAppointments((prev) =>
         prev.map((item) =>
           item.id === id
@@ -79,8 +84,7 @@ const AdminDashboard = () => {
       );
     } catch (error) {
       console.error(error);
-      alert("Failed to confirm appointment");
-    }
+toast.error("Failed to confirm appointment");    }
   };
 
   const handleDelete = async (id) => {
@@ -92,20 +96,21 @@ const AdminDashboard = () => {
 
     try {
       await deleteDoc(doc(db, "appointments", id));
-
+ 
+      toast.success("Appointment deleted");
       setAppointments((prev) =>
         prev.filter((item) => item.id !== id)
       );
     } catch (error) {
       console.error(error);
-      alert("Failed to delete appointment");
-    }
+toast.error("Failed to delete appointment");    }
   };
 
   const handleEdit = (appointment) => {
     setEditingAppointment(appointment);
     setIsEditOpen(true);
   };
+  
 
   const handleUpdateAppointment = async () => {
     try {
@@ -133,11 +138,9 @@ const AdminDashboard = () => {
       setIsEditOpen(false);
       setEditingAppointment(null);
 
-      alert("Appointment updated successfully");
-    } catch (error) {
+toast.success("Appointment updated successfully");    } catch (error) {
       console.error(error);
-      alert("Failed to update appointment");
-    }
+toast.error("Failed to update appointment");    }
   };
 
   const filteredAppointments = useMemo(() => {
