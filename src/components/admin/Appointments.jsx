@@ -33,130 +33,130 @@ const STATUS_OPTIONS = [
 const Appointments = () => {
 
 
-const [appointments,setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
-const [query,setQuery] = useState("");
+  const [query, setQuery] = useState("");
 
-const [statusFilter,setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
 
-const [isEditOpen,setIsEditOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
 
-const [editingAppointment,setEditingAppointment] =
-useState(null);
+  const [editingAppointment, setEditingAppointment] =
+    useState(null);
 
 
 
-/* ---------------- Firebase Real Time Fetch ---------------- */
+  /* ---------------- Firebase Real Time Fetch ---------------- */
 
 
-useEffect(()=>{
+  useEffect(() => {
 
 
-const unsubscribe = onSnapshot(
+    const unsubscribe = onSnapshot(
 
-collection(db,"appointments"),
+      collection(db, "appointments"),
 
-(snapshot)=>{
+      (snapshot) => {
 
 
-const data = snapshot.docs.map(docSnap=>({
+        const data = snapshot.docs.map(docSnap => ({
 
-id:docSnap.id,
+          id: docSnap.id,
 
-...docSnap.data(),
+          ...docSnap.data(),
 
-status:
-docSnap.data().status || "pending"
+          status:
+            docSnap.data().status || "pending"
 
-}));
+        }));
 
 
-setAppointments(data);
+        setAppointments(data);
 
 
-},
+      },
 
 
-(error)=>{
+      (error) => {
 
-console.log(error);
+        console.log(error);
 
-}
+      }
 
 
-);
+    );
 
 
 
-return ()=>unsubscribe();
+    return () => unsubscribe();
 
 
-},[]);
+  }, []);
 
 
 
 
 
 
-/* ---------------- Update Status ---------------- */
+  /* ---------------- Update Status ---------------- */
 
 
-const handleStatusChange = async(
-id,
-status
-)=>{
+  const handleStatusChange = async (
+    id,
+    status
+  ) => {
 
 
-try{
+    try {
 
 
-await updateDoc(
+      await updateDoc(
 
-doc(db,"appointments",id),
+        doc(db, "appointments", id),
 
-{
-status
-}
+        {
+          status
+        }
 
-);
+      );
 
 
 
-setAppointments(prev=>
+      setAppointments(prev =>
 
-prev.map(item=>
+        prev.map(item =>
 
-item.id===id
+          item.id === id
 
-?
+            ?
 
-{
-...item,
-status
-}
+            {
+              ...item,
+              status
+            }
 
-:
+            :
 
-item
+            item
 
-)
+        )
 
-);
+      );
 
 
 
-}
+    }
 
-catch(error){
+    catch (error) {
 
-console.log(error);
+      console.log(error);
 
-}
+    }
 
 
-};
+  };
 
 
 
@@ -164,53 +164,53 @@ console.log(error);
 
 
 
-/* ---------------- Delete ---------------- */
+  /* ---------------- Delete ---------------- */
 
 
-const handleDelete = async(id)=>{
+  const handleDelete = async (id) => {
 
 
-const confirmDelete =
-window.confirm(
-"Delete this appointment?"
-);
+    const confirmDelete =
+      window.confirm(
+        "Delete this appointment?"
+      );
 
 
 
-if(!confirmDelete)
-return;
+    if (!confirmDelete)
+      return;
 
 
 
-try{
+    try {
 
 
-await deleteDoc(
-doc(db,"appointments",id)
-);
+      await deleteDoc(
+        doc(db, "appointments", id)
+      );
 
 
 
-setAppointments(prev=>
+      setAppointments(prev =>
 
-prev.filter(
-item=>item.id!==id
-)
+        prev.filter(
+          item => item.id !== id
+        )
 
-);
+      );
 
 
 
-}
+    }
 
-catch(error){
+    catch (error) {
 
-console.log(error);
+      console.log(error);
 
-}
+    }
 
 
-};
+  };
 
 
 
@@ -218,105 +218,105 @@ console.log(error);
 
 
 
-/* ---------------- Edit ---------------- */
+  /* ---------------- Edit ---------------- */
 
 
-const handleEdit=(appointment)=>{
+  const handleEdit = (appointment) => {
 
 
-setEditingAppointment(
-{
-...appointment
-}
-);
+    setEditingAppointment(
+      {
+        ...appointment
+      }
+    );
 
 
-setIsEditOpen(true);
+    setIsEditOpen(true);
 
 
-};
+  };
 
 
 
 
 
 
-const handleUpdateAppointment =
-async()=>{
+  const handleUpdateAppointment =
+    async () => {
 
 
-try{
+      try {
 
 
-await updateDoc(
+        await updateDoc(
 
-doc(
-db,
-"appointments",
-editingAppointment.id
-),
+          doc(
+            db,
+            "appointments",
+            editingAppointment.id
+          ),
 
-{
+          {
 
-name:editingAppointment.name,
+            name: editingAppointment.name,
 
-phone:editingAppointment.phone,
+            phone: editingAppointment.phone,
 
-email:editingAppointment.email,
+            email: editingAppointment.email,
 
-condition:editingAppointment.condition,
+            condition: editingAppointment.condition,
 
-date:editingAppointment.date,
+            date: editingAppointment.date,
 
-time:editingAppointment.time,
+            time: editingAppointment.time,
 
-message:
-editingAppointment.message || ""
+            message:
+              editingAppointment.message || ""
 
-}
+          }
 
-);
+        );
 
 
 
 
-setAppointments(prev=>
+        setAppointments(prev =>
 
-prev.map(item=>
+          prev.map(item =>
 
-item.id===editingAppointment.id
+            item.id === editingAppointment.id
 
-?
+              ?
 
-editingAppointment
+              editingAppointment
 
-:
+              :
 
-item
+              item
 
-)
+          )
 
-);
+        );
 
 
 
-setIsEditOpen(false);
+        setIsEditOpen(false);
 
-setEditingAppointment(null);
+        setEditingAppointment(null);
 
 
 
-}
+      }
 
 
-catch(error){
+      catch (error) {
 
-console.log(error);
+        console.log(error);
 
-}
+      }
 
 
-};
+    };
 
 
 
@@ -325,111 +325,111 @@ console.log(error);
 
 
 
-/* ---------------- Search + Status Filter ---------------- */
+  /* ---------------- Search + Status Filter ---------------- */
 
 
 
-const filteredAppointments =
-useMemo(()=>{
+  const filteredAppointments =
+    useMemo(() => {
 
 
-const search =
-query.toLowerCase();
+      const search =
+        query.toLowerCase();
 
 
 
-return appointments.filter(item=>{
+      return appointments.filter(item => {
 
 
-const matchesSearch =
+        const matchesSearch =
 
 
-item.name
-?.toLowerCase()
-.includes(search)
+          item.name
+            ?.toLowerCase()
+            .includes(search)
 
 
-||
+          ||
 
-item.email
-?.toLowerCase()
-.includes(search)
+          item.email
+            ?.toLowerCase()
+            .includes(search)
 
 
-||
+          ||
 
-item.condition
-?.toLowerCase()
-.includes(search);
+          item.condition
+            ?.toLowerCase()
+            .includes(search);
 
 
 
 
 
-const matchesStatus =
+        const matchesStatus =
 
 
-statusFilter==="all"
+          statusFilter === "all"
 
-||
+          ||
 
-item.status===statusFilter;
+          item.status === statusFilter;
 
 
 
 
 
-return (
-matchesSearch &&
-matchesStatus
-);
+        return (
+          matchesSearch &&
+          matchesStatus
+        );
 
 
 
-});
+      });
 
 
-},[
-appointments,
-query,
-statusFilter
-]);
+    }, [
+      appointments,
+      query,
+      statusFilter
+    ]);
 
+  return (
+    <div className="min-h-screen bg-slate-50">
 
-return (
-<div className="min-h-screen bg-slate-50">
+      <div className="max-w-7xl mx-auto p-4 md:p-6">
 
-<div className="max-w-7xl mx-auto p-4 md:p-6">
 
+        <h1 className="text-3xl font-bold text-slate-900 mb-6">
+          Appointments
+        </h1>
 
-<h1 className="text-3xl font-bold text-slate-900 mb-6">
-Appointments
-</h1>
-<p className="text-sm text-slate-500 mb-6">
-  Manage patient appointments, update status, and track bookings.
-</p>
+        <p className="text-slate-600">
+          Manage your appointments efficiently.
+        </p>
 
 
 
-{/* Search + Filter */}
+        {/* Search + Filter */}
 
-<div className="bg-white rounded-2xl shadow p-5 mb-6">
+        <div className="bg-white rounded-2xl shadow p-5 mb-6">
 
 
-<div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
 
 
-<input
+            <input
 
-type="text"
+              type="text"
 
-placeholder="Search patient, email, condition..."
+              placeholder="Search patient, email, condition..."
 
-value={query}
+              value={query}
 
-onChange={(e)=>setQuery(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
 
-className="
+              className="
 w-full
 border
 rounded-xl
@@ -440,250 +440,249 @@ focus:ring-2
 focus:ring-teal-500
 "
 
-/>
+            />
 
 
 
-<select
+            <select
 
-value={statusFilter}
+              value={statusFilter}
 
-onChange={(e)=>setStatusFilter(e.target.value)}
+              onChange={(e) => setStatusFilter(e.target.value)}
 
-className="
+              className="
 border
 rounded-xl
 px-4
 py-3
 "
 
->
+            >
 
 
-<option value="all">
-All Status
-</option>
+              <option value="all">
+                All Status
+              </option>
 
 
-{
-STATUS_OPTIONS.map(status=>(
+              {
+                STATUS_OPTIONS.map(status => (
 
-<option
-key={status}
-value={status}
->
+                  <option
+                    key={status}
+                    value={status}
+                  >
 
-{
-status.charAt(0).toUpperCase()
-+
-status.slice(1)
-}
+                    {
+                      status.charAt(0).toUpperCase()
+                      +
+                      status.slice(1)
+                    }
 
-</option>
+                  </option>
 
-))
-}
-
-
-</select>
+                ))
+              }
 
 
-</div>
+            </select>
 
 
-</div>
+          </div>
 
 
+        </div>
 
 
 
-{/* Mobile Cards */}
-
-<div className="grid gap-4 md:hidden">
 
 
-{
-filteredAppointments.map((appointment)=>(
+        {/* Mobile Cards */}
+
+        <div className="grid gap-4 md:hidden">
 
 
-<div
+          {
+            filteredAppointments.map((appointment) => (
 
-key={appointment.id}
 
-className="
+              <div
+
+                key={appointment.id}
+
+                className="
 bg-white
 rounded-2xl
 shadow
 p-5
 "
 
->
+              >
 
 
-<h2 className="font-bold text-lg">
-{appointment.name}
-</h2>
+                <h2 className="font-bold text-lg">
+                  {appointment.name}
+                </h2>
 
 
-<p className="text-sm text-slate-600 mt-2">
-📞 {appointment.phone}
-</p>
+                <p className="text-sm text-slate-600 mt-2">
+                  📞 {appointment.phone}
+                </p>
 
 
-<p className="text-sm text-slate-600">
-✉️ {appointment.email}
-</p>
+                <p className="text-sm text-slate-600">
+                  ✉️ {appointment.email}
+                </p>
 
 
-<p className="text-sm text-slate-600">
-🩺 {appointment.condition}
-</p>
+                <p className="text-sm text-slate-600">
+                  🩺 {appointment.condition}
+                </p>
 
 
-<p className="text-sm text-slate-600">
-📅 {appointment.date}
-</p>
+                <p className="text-sm text-slate-600">
+                  📅 {appointment.date}
+                </p>
 
 
-<p className="text-sm text-slate-600">
-⏰ {appointment.time}
-</p>
+                <p className="text-sm text-slate-600">
+                  ⏰ {appointment.time}
+                </p>
 
 
 
 
-<div className="mt-3">
+                <div className="mt-3">
 
 
-<select
+                  <select
 
-value={appointment.status}
+                    value={appointment.status}
 
-onChange={(e)=>
-handleStatusChange(
-appointment.id,
-e.target.value
-)
-}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        appointment.id,
+                        e.target.value
+                      )
+                    }
 
-className={`
+                    className={`
 px-3
 py-2
 rounded-lg
 text-sm
 
-${
-appointment.status==="confirmed"
-?
-"bg-green-100 text-green-700"
+${appointment.status === "confirmed"
+                        ?
+                        "bg-green-100 text-green-700"
 
-:
+                        :
 
-appointment.status==="completed"
-?
-"bg-blue-100 text-blue-700"
+                        appointment.status === "completed"
+                          ?
+                          "bg-blue-100 text-blue-700"
 
-:
+                          :
 
-appointment.status==="cancelled"
-?
-"bg-red-100 text-red-700"
+                          appointment.status === "cancelled"
+                            ?
+                            "bg-red-100 text-red-700"
 
-:
-"bg-yellow-100 text-yellow-700"
+                            :
+                            "bg-yellow-100 text-yellow-700"
 
-}
+                      }
 
 `}
 
->
+                  >
 
 
-{
-STATUS_OPTIONS.map(status=>(
+                    {
+                      STATUS_OPTIONS.map(status => (
 
-<option
-key={status}
-value={status}
->
+                        <option
+                          key={status}
+                          value={status}
+                        >
 
-{
-status.charAt(0).toUpperCase()
-+
-status.slice(1)
-}
+                          {
+                            status.charAt(0).toUpperCase()
+                            +
+                            status.slice(1)
+                          }
 
-</option>
+                        </option>
 
-))
-}
-
-
-</select>
+                      ))
+                    }
 
 
-</div>
+                  </select>
 
 
-
-
-
-<div className="flex gap-5 mt-4">
-
-
-<button
-
-onClick={()=>handleEdit(appointment)}
-
-className="text-blue-600"
-
->
-
-<Pencil size={20}/>
-
-</button>
-
-
-
-<button
-
-onClick={()=>handleDelete(appointment.id)}
-
-className="text-red-600"
-
->
-
-<Trash2 size={20}/>
-
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-))
-
-}
-
-
-
-</div>
+                </div>
 
 
 
 
 
+                <div className="flex gap-5 mt-4">
+
+
+                  <button
+
+                    onClick={() => handleEdit(appointment)}
+
+                    className="text-blue-600"
+
+                  >
+
+                    <Pencil size={20} />
+
+                  </button>
 
 
 
-{/* Desktop Table */}
+                  <button
+
+                    onClick={() => handleDelete(appointment.id)}
+
+                    className="text-red-600"
+
+                  >
+
+                    <Trash2 size={20} />
+
+                  </button>
 
 
-<div className="
+                </div>
+
+
+
+              </div>
+
+
+            ))
+
+          }
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        {/* Desktop Table */}
+
+
+        <div className="
 hidden
 md:block
 bg-white
@@ -693,293 +692,292 @@ overflow-x-auto
 ">
 
 
-<table className="
+          <table className="
 w-full
 min-w-[1000px]
 ">
 
 
-<thead className="
+            <thead className="
 bg-teal-600
 text-white
 ">
 
 
-<tr>
+              <tr>
 
 
-<th className="p-4 text-left">
-Patient
-</th>
+                <th className="p-4 text-left">
+                  Patient
+                </th>
 
 
-<th className="p-4 text-left">
-Phone
-</th>
+                <th className="p-4 text-left">
+                  Phone
+                </th>
 
 
-<th className="p-4 text-left">
-Email
-</th>
+                <th className="p-4 text-left">
+                  Email
+                </th>
 
 
-<th className="p-4 text-left">
-Condition
-</th>
+                <th className="p-4 text-left">
+                  Condition
+                </th>
 
 
-<th className="p-4 text-left">
-Date
-</th>
+                <th className="p-4 text-left">
+                  Date
+                </th>
 
 
-<th className="p-4 text-left">
-Time
-</th>
+                <th className="p-4 text-left">
+                  Time
+                </th>
 
 
-<th className="p-4 text-left">
-Status
-</th>
+                <th className="p-4 text-left">
+                  Status
+                </th>
 
 
-<th className="p-4 text-left">
-Action
-</th>
+                <th className="p-4 text-left">
+                  Action
+                </th>
 
 
-</tr>
+              </tr>
 
 
-</thead>
+            </thead>
 
 
 
 
 
-<tbody>
+            <tbody>
 
 
-{
+              {
 
-filteredAppointments.map((appointment)=>(
+                filteredAppointments.map((appointment) => (
 
 
-<tr
+                  <tr
 
-key={appointment.id}
+                    key={appointment.id}
 
-className="
+                    className="
 border-b
 hover:bg-slate-50
 "
 
->
+                  >
 
 
-<td className="p-4">
-{appointment.name}
-</td>
+                    <td className="p-4">
+                      {appointment.name}
+                    </td>
 
 
-<td className="p-4">
-{appointment.phone}
-</td>
+                    <td className="p-4">
+                      {appointment.phone}
+                    </td>
 
 
-<td className="p-4">
-{appointment.email}
-</td>
+                    <td className="p-4">
+                      {appointment.email}
+                    </td>
 
 
-<td className="p-4">
-{appointment.condition}
-</td>
+                    <td className="p-4">
+                      {appointment.condition}
+                    </td>
 
 
-<td className="p-4">
-{appointment.date}
-</td>
+                    <td className="p-4">
+                      {appointment.date}
+                    </td>
 
 
-<td className="p-4">
-{appointment.time}
-</td>
+                    <td className="p-4">
+                      {appointment.time}
+                    </td>
 
 
 
 
-<td className="p-4">
+                    <td className="p-4">
 
 
-<select
+                      <select
 
-value={appointment.status}
+                        value={appointment.status}
 
-onChange={(e)=>
-handleStatusChange(
-appointment.id,
-e.target.value
-)
-}
+                        onChange={(e) =>
+                          handleStatusChange(
+                            appointment.id,
+                            e.target.value
+                          )
+                        }
 
-className={`
+                        className={`
 
 px-3
 py-2
 rounded-lg
 text-sm
 
-${
-appointment.status==="confirmed"
-?
-"bg-green-100 text-green-700"
+${appointment.status === "confirmed"
+                            ?
+                            "bg-green-100 text-green-700"
 
-:
+                            :
 
-appointment.status==="completed"
-?
-"bg-blue-100 text-blue-700"
+                            appointment.status === "completed"
+                              ?
+                              "bg-blue-100 text-blue-700"
 
-:
+                              :
 
-appointment.status==="cancelled"
-?
-"bg-red-100 text-red-700"
+                              appointment.status === "cancelled"
+                                ?
+                                "bg-red-100 text-red-700"
 
-:
-"bg-yellow-100 text-yellow-700"
+                                :
+                                "bg-yellow-100 text-yellow-700"
 
-}
+                          }
 
 `}
 
->
+                      >
 
 
-{
-STATUS_OPTIONS.map(status=>(
+                        {
+                          STATUS_OPTIONS.map(status => (
 
-<option
-key={status}
-value={status}
->
+                            <option
+                              key={status}
+                              value={status}
+                            >
 
-{
-status.charAt(0).toUpperCase()
-+
-status.slice(1)
-}
+                              {
+                                status.charAt(0).toUpperCase()
+                                +
+                                status.slice(1)
+                              }
 
-</option>
+                            </option>
 
-))
-}
-
-
-</select>
+                          ))
+                        }
 
 
-</td>
+                      </select>
 
 
-
-
-
-<td className="p-4">
-
-
-<div className="flex gap-4">
-
-
-<button
-
-onClick={()=>handleEdit(appointment)}
-
-className="text-blue-600"
-
->
-
-<Pencil size={18}/>
-
-</button>
+                    </td>
 
 
 
-<button
-
-onClick={()=>handleDelete(appointment.id)}
-
-className="text-red-600"
-
->
-
-<Trash2 size={18}/>
-
-</button>
 
 
-
-</div>
-
-
-</td>
+                    <td className="p-4">
 
 
-</tr>
+                      <div className="flex gap-4">
 
 
-))
+                        <button
 
-}
+                          onClick={() => handleEdit(appointment)}
+
+                          className="text-blue-600"
+
+                        >
+
+                          <Pencil size={18} />
+
+                        </button>
 
 
 
-{
-filteredAppointments.length===0 &&
+                        <button
 
-<tr>
+                          onClick={() => handleDelete(appointment.id)}
 
-<td
-colSpan="8"
-className="
+                          className="text-red-600"
+
+                        >
+
+                          <Trash2 size={18} />
+
+                        </button>
+
+
+
+                      </div>
+
+
+                    </td>
+
+
+                  </tr>
+
+
+                ))
+
+              }
+
+
+
+              {
+                filteredAppointments.length === 0 &&
+
+                <tr>
+
+                  <td
+                    colSpan="8"
+                    className="
 text-center
 p-6
 text-slate-500
 "
->
+                  >
 
-No appointments found
+                    No appointments found
 
-</td>
+                  </td>
 
-</tr>
+                </tr>
 
-}
-
-
-</tbody>
+              }
 
 
-</table>
+            </tbody>
 
 
-</div>
+          </table>
 
 
+        </div>
 
 
 
 
 
-{/* Edit Modal */}
 
 
-{
-isEditOpen &&
-editingAppointment &&
+        {/* Edit Modal */}
 
-<div className="
+
+        {
+          isEditOpen &&
+          editingAppointment &&
+
+          <div className="
 fixed
 inset-0
 bg-black/50
@@ -991,7 +989,7 @@ p-4
 ">
 
 
-<div className="
+            <div className="
 bg-white
 rounded-2xl
 p-6
@@ -1000,79 +998,79 @@ max-w-lg
 ">
 
 
-<h2 className="
+              <h2 className="
 text-2xl
 font-bold
 mb-5
 ">
 
-Edit Appointment
+                Edit Appointment
 
-</h2>
-
-
-
-
-<div className="space-y-3">
-
-
-<input
-
-className="w-full border rounded-lg p-3"
-
-value={editingAppointment.name}
-
-onChange={(e)=>
-setEditingAppointment({
-...editingAppointment,
-name:e.target.value
-})
-}
-
-/>
-
-
-
-<input
-
-className="w-full border rounded-lg p-3"
-
-value={editingAppointment.phone}
-
-onChange={(e)=>
-setEditingAppointment({
-...editingAppointment,
-phone:e.target.value
-})
-}
-
-/>
-
-
-
-<input
-
-className="w-full border rounded-lg p-3"
-
-value={editingAppointment.email}
-
-onChange={(e)=>
-setEditingAppointment({
-...editingAppointment,
-email:e.target.value
-})
-}
-
-/>
+              </h2>
 
 
 
 
-<button
+              <div className="space-y-3">
 
-onClick={handleUpdateAppointment}
 
-className="
+                <input
+
+                  className="w-full border rounded-lg p-3"
+
+                  value={editingAppointment.name}
+
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      name: e.target.value
+                    })
+                  }
+
+                />
+
+
+
+                <input
+
+                  className="w-full border rounded-lg p-3"
+
+                  value={editingAppointment.phone}
+
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      phone: e.target.value
+                    })
+                  }
+
+                />
+
+
+
+                <input
+
+                  className="w-full border rounded-lg p-3"
+
+                  value={editingAppointment.email}
+
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      email: e.target.value
+                    })
+                  }
+
+                />
+
+
+
+
+                <button
+
+                  onClick={handleUpdateAppointment}
+
+                  className="
 bg-teal-600
 text-white
 px-5
@@ -1080,24 +1078,24 @@ py-3
 rounded-lg
 "
 
->
+                >
 
-Save Changes
+                  Save Changes
 
-</button>
+                </button>
 
 
-<button
+                <button
 
-onClick={()=>{
+                  onClick={() => {
 
-setIsEditOpen(false);
+                    setIsEditOpen(false);
 
-setEditingAppointment(null);
+                    setEditingAppointment(null);
 
-}}
+                  }}
 
-className="
+                  className="
 ml-3
 bg-gray-200
 px-5
@@ -1105,30 +1103,30 @@ py-3
 rounded-lg
 "
 
->
+                >
 
-Cancel
+                  Cancel
 
-</button>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-}
+                </button>
 
 
 
-</div>
+              </div>
 
-</div>
-);
+
+            </div>
+
+
+          </div>
+
+        }
+
+
+
+      </div>
+
+    </div>
+  );
 
 
 };

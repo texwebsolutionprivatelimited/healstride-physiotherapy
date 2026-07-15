@@ -8,6 +8,7 @@ import Specialists from "../components/home/Specialists";
 import Testimonials from "../components/home/Testimonials";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import TreatmentSlider from "../components/home/TreatmentSlider";
+import WhatsAppFloat from "../components/common/WhatsAppFloat";
 
 const Home = () => {
   return (
@@ -21,6 +22,8 @@ const Home = () => {
       <GalleryPreview /> 
       <Specialists /> 
       <Testimonials /> 
+
+      <WhatsAppFloat />
        
     </>
   );

@@ -12,9 +12,12 @@ import {
   X,
   LayoutDashboard,
   CalendarDays,
-  Users,
   Settings,
   LogOut,
+  ImageIcon,
+  MessageSquare,
+  CircleHelp,
+  UserRound,
 } from "lucide-react";
 
 const AdminLayout = () => {
@@ -35,9 +38,24 @@ const AdminLayout = () => {
       path: "/admin/appointments",
     },
     {
-      name: "Patients",
-      icon: <Users size={18} />,
-      path: "/admin/patients",
+      name: "Gallery",
+      icon: <ImageIcon size={18} />,
+      path: "/admin/gallery",
+    },
+    {
+      name: "Testimonials",
+      icon: <MessageSquare size={18} />,
+      path: "/admin/testimonials",
+    },
+    {
+      name: "FAQ",
+      icon: <CircleHelp size={18} />,
+      path: "/admin/faq",
+    },
+    {
+      name: "Doctor Profile",
+      icon: <UserRound size={18} />,
+      path: "/admin/doctor-profile",
     },
     {
       name: "Settings",
@@ -47,11 +65,10 @@ const AdminLayout = () => {
   ];
 
   const getButtonClass = (path) => {
-    return `flex items-center gap-3 w-full px-4 py-3 rounded-xl transition-all duration-300 ${
-      location.pathname === path
+    return `flex items-center gap-3 w-full px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === path
         ? "bg-teal-500 text-white shadow-lg shadow-teal-500/30"
         : "bg-slate-800 text-slate-300 hover:bg-teal-600 hover:text-white"
-    }`;
+      }`;
   };
 
   const handleLogout = async () => {
