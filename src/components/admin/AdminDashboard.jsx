@@ -41,11 +41,12 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [query, setQuery] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("all");
+const [selectedAppointment, setSelectedAppointment] = useState(null);
   useEffect(() => {
     fetchAppointments();
   }, []);
@@ -84,7 +85,8 @@ const AdminDashboard = () => {
       );
     } catch (error) {
       console.error(error);
-toast.error("Failed to confirm appointment");    }
+      toast.error("Failed to confirm appointment");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -111,6 +113,10 @@ toast.error("Failed to delete appointment");    }
     setIsEditOpen(true);
   };
   
+const handleViewAppointment = (appointment) => {
+  setSelectedAppointment(appointment);
+  setIsViewOpen(true);
+};
 
   const handleUpdateAppointment = async () => {
     try {
@@ -144,15 +150,22 @@ toast.error("Failed to update appointment");    }
   };
 
   const filteredAppointments = useMemo(() => {
-    const q = query.toLowerCase();
+  const q = query.toLowerCase();
 
-    return appointments.filter(
-      (item) =>
-        item.name?.toLowerCase().includes(q) ||
-        item.email?.toLowerCase().includes(q) ||
-        item.condition?.toLowerCase().includes(q)
-    );
-  }, [appointments, query]);
+  return appointments.filter((item) => {
+    const matchesSearch =
+      item.name?.toLowerCase().includes(q) ||
+      item.email?.toLowerCase().includes(q) ||
+      item.condition?.toLowerCase().includes(q) ||
+      item.date?.includes(query)
+
+    const matchesStatus =
+      statusFilter === "all" ||
+      item.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+}, [appointments, query, statusFilter]);
 
   const stats = useMemo(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -179,6 +192,50 @@ toast.error("Failed to update appointment");    }
     };
   }, [appointments]);
 
+
+// 👇 Paste it HERE
+const exportToCSV = () => {
+  const headers = [
+    "Patient",
+    "Phone",
+    "Email",
+    "Condition",
+    "Date",
+    "Time",
+    "Status",
+  ];
+
+  const rows = filteredAppointments.map((appointment) => [
+    appointment.name,
+    appointment.phone,
+    appointment.email,
+    appointment.condition,
+    appointment.date,
+    appointment.time,
+    appointment.status,
+  ]);
+
+  const csvContent = [
+    headers.join(","),
+    ...rows.map((row) => row.join(",")),
+  ].join("\n");
+
+  const blob = new Blob([csvContent], {
+    type: "text/csv;charset=utf-8;",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "appointments.csv";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
 
 
   return (
@@ -229,16 +286,62 @@ toast.error("Failed to update appointment");    }
 
           </div>
 
-          {/* Search */}
-          <div className="bg-white rounded-xl shadow-md p-5 mb-6">
-            <input
-              type="text"
-              placeholder="Search by patient, email, condition..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
-            />
-          </div>
+<div className="flex gap-3 mb-5 flex-wrap">
+
+  <button
+    onClick={() => setStatusFilter("all")}
+    className={`px-4 py-2 rounded-lg ${
+      statusFilter === "all"
+        ? "bg-teal-600 text-white"
+        : "bg-gray-200"
+    }`}
+  >
+    All
+  </button>
+
+  <button
+    onClick={() => setStatusFilter("pending")}
+    className={`px-4 py-2 rounded-lg ${
+      statusFilter === "pending"
+        ? "bg-yellow-500 text-white"
+        : "bg-gray-200"
+    }`}
+  >
+    Pending
+  </button>
+
+  <button
+    onClick={() => setStatusFilter("confirmed")}
+    className={`px-4 py-2 rounded-lg ${
+      statusFilter === "confirmed"
+        ? "bg-green-600 text-white"
+        : "bg-gray-200"
+    }`}
+  >
+    Confirmed
+  </button>
+
+</div> 
+
+         <div className="flex justify-between items-center mb-6">
+  <button
+    onClick={exportToCSV}
+    className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition"
+  >
+    Export CSV
+  </button>
+</div>
+
+{/* Search */}
+<div className="bg-white rounded-xl shadow-md p-5 mb-6">
+  <input
+    type="text"
+    placeholder="Search by patient, email, condition or date..."
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    className="w-full border rounded-lg px-4 py-3 text-sm md:text-base"
+  />
+</div>
 
           {/* Table */}
           <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
@@ -302,7 +405,13 @@ toast.error("Failed to update appointment");    }
 
                     <td className="p-4">
                       <div className="flex justify-center items-center gap-3">
-
+ 
+                        <button
+  onClick={() => handleViewAppointment(appointment)}
+  className="text-blue-600 hover:text-blue-800"
+>
+  <Eye size={18} />
+</button>
                         <button
                           onClick={() =>
                             handleEdit(appointment)
@@ -489,6 +598,46 @@ toast.error("Failed to update appointment");    }
           </div>
         )
       }
+      {isViewOpen && selectedAppointment && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
+
+      <h2 className="text-2xl font-bold mb-5">
+        Appointment Details
+      </h2>
+
+      <div className="space-y-3">
+
+        <p><strong>Name:</strong> {selectedAppointment.name}</p>
+
+        <p><strong>Phone:</strong> {selectedAppointment.phone}</p>
+
+        <p><strong>Email:</strong> {selectedAppointment.email}</p>
+
+        <p><strong>Condition:</strong> {selectedAppointment.condition}</p>
+
+        <p><strong>Date:</strong> {selectedAppointment.date}</p>
+
+        <p><strong>Time:</strong> {selectedAppointment.time}</p>
+
+        <p><strong>Status:</strong> {selectedAppointment.status}</p>
+
+        <p><strong>Message:</strong> {selectedAppointment.message}</p>
+
+      </div>
+
+      <div className="flex justify-end mt-6">
+        <button
+          onClick={() => setIsViewOpen(false)}
+          className="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700"
+        >
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
     </div >
 
 
