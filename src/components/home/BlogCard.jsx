@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
+
 const BlogCard = ({ blog }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+
       <img
         src={blog.image}
         alt={blog.title}
@@ -8,7 +11,10 @@ const BlogCard = ({ blog }) => {
       />
 
       <div className="p-5">
-        <p className="text-sm text-gray-500">{blog.date}</p>
+
+        <p className="text-sm text-gray-500">
+          {blog.date}
+        </p>
 
         <h3 className="text-xl font-semibold mt-2">
           {blog.title}
@@ -18,10 +24,15 @@ const BlogCard = ({ blog }) => {
           {blog.description}
         </p>
 
-        <button className="mt-5 bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition">
+        <Link
+          to={`/blogs/${blog.id}`}
+          className="inline-block mt-5 bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition"
+        >
           Read More
-        </button>
+        </Link>
+
       </div>
+
     </div>
   );
 };

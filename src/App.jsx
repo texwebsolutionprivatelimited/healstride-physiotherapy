@@ -3,6 +3,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
+import Blogs from "./pages/Blogs";
+import BlogDetails from "./pages/BlogDetails";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -71,6 +73,10 @@ function App() {
           path="/gallery/treatment"
           element={<TreatmentGallery />}
         />
+
+        <Route path="/blogs" element={<Blogs />} />
+
+<Route path="/blogs/:id" element={<BlogDetails />} />
 
         {/* Admin Login */}
         <Route path="/adminlogin" element={<AdminLogin />} />
