@@ -1,42 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
-const faqs = [
-  {
-    question: "What conditions do you treat at Heal Stride?",
-    answer:
-      "We treat a wide range of conditions including back pain, knee pain, neck pain, shoulder pain, sciatica, sports injuries, stroke rehabilitation, frozen shoulder, osteoarthritis, and more.",
-  },
-  {
-    question: "How long does a typical physiotherapy session last?",
-    answer:
-      "A standard session lasts between 30 to 60 minutes depending on the treatment plan and condition being addressed.",
-  },
-  {
-    question: "Do I need a doctor's referral to book an appointment?",
-    answer:
-      "No, you can directly book an appointment with us. However, if you have a referral or previous medical reports, please bring them along.",
-  },
-  {
-    question: "What should I wear for my physiotherapy session?",
-    answer:
-      "Wear comfortable, loose-fitting clothing that allows easy movement. Athletic wear is ideal for most therapy sessions.",
-  },
-  {
-    question: "How many sessions will I need?",
-    answer:
-      "The number of sessions varies based on your condition, severity, and response to treatment. We will provide an estimate after your initial assessment.",
-  },
-  {
-    question: "Do you offer home visits?",
-    answer:
-      "Yes, we offer home physiotherapy services in Bhopal for patients who have difficulty visiting the clinic.",
-  },
-];
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [faqs, setFaqs] = useState([]);
+
+  useEffect(() => {
+    fetchFAQs();
+  }, []);
+
+  const fetchFAQs = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "faqs"));
+
+      const data = snapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter((faq) => faq.active);
+
+      setFaqs(data);
+    } catch (error) {
+      console.error("Error loading FAQs:", error);
+    }
+  };
 
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-gray-50">
@@ -59,7 +51,6 @@ const FAQSection = () => {
           </p>
         </motion.div>
 
-        {/* FAQ Items */}
         <div className="space-y-4">
 
           {faqs.map((faq, index) => {
@@ -67,7 +58,7 @@ const FAQSection = () => {
 
             return (
               <motion.div
-                key={index}
+                key={faq.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
