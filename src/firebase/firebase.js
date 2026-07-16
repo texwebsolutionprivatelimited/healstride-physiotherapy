@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCzMxsl6FvQLH1uqldb7Bie0vULFvM7xbc",
   authDomain: "heal-stride.firebaseapp.com",
   projectId: "heal-stride",
-  storageBucket: "heal-stride.appspot.com",
+  storageBucket: "heal-stride.firebasestorage.app",
   messagingSenderId: "445157108628",
   appId: "1:445157108628:web:e0b7cef7f0ef5fc1a63d81",
 };

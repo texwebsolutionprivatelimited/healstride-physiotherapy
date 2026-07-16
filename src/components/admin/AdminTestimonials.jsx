@@ -3,12 +3,16 @@ import {
   collection,
   addDoc,
   getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+
+import { db, storage } from "../../firebase/firebase";
 
 const AdminTestimonials = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +21,7 @@ const [selectedTestimonial, setSelectedTestimonial] = useState(null);
 const [editingId, setEditingId] = useState(null);
 
   const [testimonials, setTestimonials] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -306,7 +311,28 @@ const handleView = (item) => {
                 }
               />
 
-              
+              <div>
+  <label className="block font-medium mb-2">
+    Patient Image
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setSelectedImage(e.target.files[0])
+    }
+    className="w-full"
+  />
+
+  {selectedImage && (
+    <img
+      src={URL.createObjectURL(selectedImage)}
+      alt="Preview"
+      className="w-24 h-24 mt-4 rounded-full object-cover border"
+    />
+  )}
+</div>
 
               <label className="flex items-center gap-3">
 
