@@ -1,8 +1,5 @@
-import { useState, useEffect } from "react";
-import {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff } from "lucide-react";
 import { auth } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
@@ -18,16 +15,6 @@ const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
- 
-  useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigate("/admin");
-    }
-  });
-
-  return () => unsubscribe();
-}, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -116,19 +103,19 @@ const AdminLogin = () => {
       required
     />
 
-    <button
-      type="button"
-      onClick={() => setShowPassword(!showPassword)}
-      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-    >
-      {showPassword ? (
-        <EyeOff size={20} />
-      ) : (
-        <Eye size={20} />
-      )}
-    </button>
-  </div>
-</div>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? (
+                  <EyeOff size={20} />
+                ) : (
+                  <Eye size={20} />
+                )}
+              </button>
+            </div>
+          </div>
 
           <button
             type="submit"
