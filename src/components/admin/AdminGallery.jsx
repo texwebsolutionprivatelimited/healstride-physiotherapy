@@ -59,6 +59,10 @@ const AdminGallery = () => {
   };
 
   const handleUpload = async (e) => {
+    console.log(
+      "Bucket Name:",
+      storage.app.options.storageBucket
+    );
     const file = e.target.files?.[0];
 
     if (!file) return;
@@ -84,9 +88,6 @@ const AdminGallery = () => {
         url: downloadURL,
       }));
     } catch (error) {
-      console.log("FULL ERROR:", error);
-      console.log("ERROR CODE:", error.code);
-      console.log("ERROR MESSAGE:", error.message);
 
       alert(error.message);
     } finally {

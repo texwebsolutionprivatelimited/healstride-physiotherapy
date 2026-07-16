@@ -27,6 +27,8 @@ import FAQ from "./components/admin/AdminFAQ";
 import AdminTestimonials from "./components/admin/AdminTestimonials";
 import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
+import PhysiotherapyServices from "./pages/PhysiotherapyServices";
+import ToolsEquipment from "./pages/ToolsEquipment";
 
 function App() {
   const location = useLocation();
@@ -49,6 +51,8 @@ function App() {
           path="/services"
           element={<Services />}
         />
+        <Route path="/services/physiotherapy" element={<PhysiotherapyServices />} />
+        <Route path="/services/tools-equipment" element={<ToolsEquipment />} />
         <Route path="/services/:slug" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route

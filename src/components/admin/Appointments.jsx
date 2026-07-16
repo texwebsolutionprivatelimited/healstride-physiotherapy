@@ -9,6 +9,7 @@ import {
 import {
   Pencil,
   Trash2,
+  Eye,
 } from "lucide-react";
 
 import { db } from "../../firebase/firebase";
@@ -34,6 +35,8 @@ const Appointments = () => {
 
 
   const [appointments, setAppointments] = useState([]);
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [viewAppointment, setViewAppointment] = useState(null);
 
   const [query, setQuery] = useState("");
 
@@ -101,7 +104,10 @@ const Appointments = () => {
 
 
   /* ---------------- Update Status ---------------- */
-
+  const handleView = (appointment) => {
+    setViewAppointment(appointment);
+    setIsViewOpen(true);
+  };
 
   const handleStatusChange = async (
     id,
@@ -154,43 +160,21 @@ const Appointments = () => {
       console.log(error);
 
     }
-
-
   };
 
-
-
-
-
-
-
   /* ---------------- Delete ---------------- */
-
-
   const handleDelete = async (id) => {
-
-
     const confirmDelete =
       window.confirm(
         "Delete this appointment?"
       );
 
-
-
     if (!confirmDelete)
       return;
-
-
-
     try {
-
-
       await deleteDoc(
         doc(db, "appointments", id)
       );
-
-
-
       setAppointments(prev =>
 
         prev.filter(
@@ -198,9 +182,6 @@ const Appointments = () => {
         )
 
       );
-
-
-
     }
 
     catch (error) {
@@ -401,12 +382,12 @@ const Appointments = () => {
       <div className="max-w-7xl mx-auto p-4 md:p-6">
 
 
-        <h1 className="text-3xl font-bold text-slate-900 mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
           Appointments
         </h1>
 
-        <p className="text-slate-600">
-          Manage your appointments efficiently.
+        <p className="mt-3 text-slate-600 text-base my-3">
+          View, manage and track all patient appointments from one place.
         </p>
 
 
@@ -416,7 +397,7 @@ const Appointments = () => {
         <div className="bg-white rounded-2xl shadow p-5 mb-6">
 
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-4 ">
 
 
             <input
@@ -622,63 +603,35 @@ ${appointment.status === "confirmed"
 
 
                 </div>
-
-
-
-
-
                 <div className="flex gap-5 mt-4">
 
+                  <button
+                    onClick={() => handleView(appointment)}
+                    className="text-green-600"
+                  >
+                    <Eye size={20} />
+                  </button>
 
                   <button
-
                     onClick={() => handleEdit(appointment)}
-
                     className="text-blue-600"
-
                   >
-
                     <Pencil size={20} />
-
                   </button>
-
-
 
                   <button
-
                     onClick={() => handleDelete(appointment.id)}
-
                     className="text-red-600"
-
                   >
-
                     <Trash2 size={20} />
-
                   </button>
-
 
                 </div>
-
-
-
               </div>
-
-
             ))
 
           }
-
-
-
         </div>
-
-
-
-
-
-
-
-
         {/* Desktop Table */}
 
 
@@ -889,34 +842,26 @@ ${appointment.status === "confirmed"
 
                       <div className="flex gap-4">
 
+                        <button
+                          onClick={() => handleView(appointment)}
+                          className="text-green-600"
+                        >
+                          <Eye size={18} />
+                        </button>
 
                         <button
-
                           onClick={() => handleEdit(appointment)}
-
                           className="text-blue-600"
-
                         >
-
                           <Pencil size={18} />
-
                         </button>
-
-
 
                         <button
-
                           onClick={() => handleDelete(appointment.id)}
-
                           className="text-red-600"
-
                         >
-
                           <Trash2 size={18} />
-
                         </button>
-
-
 
                       </div>
 
@@ -1063,51 +1008,92 @@ mb-5
 
                 />
 
+                <input
+                  className="w-full border rounded-lg p-3"
+                  value={editingAppointment.condition || ""}
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      condition: e.target.value,
+                    })
+                  }
+                  placeholder="Condition"
+                />
 
+                <input
+                  type="date"
+                  className="w-full border rounded-lg p-3"
+                  value={editingAppointment.date || ""}
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      date: e.target.value,
+                    })
+                  }
+                />
 
+                <input
+                  type="time"
+                  className="w-full border rounded-lg p-3"
+                  value={editingAppointment.time || ""}
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      time: e.target.value,
+                    })
+                  }
+                />
 
-                <button
-
-                  onClick={handleUpdateAppointment}
-
-                  className="
-bg-teal-600
-text-white
-px-5
-py-3
-rounded-lg
-"
-
+                <select
+                  className="w-full border rounded-lg p-3"
+                  value={editingAppointment.status || "Pending"}
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      status: e.target.value,
+                    })
+                  }
                 >
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
 
-                  Save Changes
+                <textarea
+                  rows={4}
+                  className="w-full border rounded-lg p-3"
+                  value={editingAppointment.message || ""}
+                  onChange={(e) =>
+                    setEditingAppointment({
+                      ...editingAppointment,
+                      message: e.target.value,
+                    })
+                  }
+                  placeholder="Message"
+                />
 
-                </button>
 
 
-                <button
 
-                  onClick={() => {
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <button
+                    onClick={handleUpdateAppointment}
+                    className="bg-teal-600 text-white px-5 py-3 rounded-lg hover:bg-teal-700"
+                  >
+                    Save Changes
+                  </button>
 
-                    setIsEditOpen(false);
-
-                    setEditingAppointment(null);
-
-                  }}
-
-                  className="
-ml-3
-bg-gray-200
-px-5
-py-3
-rounded-lg
-"
-
-                >
-
-                  Cancel
-
-                </button>
+                  <button
+                    onClick={() => {
+                      setIsEditOpen(false);
+                      setEditingAppointment(null);
+                    }}
+                    className="bg-gray-200 px-5 py-3 rounded-lg hover:bg-gray-300"
+                  >
+                    Cancel
+                  </button>
+                </div>
 
 
 
@@ -1120,6 +1106,49 @@ rounded-lg
           </div>
 
         }
+
+
+        {isViewOpen && viewAppointment && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl p-6 w-full max-w-lg">
+
+              <h2 className="text-2xl font-bold mb-5">
+                Appointment Details
+              </h2>
+
+              <div className="space-y-3 text-slate-700">
+
+                <p><strong>Name:</strong> {viewAppointment.name}</p>
+
+                <p><strong>Phone:</strong> {viewAppointment.phone}</p>
+
+                <p><strong>Email:</strong> {viewAppointment.email}</p>
+
+                <p><strong>Condition:</strong> {viewAppointment.condition}</p>
+
+                <p><strong>Date:</strong> {viewAppointment.date}</p>
+
+                <p><strong>Time:</strong> {viewAppointment.time}</p>
+
+                <p><strong>Status:</strong> {viewAppointment.status}</p>
+
+                <p><strong>Message:</strong> {viewAppointment.message}</p>
+
+              </div>
+
+              <button
+                onClick={() => {
+                  setIsViewOpen(false);
+                  setViewAppointment(null);
+                }}
+                className="mt-5 bg-teal-600 text-white px-5 py-3 rounded-lg"
+              >
+                Close
+              </button>
+
+            </div>
+          </div>
+        )}
 
 
 
