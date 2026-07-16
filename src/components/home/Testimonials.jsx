@@ -1,3 +1,12 @@
+import { useEffect, useState } from "react";
+import {
+  collection,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/firebase";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 
@@ -6,51 +15,28 @@ import "swiper/css/pagination";
 
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
-import patient1 from "../../assets/images/testimonials/patient1.jpg";
-import patient2 from "../../assets/images/testimonials/patient2.jpg";
-import patient3 from "../../assets/images/testimonials/patient3.jpg";
-import patient4 from "../../assets/images/testimonials/patient4.jpg";
-import patient5 from "../../assets/images/testimonials/patient5.jpg";
-
-const testimonials = [
-  {
-    image: patient1,
-    name: "Ravi Kumar",
-    profession: "Software Engineer",
-    review:
-      "After suffering from shoulder pain for years, HealStride helped me regain full mobility. The therapists were knowledgeable and caring.",
-  },
-  {
-    image: patient2,
-    name: "Priya Sharma",
-    profession: "Teacher",
-    review:
-      "The home physiotherapy service was excellent. Professional, punctual and extremely supportive throughout my recovery.",
-  },
-  {
-    image: patient3,
-    name: "Mohan Verma",
-    profession: "Retired Banker",
-    review:
-      "Their post-surgery rehabilitation program helped me recover much faster than expected. Highly recommended.",
-  },
-  {
-    image: patient4,
-    name: "Sneha Reddy",
-    profession: "Marketing Executive",
-    review:
-      "Dry needling therapy significantly reduced my neck pain. The clinic is clean and the staff is very friendly.",
-  },
-  {
-    image: patient5,
-    name: "Anil Gupta",
-    profession: "Business Owner",
-    review:
-      "Excellent experience from consultation to treatment. Every session was personalized and effective.",
-  },
-];
+import defaultUser from "../../assets/images/default-user.png";
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "testimonials"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter((item) => item.active);
+
+      setTestimonials(data);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <section className="py-24 bg-slate-50">
       <div className="max-w-6xl mx-auto px-6">
@@ -70,54 +56,54 @@ const Testimonials = () => {
 
         <div className="mt-16">
 
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-            }}
-            loop={true}
-          >
+          {testimonials.length > 0 ? (
 
-            {testimonials.map((item, index) => (
+            <Swiper
+              modules={[Autoplay, Pagination]}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              loop={testimonials.length > 1}
+            >
 
-              <SwiperSlide key={index}>
+              {testimonials.map((item) => (
 
-                <div className="bg-white rounded-3xl shadow-xl p-10">
+                <SwiperSlide key={item.id}>
 
-                  <FaQuoteLeft className="text-teal-500 text-5xl mb-6" />
+                  <div className="bg-white rounded-3xl shadow-xl p-10">
 
-                  <p className="text-gray-600 text-xl leading-9">
-                    "{item.review}"
-                  </p>
+                    <FaQuoteLeft className="text-teal-500 text-5xl mb-6" />
 
-                  <div className="flex mt-8 items-center">
+                    <p className="text-gray-600 text-xl leading-9">
+                      "{item.review}"
+                    </p>
 
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-20 h-20 rounded-full object-cover"
-                    />
+                    <div className="flex mt-8 items-center">
 
-                    <div className="ml-5">
+                      <img
+                        src={defaultUser}
+                        alt={item.name}
+                        className="w-20 h-20 rounded-full object-cover"
+                      />
 
-                      <h4 className="font-bold text-xl">
-                        {item.name}
-                      </h4>
+                      <div className="ml-5">
 
-                      <p className="text-gray-500">
-                        {item.profession}
-                      </p>
+                        <h4 className="font-bold text-xl">
+                          {item.name}
+                        </h4>
 
-                      <div className="flex text-yellow-400 mt-2">
+                        <p className="text-gray-500">
+                          {item.designation}
+                        </p>
 
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
+                        <div className="flex text-yellow-400 mt-2 gap-1">
+                          {[...Array(item.rating)].map((_, index) => (
+                            <FaStar key={index} />
+                          ))}
+                        </div>
 
                       </div>
 
@@ -125,13 +111,19 @@ const Testimonials = () => {
 
                   </div>
 
-                </div>
+                </SwiperSlide>
 
-              </SwiperSlide>
+              ))}
 
-            ))}
+            </Swiper>
 
-          </Swiper>
+          ) : (
+
+            <div className="text-center text-gray-500 py-20">
+              No testimonials available.
+            </div>
+
+          )}
 
         </div>
 

@@ -3,12 +3,18 @@ import {
   collection,
   addDoc,
   getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 const AdminTestimonials = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewOpen, setIsViewOpen] = useState(false);
+const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+const [editingId, setEditingId] = useState(null);
 
   const [testimonials, setTestimonials] = useState([]);
 
@@ -36,18 +42,23 @@ const AdminTestimonials = () => {
   setTestimonials(data);
 };
 
-useEffect(() => {
-  fetchTestimonials();
-}, []);
+
 
   const handleSave = async () => {
   try {
-    await addDoc(collection(db, "testimonials"), {
-      ...formData,
-      createdAt: serverTimestamp(),
-    });
+    if (editingId) {
+      await updateDoc(doc(db, "testimonials", editingId), {
+        ...formData,
+      });
+    } else {
+      await addDoc(collection(db, "testimonials"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
+    }
 
     setIsModalOpen(false);
+    setEditingId(null);
 
     setFormData({
       name: "",
@@ -59,10 +70,47 @@ useEffect(() => {
     });
 
     fetchTestimonials();
+
   } catch (err) {
-  console.error(err);
-  alert(err.message);
-}
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+const handleEdit = (item) => {
+  setEditingId(item.id);
+
+  setFormData({
+    name: item.name,
+    designation: item.designation,
+    review: item.review,
+    rating: item.rating,
+    image: item.image || "",
+    active: item.active,
+  });
+
+  setIsModalOpen(true);
+};
+
+const handleDelete = async (id) => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this testimonial?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    await deleteDoc(doc(db, "testimonials", id));
+    fetchTestimonials();
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+const handleView = (item) => {
+  setSelectedTestimonial(item);
+  setIsViewOpen(true);
 };
 
   return (
@@ -81,7 +129,20 @@ useEffect(() => {
         </div>
 
         <button
-  onClick={() => setIsModalOpen(true)}
+  onClick={() => {
+    setEditingId(null);
+
+    setFormData({
+      name: "",
+      designation: "",
+      review: "",
+      rating: 5,
+      image: "",
+      active: true,
+    });
+
+    setIsModalOpen(true);
+  }}
   className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-medium"
 >
   + Add Testimonial
@@ -146,11 +207,26 @@ useEffect(() => {
   <td className="p-4">
     <div className="flex justify-center gap-4">
 
-      <button title="View">👁️</button>
+      <button
+  title="View"
+  onClick={() => handleView(item)}
+>
+  👁️
+</button>
 
-      <button title="Edit">✏️</button>
+      <button
+  title="Edit"
+  onClick={() => handleEdit(item)}
+>
+  ✏️
+</button>
 
-      <button title="Delete">🗑️</button>
+      <button
+  title="Delete"
+  onClick={() => handleDelete(item.id)}
+>
+  🗑️
+</button>
 
     </div>
   </td>
@@ -171,8 +247,8 @@ useEffect(() => {
           <div className="bg-white rounded-xl p-8 w-full max-w-lg">
 
             <h2 className="text-2xl font-bold mb-6">
-              Add Testimonial
-            </h2>
+  {editingId ? "Edit Testimonial" : "Add Testimonial"}
+</h2>
 
             <div className="space-y-4">
 
@@ -254,11 +330,23 @@ useEffect(() => {
             <div className="flex justify-end gap-3 mt-8">
 
               <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-5 py-2 border rounded-lg"
-              >
-                Cancel
-              </button>
+  onClick={() => {
+    setIsModalOpen(false);
+    setEditingId(null);
+
+    setFormData({
+      name: "",
+      designation: "",
+      review: "",
+      rating: 5,
+      image: "",
+      active: true,
+    });
+  }}
+  className="px-5 py-2 border rounded-lg"
+>
+  Cancel
+</button>
 
               <button
                 onClick={handleSave}
@@ -273,7 +361,77 @@ useEffect(() => {
 
         </div>
       )}
+{isViewOpen && selectedTestimonial && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-8">
 
+      <h2 className="text-2xl font-bold mb-6">
+        Testimonial Details
+      </h2>
+
+      <div className="space-y-4">
+
+        <div>
+          <p className="text-gray-500 text-sm">Patient Name</p>
+          <p className="font-semibold">
+            {selectedTestimonial.name}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-sm">Designation</p>
+          <p className="font-semibold">
+            {selectedTestimonial.designation}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-sm">Rating</p>
+          <p className="font-semibold">
+            {"⭐".repeat(selectedTestimonial.rating)}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-sm">Review</p>
+
+          <div className="bg-gray-50 rounded-lg p-4 mt-2">
+            {selectedTestimonial.review}
+          </div>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-sm">Status</p>
+
+          <span
+            className={`inline-block mt-2 px-4 py-1 rounded-full text-sm ${
+              selectedTestimonial.active
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {selectedTestimonial.active
+              ? "Active"
+              : "Inactive"}
+          </span>
+        </div>
+
+      </div>
+
+      <div className="flex justify-end mt-8">
+
+        <button
+          onClick={() => setIsViewOpen(false)}
+          className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg"
+        >
+          Close
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
     </div>
   );
 };

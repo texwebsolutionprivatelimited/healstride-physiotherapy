@@ -27,7 +27,7 @@ export const blogs = [
     description: "Essential rehabilitation tips for faster recovery.",
   },
   {
-    id: 1,
+    id: 4,
     title: "Managing Lower Back Pain",
     date: "July 15, 2026",
     image: blog5,
@@ -35,7 +35,7 @@ export const blogs = [
       "Learn simple physiotherapy exercises that help relieve chronic lower back pain.",
   },
   {
-    id: 2,
+    id: 5,
     title: "Benefits of Sports Rehabilitation",
     date: "July 10, 2026",
     image: blog2,
