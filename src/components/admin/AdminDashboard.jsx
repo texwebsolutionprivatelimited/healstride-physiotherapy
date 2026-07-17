@@ -373,8 +373,6 @@ const AdminDashboard = () => {
 
 
         const date =
-          toDateSafe(item.date)
-          ||
           toDateSafe(item.createdAt);
 
 
@@ -539,6 +537,36 @@ const AdminDashboard = () => {
             ))}
 
           </div>
+
+          {preset === "custom" && (
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+              <div>
+                <label className="block text-sm text-slate-600 mb-1">
+                  From Date
+                </label>
+
+                <input
+                  type="date"
+                  value={from}
+                  onChange={(e) => setFrom(e.target.value)}
+                  className="border border-slate-300 rounded-lg px-4 py-2"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-slate-600 mb-1">
+                  To Date
+                </label>
+
+                <input
+                  type="date"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
+                  className="border border-slate-300 rounded-lg px-4 py-2"
+                />
+              </div>
+            </div>
+          )}
 
 
         </header>
