@@ -79,29 +79,29 @@ const AdminLogin = () => {
             </label>
 
             <input
-              type="email"
-              placeholder="Enter email"
-              className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+  type="email"
+  placeholder="Enter email"
+  className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+/>
+</div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
+<div>
+  <label className="block text-sm font-medium text-gray-700 mb-2">
+    Password
+  </label>
 
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter password"
-                className="w-full border border-gray-300 rounded-xl p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter password"
+      className="w-full border border-gray-300 rounded-xl p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-teal-500"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
 
               <button
                 type="button"
