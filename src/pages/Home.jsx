@@ -8,6 +8,7 @@ import Specialists from "../components/home/Specialists";
 import Testimonials from "../components/home/Testimonials";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import BlogSection from "../components/home/BlogSection";
+import { blogs } from "../data/blogs";
 import AppointmentForm from "../components/contact/AppointmentForm";
 import TreatmentSlider from "../components/home/TreatmentSlider";
 import WhatsAppFloat from "../components/common/WhatsAppFloat";
@@ -23,7 +24,10 @@ const Home = () => {
       <Conditions /> 
       <GalleryPreview /> 
       <Specialists /> 
-      <BlogSection />
+      <BlogSection
+  blogsToShow={blogs.slice(0, 3)}
+  showViewAllButton={true}
+/>
        <AppointmentForm />
       <Testimonials /> 
 
