@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
-const BlogCard = ({ blog }) => {
+
+
+const BlogCard = ({ blog, showButton = false }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
 
@@ -24,12 +26,13 @@ const BlogCard = ({ blog }) => {
           {blog.description}
         </p>
 
-        <Link
-          to={`/blogs/${blog.id}`}
-          className="inline-block mt-5 bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition"
-        >
-          Read More
-        </Link>
+        {showButton && (
+  <Link to={`/blogs/${blog.id}`}>
+    <button className="mt-4 bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition">
+      Read More
+    </button>
+  </Link>
+)}
 
       </div>
 
