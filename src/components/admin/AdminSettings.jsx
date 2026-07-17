@@ -1,75 +1,429 @@
-const AdminSettings = () => {
+import { useState } from "react";
+
+import {
+  Building2,
+  Clock,
+  Phone,
+  MessageCircle,
+  Mail,
+  Save,
+  Check,
+  Stethoscope,
+  MapPin,
+  Share2,
+  Sparkles,
+} from "lucide-react";
+
+import {
+  FaInstagram,
+  FaFacebook,
+  FaLinkedin,
+} from "react-icons/fa";
+
+
+const SECTIONS = [
+  {
+    id: "location",
+    title: "Location & Hours",
+    description: "Where patients find you and when you're open.",
+    icon: MapPin,
+    fields: [
+      {
+        key: "address",
+        label: "Clinic Address",
+        placeholder: "Clinic address",
+        type: "text",
+        icon: Building2,
+        full: true,
+      },
+      {
+        key: "hours",
+        label: "Working Hours",
+        placeholder: "Mon-Fri, 9:00 - 18:00",
+        type: "text",
+        icon: Clock,
+        full: true,
+      },
+    ],
+  },
+
+  {
+    id: "contact",
+    title: "Contact Channels",
+    description: "Primary ways for patients to reach you.",
+    icon: Phone,
+
+    fields: [
+      {
+        key: "phone",
+        label: "Phone",
+        placeholder: "+91 9876543210",
+        type: "tel",
+        icon: Phone,
+      },
+      {
+        key: "whatsapp",
+        label: "WhatsApp",
+        placeholder: "+91 9876543210",
+        type: "tel",
+        icon: MessageCircle,
+      },
+      {
+        key: "email",
+        label: "Email",
+        placeholder: "hello@clinic.com",
+        type: "email",
+        icon: Mail,
+        full: true,
+      },
+    ],
+  },
+
+
+  {
+    id: "social",
+    title: "Social Presence",
+    description: "Links shown in your public footer.",
+    icon: Share2,
+
+    fields: [
+      {
+        key: "instagram",
+        label: "Instagram",
+        placeholder: "https://instagram.com/yourclinic",
+        type: "url",
+        icon: FaInstagram,
+      },
+      {
+        key: "facebook",
+        label: "Facebook",
+        placeholder: "https://facebook.com/yourclinic",
+        type: "url",
+        icon: FaFacebook,
+      },
+      {
+        key: "linkedin",
+        label: "LinkedIn",
+        placeholder: "https://linkedin.com/company/yourclinic",
+        type: "url",
+        icon: FaLinkedin,
+        full: true,
+      },
+    ],
+  },
+];
+
+
+const ALL_FIELDS = SECTIONS.flatMap(
+  (section)=>section.fields
+);
+
+
+const INITIAL = ALL_FIELDS.reduce(
+  (acc,field)=>({
+    ...acc,
+    [field.key]:""
+  }),
+  {}
+);
+
+
+
+function AdminSettings(){
+
+  const [values,setValues] = useState(INITIAL);
+
+  const [saving,setSaving] = useState(false);
+
+  const [saved,setSaved] = useState(false);
+
+
+
+  const update = (key,value)=>{
+
+    setValues(prev=>({
+      ...prev,
+      [key]:value
+    }));
+
+  };
+
+
+
+  const filledCount =
+    Object.values(values)
+    .filter(value=>value.trim()!=="")
+    .length;
+
+
+  const progress =
+    Math.round(
+      (filledCount / ALL_FIELDS.length) * 100
+    );
+
+
+
+  const handleSubmit=(e)=>{
+
+    e.preventDefault();
+
+    setSaving(true);
+
+
+    setTimeout(()=>{
+
+      setSaving(false);
+
+      setSaved(true);
+
+
+      setTimeout(()=>{
+        setSaved(false);
+      },2500);
+
+
+    },700);
+
+  };
+
+
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-slate-900">
-        Clinic Settings
-      </h1>
 
-      <p className="text-slate-500 mt-2">
-        Manage clinic contact information.
-      </p>
+<div className="min-h-screen bg-slate-50">
 
-      <div className="bg-white rounded-2xl shadow p-6 mt-6">
+<div className="mx-auto max-w-5xl px-4 py-10">
 
-        <div className="grid md:grid-cols-2 gap-5">
 
-          <input
-            type="text"
-            placeholder="Clinic Address"
-            className="border rounded-xl p-3"
-          />
+<header className="mb-8">
 
-          <input
-            type="text"
-            placeholder="Working Hours"
-            className="border rounded-xl p-3"
-          />
+<div className="flex items-center gap-3">
 
-          <input
-            type="text"
-            placeholder="Phone"
-            className="border rounded-xl p-3"
-          />
+<div className="h-10 w-10 rounded-xl bg-teal-600 flex items-center justify-center">
+<Stethoscope className="text-white"/>
+</div>
 
-          <input
-            type="text"
-            placeholder="WhatsApp"
-            className="border rounded-xl p-3"
-          />
+<p className="font-semibold text-teal-700">
+Admin / Clinic Settings
+</p>
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="border rounded-xl p-3"
-          />
+</div>
 
-          <input
-            type="text"
-            placeholder="Instagram Link"
-            className="border rounded-xl p-3"
-          />
 
-          <input
-            type="text"
-            placeholder="Facebook Link"
-            className="border rounded-xl p-3"
-          />
+<h1 className="text-4xl font-bold mt-5">
+Clinic Settings
+</h1>
 
-          <input
-            type="text"
-            placeholder="LinkedIn Link"
-            className="border rounded-xl p-3"
-          />
 
-        </div>
+<p className="text-slate-500 mt-2">
+Manage clinic contact information and social links.
+</p>
 
-        <button className="mt-5 bg-teal-600 text-white px-6 py-3 rounded-xl">
-          Save Settings
-        </button>
 
-      </div>
-    </div>
-  );
-};
+
+<div className="mt-6">
+
+<div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+
+<div
+className="h-full bg-teal-600 transition-all"
+style={{
+width:`${progress}%`
+}}
+/>
+
+</div>
+
+
+<p className="text-sm mt-2">
+Profile completeness {filledCount}/{ALL_FIELDS.length}
+</p>
+
+</div>
+
+
+</header>
+
+
+
+<form
+onSubmit={handleSubmit}
+className="space-y-6"
+>
+
+
+{
+SECTIONS.map(section=>{
+
+const SectionIcon = section.icon;
+
+
+return (
+
+<section
+key={section.id}
+className="bg-white rounded-2xl border shadow-sm"
+>
+
+
+<div className="flex gap-3 p-5 border-b">
+
+<SectionIcon className="text-teal-600"/>
+
+<div>
+
+<h2 className="font-semibold">
+{section.title}
+</h2>
+
+<p className="text-sm text-slate-500">
+{section.description}
+</p>
+
+</div>
+
+</div>
+
+
+
+<div className="grid md:grid-cols-2 gap-5 p-6">
+
+
+{
+section.fields.map(field=>{
+
+
+const Icon = field.icon;
+
+
+return (
+
+<div
+key={field.key}
+className={
+field.full
+?"md:col-span-2"
+:""
+}
+>
+
+
+<label className="block text-sm font-medium mb-2">
+{field.label}
+</label>
+
+
+<div className="relative">
+
+<Icon
+className="absolute left-3 top-3 text-slate-400"
+size={18}
+/>
+
+
+<input
+
+type={field.type}
+
+value={values[field.key]}
+
+placeholder={field.placeholder}
+
+onChange={(e)=>
+update(
+field.key,
+e.target.value
+)
+}
+
+className="w-full border rounded-xl py-3 pl-10 pr-3 outline-none focus:border-teal-500"
+
+/>
+
+
+</div>
+
+
+</div>
+
+
+)
+
+
+})
+
+}
+
+
+</div>
+
+
+</section>
+
+)
+
+})
+
+}
+
+
+
+
+<div className="flex justify-end">
+
+
+<button
+
+disabled={saving}
+
+className="flex items-center gap-2 bg-teal-600 text-white px-6 py-3 rounded-xl disabled:opacity-50"
+
+>
+
+
+{
+saved
+?
+<>
+<Check size={18}/>
+Saved
+</>
+
+:
+
+saving
+
+?
+
+"Saving..."
+
+:
+
+<>
+<Save size={18}/>
+Save Settings
+</>
+
+}
+
+
+</button>
+
+
+</div>
+
+
+
+</form>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+
 
 export default AdminSettings;

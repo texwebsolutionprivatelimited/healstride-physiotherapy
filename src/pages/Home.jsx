@@ -9,6 +9,8 @@ import Testimonials from "../components/home/Testimonials";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import TreatmentSlider from "../components/home/TreatmentSlider";
 import WhatsAppFloat from "../components/common/WhatsAppFloat";
+import BlogSection from "../components/home/BlogSection";
+
 
 const Home = () => {
   return (
@@ -21,9 +23,8 @@ const Home = () => {
       <Conditions /> 
       <GalleryPreview /> 
       <Specialists /> 
-      
-      <Testimonials /> 
-
+      <Testimonials />
+      <BlogSection />
       <WhatsAppFloat />
        
     </>
