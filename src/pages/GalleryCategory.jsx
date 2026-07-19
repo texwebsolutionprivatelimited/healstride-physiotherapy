@@ -39,8 +39,12 @@ const GalleryCategory = ({ category, title }) => {
   };
 
   return (
-    <section className="pt-28 pb-20 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="pt-28 pb-20 bg-slate-50 min-h-screen"
+
+    >
+
+
+      <div className=" max-w-7xl mx-auto px-4">
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -78,22 +82,27 @@ const GalleryCategory = ({ category, title }) => {
                   setSelectedImage(image.imageUrl)
                 }
               >
-                <div className="overflow-hidden">
+                <div className="overflow-hidden relative">
                   <img
                     src={image.imageUrl}
                     alt={image.title}
                     className="w-full h-72 object-cover hover:scale-110 transition duration-700"
                   />
+
+                  <span className="absolute top-3 left-3 bg-teal-500 text-white text-xs px-3 py-1 rounded-full">
+                    {image.category}
+                  </span>
                 </div>
 
                 <div className="p-5">
                   <h3 className="font-semibold text-lg">
                     {image.title}
                   </h3>
-
-                  <p className="text-sm text-gray-500 mt-1">
-                    {image.category}
+                  <p className="text-sm text-gray-500 mt-2 line-clamp-4">
+                    {image.description}
                   </p>
+
+
                 </div>
               </motion.div>
             ))}

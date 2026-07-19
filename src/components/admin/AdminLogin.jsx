@@ -32,11 +32,11 @@ const AdminLogin = () => {
 
       navigate("/admin");
     } catch (err) {
-      console.log(err);
-      console.log(err.code);
-      console.log(err.message);
+      console.log("Firebase Error:", err);
+      console.log("Error Code:", err.code);
+      console.log("Error Message:", err.message);
 
-      setError(err.message);
+      setError(err.code);
     } finally {
       setLoading(false);
     }

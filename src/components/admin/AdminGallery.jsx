@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ImagePlus, Trash2, X } from "lucide-react";
+import { ImagePlus, Trash2, Edit, X } from "lucide-react";
 
 import {
   collection,
@@ -8,6 +8,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
   Timestamp,
 } from "firebase/firestore";
 
@@ -21,11 +22,12 @@ import { db, storage } from "../../firebase/firebase";
 
 const AdminGallery = () => {
   const [images, setImages] = useState([]);
-
+  const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     title: "",
+    description: "",
     category: "",
     url: "",
   });
@@ -112,11 +114,7 @@ const AdminGallery = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.title ||
-      !form.category ||
-      !form.url
-    ) {
+    if (!form.title || !form.category) {
       alert("Please fill all fields");
       return;
     }
@@ -124,15 +122,17 @@ const AdminGallery = () => {
     try {
       setLoading(true);
 
-      await addDoc(
-        collection(db, "gallery"),
-        {
-          title: form.title,
-          category: form.category,
-          imageUrl: form.url,
-          createdAt: Timestamp.now(),
-        }
-      );
+      const imageUrl =
+        form.url ||
+        "https://images.unsplash.com/photo-1584515933487-779824d29309?w=800";
+
+      await addDoc(collection(db, "gallery"), {
+        title: form.title,
+        description: form.description,
+        category: form.category,
+        imageUrl,
+        createdAt: Timestamp.now(),
+      });
 
       setForm({
         title: "",
@@ -219,15 +219,25 @@ const AdminGallery = () => {
               Treatment Photos
             </option>
           </select>
+
+          <textarea
+            name="description"
+            placeholder="Image Description"
+            value={form.description}
+            onChange={handleChange}
+            rows="3"
+            className="border rounded-xl px-4 py-3 focus:ring-2 focus:ring-teal-500 outline-none md:col-span-2"
+          />
         </div>
 
         <div className="mt-4">
           <input
-            id="galleryImage"
-            type="file"
-            accept="image/*"
-            onChange={handleUpload}
-            className="w-full border rounded-xl p-3"
+            type="text"
+            name="url"
+            placeholder="Image URL"
+            value={form.url}
+            onChange={handleChange}
+            className="border rounded-xl px-4 py-3 focus:ring-2 focus:ring-teal-500 outline-none mt-4 w-full"
           />
         </div>
 
@@ -293,32 +303,53 @@ const AdminGallery = () => {
               }}
               className="bg-white rounded-2xl overflow-hidden shadow-lg"
             >
-              <img
-                src={img.imageUrl}
-                alt={img.title}
-                className="w-full h-52 object-cover"
-              />
+              <div className="relative">
+                <img
+                  src={img.imageUrl}
+                  alt={img.title}
+                  className="w-full h-52 object-cover transition-transform duration-300 hover:scale-105"
+                />
+
+                <span className="absolute top-3 left-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-xs font-medium px-3 py-1 rounded-full shadow-lg capitalize">
+                  {img.category}
+                </span>
+              </div>
 
               <div className="p-4">
                 <h3 className="font-semibold text-slate-900">
                   {img.title}
                 </h3>
 
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs bg-teal-100 text-teal-700 px-3 py-1 rounded-full">
-                    {img.category}
-                  </span>
-                </div>
+                <p className="text-sm text-slate-500 mt-2 line-clamp-4">
+                  {img.description}
+                </p>
 
-                <button
-                  onClick={() =>
-                    handleDelete(img.id)
-                  }
-                  className="mt-4 flex items-center gap-2 text-red-600 hover:text-red-700"
-                >
-                  <Trash2 size={16} />
-                  Delete
-                </button>
+                <div className="flex items-center gap-4 mt-4">
+                  <button
+                    onClick={() => {
+                      setEditingId(img.id);
+
+                      setForm({
+                        title: img.title,
+                        description: img.description || "",
+                        category: img.category,
+                        url: img.imageUrl,
+                      });
+                    }}
+                    className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                  >
+                    <Edit size={16} />
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(img.id)}
+                    className="flex items-center gap-2 text-red-600 hover:text-red-700"
+                  >
+                    <Trash2 size={16} />
+                    Delete
+                  </button>
+                </div>
               </div>
             </motion.div>
           ))}

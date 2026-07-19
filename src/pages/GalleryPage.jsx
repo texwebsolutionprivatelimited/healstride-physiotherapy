@@ -24,8 +24,16 @@ const categories = [
 
 const GalleryPage = () => {
   return (
-    <section className="pt-28 pb-20 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="pt-28 pb-20 bg-slate-50 min-h-screen"
+      className="pt-28 pb-20 min-h-screen bg-cover bg-center bg-fixed relative"
+      style={{
+        backgroundImage: "url('/gallery-bg.avif')",
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-white/40"></div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4">
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}

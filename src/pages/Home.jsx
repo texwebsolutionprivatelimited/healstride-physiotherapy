@@ -11,6 +11,8 @@ import BlogSection from "../components/home/BlogSection";
 import { blogs } from "../data/blogs";
 import TreatmentSlider from "../components/home/TreatmentSlider";
 import WhatsAppFloat from "../components/common/WhatsAppFloat";
+import BlogSection from "../components/home/BlogSection";
+
 
 const Home = () => {
   return (
@@ -23,13 +25,8 @@ const Home = () => {
       <Conditions /> 
       <GalleryPreview /> 
       <Specialists /> 
+      <Testimonials />
       <BlogSection />
-      <BlogSection
-  blogsToShow={blogs.slice(0, 3)}
-  showButton={false}
-  showViewAllButton={true}
-/>
-      <Testimonials /> 
       <WhatsAppFloat />
        
     </>
