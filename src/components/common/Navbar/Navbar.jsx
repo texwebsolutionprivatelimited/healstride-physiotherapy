@@ -53,22 +53,25 @@ const Navbar = () => {
 
   return (
     <nav className="w-full bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-        {/* Logo */}
+<div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Link to="/" className="flex items-center gap-2 sm:gap-3">
-            <img
+<Link
+  to="/"
+  className="flex items-center gap-2 min-w-0 flex-1"
+>
+              <img
               src={logo}
               alt="HealStride Logo"
               className="h-12 sm:h-14 md:h-16 w-auto"
             />
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-teal-700">
-                HealStride
+            <div className="min-w-0">
+<h1 className="text-lg sm:text-2xl font-bold text-teal-700 truncate">
+                  HealStride
               </h1>
               <p className="hidden sm:block text-xs text-gray-500">
                 Physiotherapy & Wellness
@@ -121,9 +124,9 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-teal-700 text-2xl"
-        >
+  onClick={() => setOpen(!open)}
+  className="md:hidden text-teal-700 text-2xl shrink-0"
+>
           {open ? <FaTimes /> : <FaBars />}
         </button>
       </div>
