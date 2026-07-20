@@ -24,7 +24,7 @@ const CTA = () => {
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
 
             <a
-              href="/contact"
+              href="/booking"
               className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
             >
               <Calendar className="w-5 h-5" />

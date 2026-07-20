@@ -412,7 +412,7 @@ const ServicesGrid = () => {
 
                                     <Link
 
-                                        to="/contact"
+                                        to="/booking"
 
                                         className="
                             inline-block

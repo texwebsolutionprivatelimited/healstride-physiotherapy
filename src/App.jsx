@@ -5,7 +5,7 @@ import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
-
+import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -63,8 +63,15 @@ function App() {
         <Route
           path="/contact"
           element={
+            <Contact />
+          }
+        />
+
+        <Route
+          path="/booking"
+          element={
             <UserProtectedRoute>
-              <Contact />
+              <Booking />
             </UserProtectedRoute>
           }
         />

@@ -89,7 +89,7 @@ const BlogDetails = () => {
           </p>
 
           <Link
-            to="/contact"
+            to="/booking"
             className="inline-block mt-8 bg-white text-teal-600 font-semibold px-8 py-4 rounded-xl hover:bg-gray-100 transition"
           >
             Book Appointment

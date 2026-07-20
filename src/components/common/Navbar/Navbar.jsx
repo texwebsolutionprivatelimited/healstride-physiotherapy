@@ -23,7 +23,7 @@ const Navbar = () => {
 
   const handleBookAppointment = () => {
     if (!auth.currentUser) return navigate("/login");
-    navigate("/contact");
+    navigate("/booking");
   };
 
   const handleLogout = async () => {
