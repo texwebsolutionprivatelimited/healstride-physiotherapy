@@ -133,7 +133,7 @@ const DoctorProfile = () => {
             </div>
 
             <Link
-              to="/contact"
+              to="/booking"
               className="inline-block mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl"
             >
               Book Appointment

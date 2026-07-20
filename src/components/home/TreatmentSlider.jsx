@@ -134,7 +134,7 @@ const TreatmentSlider = () => {
         </p>
 
         <a
-  href="#services"
+  href="/services"
   className="mt-5 inline-block text-teal-600 font-semibold hover:text-teal-800 transition"
 >
   Learn More →

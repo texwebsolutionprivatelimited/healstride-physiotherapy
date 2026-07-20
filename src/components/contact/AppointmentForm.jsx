@@ -92,8 +92,15 @@ const AppointmentForm = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+    <section
+      className="py-16 md:py-20 bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: "url('/appointment-bg.jpg')",
+      }}
+    >
+      <div className="absolute inset-0 bg-white/30"></div>
+
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}

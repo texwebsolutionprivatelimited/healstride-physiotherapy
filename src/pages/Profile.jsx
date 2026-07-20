@@ -263,7 +263,7 @@ const Profile = () => {
                 </p>
               </div>
               <button
-                onClick={() => navigate("/contact")}
+                onClick={() => navigate("/booking")}
                 className="text-sm bg-teal-50 text-teal-700 hover:bg-teal-100 px-4 py-2 rounded-lg font-medium transition"
               >
                 + Book New
@@ -284,7 +284,7 @@ const Profile = () => {
                     Book your first session to get started
                   </p>
                   <button
-                    onClick={() => navigate("/contact")}
+                    onClick={() => navigate("/booking")}
                     className="mt-4 bg-teal-700 text-white px-5 py-2 rounded-lg hover:bg-teal-800 transition"
                   >
                     Book Appointment

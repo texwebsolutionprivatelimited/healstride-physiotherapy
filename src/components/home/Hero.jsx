@@ -114,7 +114,7 @@ const Hero = () => {
 
             {/* Book Appointment */}
             <Link
-              to="/contact"
+              to="/booking"
               className="
         bg-teal-600
         hover:bg-teal-700
