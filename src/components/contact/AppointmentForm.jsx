@@ -1,23 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { db, auth } from "../../firebase/firebase";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const AppointmentForm = () => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: "",
     condition: "",
     date: "",
     time: "",
     message: "",
-    status: "Pending",
   });
 
-  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (currentUser) => {
+        setUser(currentUser);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,11 +42,28 @@ const AppointmentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     try {
       setLoading(true);
 
       await addDoc(collection(db, "appointments"), {
-        ...formData,
+        userId: user.uid,
+
+        name: formData.name,
+        phone: formData.phone,
+        condition: formData.condition,
+        date: formData.date,
+        time: formData.time,
+        message: formData.message,
+
+        email: user.email || "",
+        profileImage: user.photoURL || "",
+        googleName: user.displayName || "",
+
         status: "pending",
         createdAt: serverTimestamp(),
       });
@@ -43,7 +73,6 @@ const AppointmentForm = () => {
       setFormData({
         name: "",
         phone: "",
-        email: "",
         condition: "",
         date: "",
         time: "",
@@ -53,9 +82,10 @@ const AppointmentForm = () => {
       setTimeout(() => {
         setSubmitted(false);
       }, 4000);
+
     } catch (error) {
       console.error(error);
-      alert("Something went wrong. Please try again.");
+      alert("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -71,7 +101,7 @@ const AppointmentForm = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          {/* Heading */}
+
           <div className="text-center mb-10">
             <span className="text-teal-600 font-semibold uppercase tracking-[3px] text-sm">
               Appointment
@@ -86,13 +116,14 @@ const AppointmentForm = () => {
             </p>
           </div>
 
-          {/* Success Message */}
+          {!user && (
+            <div className="mb-6 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-xl p-4">
+              Please login with Google before booking an appointment.
+            </div>
+          )}
+
           {submitted && (
-            <motion.div
-              initial={{ opacity: 0, y: -15 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-6 rounded-2xl border border-green-200 bg-green-50 p-4"
-            >
+            <div className="mb-6 rounded-xl bg-green-50 border border-green-200 p-4">
               <h4 className="font-semibold text-green-700">
                 Appointment Request Submitted Successfully 🎉
               </h4>
@@ -100,14 +131,13 @@ const AppointmentForm = () => {
               <p className="text-green-600 mt-1">
                 Our team will contact you shortly.
               </p>
-            </motion.div>
+            </div>
           )}
-
-          {/* Form */}
           <form
             onSubmit={handleSubmit}
             className="space-y-5 max-w-4xl mx-auto"
           >
+
             <input
               type="text"
               name="name"
@@ -115,7 +145,7 @@ const AppointmentForm = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all"
+              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3"
             />
 
             <input
@@ -125,16 +155,7 @@ const AppointmentForm = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all"
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all"
+              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3"
             />
 
             <select
@@ -142,7 +163,7 @@ const AppointmentForm = () => {
               value={formData.condition}
               onChange={handleChange}
               required
-              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all"
+              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3"
             >
               <option value="">Select Condition</option>
               <option>Knee Pain</option>
@@ -158,12 +179,14 @@ const AppointmentForm = () => {
             </select>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
               <input
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all"
+                required
+                className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3"
               />
 
               <input
@@ -171,8 +194,10 @@ const AppointmentForm = () => {
                 name="time"
                 value={formData.time}
                 onChange={handleChange}
-                className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all"
+                required
+                className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3"
               />
+
             </div>
 
             <textarea
@@ -181,7 +206,7 @@ const AppointmentForm = () => {
               placeholder="Additional Message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 focus:bg-white focus:ring-2 focus:ring-teal-500 outline-none transition-all resize-none"
+              className="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 resize-none"
             />
 
             <motion.button
@@ -189,13 +214,14 @@ const AppointmentForm = () => {
               whileTap={{ scale: 0.97 }}
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-4 rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50"
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-4 rounded-xl font-semibold"
             >
               {loading ? "Booking..." : "Book Appointment"}
             </motion.button>
-          </form>
-        </motion.div>
 
+          </form>
+
+        </motion.div>
       </div>
     </section>
   );

@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
 import defaultUser from "../../assets/images/default-user.png";
+import ReviewForm from "../../pages/ReviewForm";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -29,7 +30,11 @@ const Testimonials = () => {
           id: doc.id,
           ...doc.data(),
         }))
-        .filter((item) => item.active);
+        .filter(
+          (item) =>
+            item.active === true &&
+            item.status === "approved"
+        );
 
       setTestimonials(data);
     });
@@ -40,7 +45,6 @@ const Testimonials = () => {
   return (
     <section className="py-24 bg-slate-50">
       <div className="max-w-6xl mx-auto px-6">
-
         <p className="text-center uppercase tracking-[5px] text-teal-600 font-semibold">
           TESTIMONIALS
         </p>
@@ -55,9 +59,7 @@ const Testimonials = () => {
         </p>
 
         <div className="mt-16">
-
           {testimonials.length > 0 ? (
-
             <Swiper
               modules={[Autoplay, Pagination]}
               slidesPerView={1}
@@ -68,13 +70,9 @@ const Testimonials = () => {
               }}
               loop={testimonials.length > 1}
             >
-
               {testimonials.map((item) => (
-
                 <SwiperSlide key={item.id}>
-
                   <div className="bg-white rounded-3xl shadow-xl p-10">
-
                     <FaQuoteLeft className="text-teal-500 text-5xl mb-6" />
 
                     <p className="text-gray-600 text-xl leading-9">
@@ -82,15 +80,16 @@ const Testimonials = () => {
                     </p>
 
                     <div className="flex mt-8 items-center">
-
                       <img
-                        src={defaultUser}
+                        src={item.image || defaultUser}
                         alt={item.name}
                         className="w-20 h-20 rounded-full object-cover"
+                        onError={(e) => {
+                          e.target.src = defaultUser;
+                        }}
                       />
 
                       <div className="ml-5">
-
                         <h4 className="font-bold text-xl">
                           {item.name}
                         </h4>
@@ -100,34 +99,26 @@ const Testimonials = () => {
                         </p>
 
                         <div className="flex text-yellow-400 mt-2 gap-1">
-                          {[...Array(item.rating)].map((_, index) => (
-                            <FaStar key={index} />
-                          ))}
+                          {[...Array(item.rating || 5)].map(
+                            (_, index) => (
+                              <FaStar key={index} />
+                            )
+                          )}
                         </div>
-
                       </div>
-
                     </div>
-
                   </div>
-
                 </SwiperSlide>
-
               ))}
-
             </Swiper>
-
           ) : (
-
             <div className="text-center text-gray-500 py-20">
               No testimonials available.
             </div>
-
           )}
-
         </div>
-
       </div>
+      <ReviewForm />
     </section>
   );
 };

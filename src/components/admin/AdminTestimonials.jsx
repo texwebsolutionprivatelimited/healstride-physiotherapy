@@ -1,34 +1,33 @@
-import { useEffect, useState } from "react";
 import {
   collection,
   addDoc,
   getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
   serverTimestamp,
 } from "firebase/firestore";
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
+import { useEffect, useState } from "react";
 
-import { db, storage } from "../../firebase/firebase";
+import { db } from "../../firebase/firebase";
 
 const AdminTestimonials = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
-const [selectedTestimonial, setSelectedTestimonial] = useState(null);
-const [editingId, setEditingId] = useState(null);
+  const [selectedTestimonial, setSelectedTestimonial] =
+    useState(null);
+
+  const [editingId, setEditingId] = useState(null);
 
   const [testimonials, setTestimonials] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
     designation: "",
     review: "",
     rating: 5,
-    image: "",
+    image: "/default-user.png",
     active: true,
   });
 
@@ -37,207 +36,332 @@ const [editingId, setEditingId] = useState(null);
   }, []);
 
   const fetchTestimonials = async () => {
-  const snapshot = await getDocs(collection(db, "testimonials"));
+    try {
+      const snapshot = await getDocs(
+        collection(db, "testimonials")
+      );
 
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-  setTestimonials(data);
-};
-
-
+      setTestimonials(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleSave = async () => {
-  try {
-    if (editingId) {
-      await updateDoc(doc(db, "testimonials", editingId), {
-        ...formData,
-      });
-    } else {
-      await addDoc(collection(db, "testimonials"), {
-        ...formData,
-        createdAt: serverTimestamp(),
-      });
-    }
+    try {
+      if (
+        !formData.name ||
+        !formData.review
+      ) {
+        alert("Please fill required fields");
+        return;
+      }
 
-    setIsModalOpen(false);
-    setEditingId(null);
+      if (editingId) {
+        await updateDoc(
+          doc(db, "testimonials", editingId),
+          {
+            ...formData,
+          }
+        );
+      } else {
+        await addDoc(
+          collection(db, "testimonials"),
+          {
+            ...formData,
+            active: true,
+            status: "approved",
+            createdAt: serverTimestamp(),
+          }
+        );
+      }
+
+      setIsModalOpen(false);
+      setEditingId(null);
+
+      setFormData({
+        name: "",
+        designation: "",
+        review: "",
+        rating: 5,
+        image: "/default-user.png",
+        active: true,
+      });
+
+      fetchTestimonials();
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  const handleApprove = async (id) => {
+    try {
+      await updateDoc(
+        doc(db, "testimonials", id),
+        {
+          active: true,
+          status: "approved",
+        }
+      );
+
+      fetchTestimonials();
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  const handleEdit = (item) => {
+    setEditingId(item.id);
 
     setFormData({
-      name: "",
-      designation: "",
-      review: "",
-      rating: 5,
-      image: "",
-      active: true,
+      name: item.name || "",
+      designation:
+        item.designation || "",
+      review: item.review || "",
+      rating: item.rating || 5,
+      image:
+        item.image ||
+        "/default-user.png",
+      active: item.active,
     });
 
-    fetchTestimonials();
+    setIsModalOpen(true);
+  };
 
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
+  const handleDelete = async (id) => {
+    const confirmDelete =
+      window.confirm(
+        "Are you sure you want to delete this testimonial?"
+      );
 
-const handleEdit = (item) => {
-  setEditingId(item.id);
+    if (!confirmDelete) return;
 
-  setFormData({
-    name: item.name,
-    designation: item.designation,
-    review: item.review,
-    rating: item.rating,
-    image: item.image || "",
-    active: item.active,
-  });
+    try {
+      await deleteDoc(
+        doc(db, "testimonials", id)
+      );
 
-  setIsModalOpen(true);
-};
+      fetchTestimonials();
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
 
-const handleDelete = async (id) => {
-  const confirmDelete = window.confirm(
-    "Are you sure you want to delete this testimonial?"
-  );
-
-  if (!confirmDelete) return;
-
-  try {
-    await deleteDoc(doc(db, "testimonials", id));
-    fetchTestimonials();
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
-
-const handleView = (item) => {
-  setSelectedTestimonial(item);
-  setIsViewOpen(true);
-};
+  const handleView = (item) => {
+    setSelectedTestimonial(item);
+    setIsViewOpen(true);
+  };
 
   return (
     <div className="p-8">
-
       <div className="flex items-center justify-between mb-6">
-
         <div>
           <h1 className="text-3xl font-bold text-slate-900">
             Testimonials
           </h1>
 
           <p className="text-slate-500 mt-2">
-            Manage patient reviews and testimonials.
+            Manage patient reviews and
+            testimonials.
           </p>
         </div>
 
         <button
-  onClick={() => {
-    setEditingId(null);
+          onClick={() => {
+            setEditingId(null);
 
-    setFormData({
-      name: "",
-      designation: "",
-      review: "",
-      rating: 5,
-      image: "",
-      active: true,
-    });
+            setFormData({
+              name: "",
+              designation: "",
+              review: "",
+              rating: 5,
+              image:
+                "/default-user.png",
+              active: true,
+            });
 
-    setIsModalOpen(true);
-  }}
-  className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-medium"
->
-  + Add Testimonial
-</button>
-
+            setIsModalOpen(true);
+          }}
+          className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-medium"
+        >
+          + Add Testimonial
+        </button>
       </div>
-
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
         <table className="w-full">
 
           <thead className="bg-teal-600 text-white">
-
             <tr>
-              <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Designation</th>
-              <th className="p-4 text-left">Rating</th>
-              <th className="p-4 text-left">Review</th>
-              <th className="p-4 text-left">Status</th>
-              <th className="p-4 text-center">Actions</th>
-            </tr>
+              <th className="p-4 text-left">
+                Image
+              </th>
 
+              <th className="p-4 text-left">
+                Name
+              </th>
+
+              <th className="p-4 text-left">
+                Designation
+              </th>
+
+              <th className="p-4 text-left">
+                Rating
+              </th>
+
+              <th className="p-4 text-left">
+                Review
+              </th>
+
+              <th className="p-4 text-left">
+                Status
+              </th>
+
+              <th className="p-4 text-center">
+                Actions
+              </th>
+            </tr>
           </thead>
+
 
           <tbody>
 
             {testimonials.length === 0 ? (
+
               <tr>
                 <td
-                  colSpan="4"
+                  colSpan="7"
                   className="text-center py-10 text-gray-500"
                 >
                   No testimonials found.
                 </td>
               </tr>
+
             ) : (
+
               testimonials.map((item) => (
-                <tr key={item.id} className="border-b">
 
-  <td className="p-4">
-    <img
-      src={item.image}
-      alt={item.name}
-      className="w-12 h-12 rounded-full object-cover"
-    />
-  </td>
+                <tr
+                  key={item.id}
+                  className="border-b"
+                >
 
-  <td className="p-4">{item.name}</td>
+                  <td className="p-4">
+                    <img
+                      src={
+                        item.image ||
+                        "/default-user.png"
+                      }
+                      alt={item.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                  </td>
 
-  <td className="p-4">
-    {"⭐".repeat(item.rating)}
-  </td>
 
-  <td className="p-4 max-w-xs truncate">
-    {item.review}
-  </td>
+                  <td className="p-4 font-medium">
+                    {item.name}
+                  </td>
 
-  <td className="p-4">
-    {item.active ? "Active" : "Inactive"}
-  </td>
 
-  <td className="p-4">
-    <div className="flex justify-center gap-4">
+                  <td className="p-4">
+                    {item.designation || "-"}
+                  </td>
 
-      <button
-  title="View"
-  onClick={() => handleView(item)}
->
-  👁️
-</button>
 
-      <button
-  title="Edit"
-  onClick={() => handleEdit(item)}
->
-  ✏️
-</button>
+                  <td className="p-4">
+                    {"⭐".repeat(item.rating)}
+                  </td>
 
-      <button
-  title="Delete"
-  onClick={() => handleDelete(item.id)}
->
-  🗑️
-</button>
 
-    </div>
-  </td>
+                  <td className="p-4 max-w-xs truncate">
+                    {item.review}
+                  </td>
 
-</tr>
+
+                  <td className="p-4">
+
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm ${item.status === "approved"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-yellow-100 text-yellow-700"
+                        }`}
+                    >
+
+                      {item.status || "pending"}
+
+                    </span>
+
+                  </td>
+
+
+                  <td className="p-4">
+
+                    <div className="flex justify-center gap-3">
+
+
+                      {
+                        item.status !== "approved" && (
+
+                          <button
+                            onClick={() =>
+                              handleApprove(item.id)
+                            }
+                            title="Approve"
+                          >
+                            ✅
+                          </button>
+
+                        )
+                      }
+
+
+                      <button
+                        onClick={() =>
+                          handleView(item)
+                        }
+                        title="View"
+                      >
+                        👁️
+                      </button>
+
+
+                      <button
+                        onClick={() =>
+                          handleEdit(item)
+                        }
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
+
+
+                      <button
+                        onClick={() =>
+                          handleDelete(item.id)
+                        }
+                        title="Delete"
+                      >
+                        🗑️
+                      </button>
+
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
               ))
+
             )}
 
           </tbody>
@@ -246,95 +370,110 @@ const handleView = (item) => {
 
       </div>
 
+
+
+      {/* Add / Edit Modal */}
+
       {isModalOpen && (
+
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-          <div className="bg-white rounded-xl p-8 w-full max-w-lg">
+          <div className="bg-white rounded-2xl p-8 w-full max-w-lg">
+
 
             <h2 className="text-2xl font-bold mb-6">
-  {editingId ? "Edit Testimonial" : "Add Testimonial"}
-</h2>
+
+              {editingId
+                ? "Edit Testimonial"
+                : "Add Testimonial"}
+
+            </h2>
+
 
             <div className="space-y-4">
+
 
               <input
                 type="text"
                 placeholder="Patient Name"
-                className="w-full border rounded-lg p-3"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    name: e.target.value,
+                    name: e.target.value
                   })
                 }
+                className="w-full border rounded-lg p-3"
               />
+
+
 
               <input
                 type="text"
                 placeholder="Designation"
-                className="w-full border rounded-lg p-3"
                 value={formData.designation}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    designation: e.target.value,
+                    designation: e.target.value
                   })
                 }
+                className="w-full border rounded-lg p-3"
               />
+
+
 
               <textarea
                 rows="4"
                 placeholder="Review"
-                className="w-full border rounded-lg p-3"
                 value={formData.review}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    review: e.target.value,
+                    review: e.target.value
                   })
                 }
+                className="w-full border rounded-lg p-3"
               />
 
-              <input
-                type="number"
-                min="1"
-                max="5"
-                placeholder="Rating"
-                className="w-full border rounded-lg p-3"
+
+
+              <select
                 value={formData.rating}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    rating: Number(e.target.value),
+                    rating: Number(e.target.value)
                   })
                 }
-              />
+                className="w-full border rounded-lg p-3"
+              >
 
-              <div>
-  <label className="block font-medium mb-2">
-    Patient Image
-  </label>
+                <option value={5}>
+                  Excellent ⭐⭐⭐⭐⭐
+                </option>
 
-  <input
-    type="file"
-    accept="image/*"
-    onChange={(e) =>
-      setSelectedImage(e.target.files[0])
-    }
-    className="w-full"
-  />
+                <option value={4}>
+                  Very Good ⭐⭐⭐⭐
+                </option>
 
-  {selectedImage && (
-    <img
-      src={URL.createObjectURL(selectedImage)}
-      alt="Preview"
-      className="w-24 h-24 mt-4 rounded-full object-cover border"
-    />
-  )}
-</div>
+                <option value={3}>
+                  Good ⭐⭐⭐
+                </option>
 
-              <label className="flex items-center gap-3">
+                <option value={2}>
+                  Fair ⭐⭐
+                </option>
+
+                <option value={1}>
+                  Poor ⭐
+                </option>
+
+              </select>
+
+
+
+              <label className="flex gap-3 items-center">
 
                 <input
                   type="checkbox"
@@ -342,7 +481,7 @@ const handleView = (item) => {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      active: e.target.checked,
+                      active: e.target.checked
                     })
                   }
                 />
@@ -351,115 +490,124 @@ const handleView = (item) => {
 
               </label>
 
+
             </div>
+
+
 
             <div className="flex justify-end gap-3 mt-8">
 
-              <button
-  onClick={() => {
-    setIsModalOpen(false);
-    setEditingId(null);
 
-    setFormData({
-      name: "",
-      designation: "",
-      review: "",
-      rating: 5,
-      image: "",
-      active: true,
-    });
-  }}
-  className="px-5 py-2 border rounded-lg"
->
-  Cancel
-</button>
+              <button
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setEditingId(null);
+                }}
+                className="px-5 py-2 border rounded-lg"
+              >
+                Cancel
+              </button>
+
+
 
               <button
                 onClick={handleSave}
-                className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg"
+                className="bg-teal-600 text-white px-5 py-2 rounded-lg"
               >
                 Save
               </button>
 
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      )}
+
+
+
+      {/* View Modal */}
+
+      {
+        isViewOpen &&
+        selectedTestimonial && (
+
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+
+            <div className="bg-white rounded-xl p-8 w-full max-w-lg">
+
+
+              <h2 className="text-2xl font-bold mb-5">
+                Testimonial Details
+              </h2>
+
+
+              <p>
+                <b>Name:</b>{" "}
+                {selectedTestimonial.name}
+              </p>
+
+
+              <p className="mt-2">
+                <b>Designation:</b>{" "}
+                {selectedTestimonial.designation}
+              </p>
+
+
+              <p className="mt-2">
+                <b>Rating:</b>{" "}
+                {"⭐".repeat(
+                  selectedTestimonial.rating
+                )}
+              </p>
+
+
+              <div className="mt-4">
+
+                <b>Review:</b>
+
+                <p className="bg-gray-50 p-4 rounded-lg mt-2">
+                  {selectedTestimonial.review}
+                </p>
+
+              </div>
+
+
+
+              <p className="mt-4">
+
+                <b>Status:</b>{" "}
+
+                {selectedTestimonial.status || "pending"}
+
+              </p>
+
+
+
+              <button
+                onClick={() =>
+                  setIsViewOpen(false)
+                }
+                className="mt-6 bg-teal-600 text-white px-5 py-2 rounded-lg"
+              >
+                Close
+              </button>
+
+
             </div>
 
           </div>
 
-        </div>
-      )}
-{isViewOpen && selectedTestimonial && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-    <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-8">
+        )}
 
-      <h2 className="text-2xl font-bold mb-6">
-        Testimonial Details
-      </h2>
 
-      <div className="space-y-4">
-
-        <div>
-          <p className="text-gray-500 text-sm">Patient Name</p>
-          <p className="font-semibold">
-            {selectedTestimonial.name}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-gray-500 text-sm">Designation</p>
-          <p className="font-semibold">
-            {selectedTestimonial.designation}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-gray-500 text-sm">Rating</p>
-          <p className="font-semibold">
-            {"⭐".repeat(selectedTestimonial.rating)}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-gray-500 text-sm">Review</p>
-
-          <div className="bg-gray-50 rounded-lg p-4 mt-2">
-            {selectedTestimonial.review}
-          </div>
-        </div>
-
-        <div>
-          <p className="text-gray-500 text-sm">Status</p>
-
-          <span
-            className={`inline-block mt-2 px-4 py-1 rounded-full text-sm ${
-              selectedTestimonial.active
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
-            }`}
-          >
-            {selectedTestimonial.active
-              ? "Active"
-              : "Inactive"}
-          </span>
-        </div>
-
-      </div>
-
-      <div className="flex justify-end mt-8">
-
-        <button
-          onClick={() => setIsViewOpen(false)}
-          className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg"
-        >
-          Close
-        </button>
-
-      </div>
-
-    </div>
-  </div>
-)}
     </div>
   );
 };
+
 
 export default AdminTestimonials;

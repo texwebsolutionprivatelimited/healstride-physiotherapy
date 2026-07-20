@@ -239,21 +239,22 @@ const AdminDashboard = () => {
       );
 
 
-
     const unsubscribeReviews =
       onSnapshot(
-        collection(db, "reviews"),
+        collection(db, "testimonials"),
         (snapshot) => {
 
-          setReviews(
-            snapshot.docs.map(doc => ({
+          const data = snapshot.docs
+            .map(doc => ({
               id: doc.id,
               ...doc.data()
             }))
-          );
+            .filter(item => item.status === "approved");
+
+
+          setReviews(data);
 
         }
-
       );
 
 
@@ -681,7 +682,7 @@ gap-4
 
                   label="Enquiries"
 
-                  value={enquiries.length}
+                  value={appointments.length}
 
                   tone="purple"
 
