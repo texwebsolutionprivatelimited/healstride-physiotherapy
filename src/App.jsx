@@ -5,7 +5,7 @@ import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
-
+import Booking from "./pages/Booking";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -31,6 +31,10 @@ import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
 import PhysiotherapyServices from "./pages/PhysiotherapyServices";
 import ToolsEquipment from "./pages/ToolsEquipment";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import UserProtectedRoute from "./user/UserProtectedRoute";
+import Profile from "./pages/Profile";
 
 function App() {
   const location = useLocation();
@@ -56,7 +60,23 @@ function App() {
         <Route path="/services/physiotherapy" element={<PhysiotherapyServices />} />
         <Route path="/services/tools-equipment" element={<ToolsEquipment />} />
         <Route path="/services/:slug" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/contact"
+          element={
+            <Contact />
+          }
+        />
+
+        <Route
+          path="/booking"
+          element={
+            <UserProtectedRoute>
+              <Booking />
+            </UserProtectedRoute>
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+
         <Route
           path="/doctors/:doctorName"
           element={<DoctorProfile />}
@@ -80,7 +100,10 @@ function App() {
 
         <Route path="/blogs" element={<Blogs />} />
 
-<Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
         {/* Admin Login */}
         <Route path="/adminlogin" element={<AdminLogin />} />

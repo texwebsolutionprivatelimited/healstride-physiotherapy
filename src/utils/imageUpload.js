@@ -2,12 +2,16 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase/firebase";
 
 /**
- * Compresses an image file and converts it to a Base64 data URL as a fail-safe fallback.
+ * Compresses an image file and converts it to a Base64 data URL.
  */
 export const compressToBase64 = (file, maxWidth = 1000, quality = 0.75) => {
   return new Promise((resolve) => {
     if (!file) {
       resolve("");
+      return;
+    }
+    if (typeof file === "string") {
+      resolve(file);
       return;
     }
     const reader = new FileReader();
@@ -45,27 +49,33 @@ export const compressToBase64 = (file, maxWidth = 1000, quality = 0.75) => {
 
 /**
  * Uploads an image file safely without throwing storage errors.
- * Multi-tiered strategy:
- * 1. ImageKit API Upload (using VITE_IMAGEKIT_PRIVATE_KEY)
- * 2. Firebase Storage (if bucket configured and permitted)
- * 3. Compressed Base64 Data URL fallback (100% reliable)
+ * Strategy:
+ * 1. Convert/compress image to Base64 data URL
+ * 2. Upload to ImageKit REST API (using VITE_IMAGEKIT_PRIVATE_KEY)
+ * 3. Fallback to Firebase Storage if ImageKit fails
+ * 4. Fallback to Base64 data URL (100% offline & storage error proof)
  */
 export const uploadImage = async (file, folder = "uploads") => {
   if (!file) return "";
 
-  // If passed string (already a URL or base64), return it directly
-  if (typeof file === "string") return file;
+  // If already a hosted URL (http:// or https://), return as is
+  if (typeof file === "string" && (file.startsWith("http://") || file.startsWith("https://"))) {
+    return file;
+  }
+
+  // Convert/Compress file to base64
+  const base64Data = typeof file === "string" ? file : await compressToBase64(file);
 
   const privateKey =
     import.meta.env.VITE_IMAGEKIT_PRIVATE_KEY ||
     "private_Hv3zD0erqaqgXfjIaRdiWsYza+U=";
 
-  // 1. Try ImageKit API Upload
-  if (privateKey) {
+  // 1. ImageKit API Upload
+  if (privateKey && base64Data) {
     try {
       const formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileName", file.name || `image_${Date.now()}.jpg`);
+      formData.append("file", base64Data);
+      formData.append("fileName", (typeof file !== "string" && file.name) ? file.name : `img_${Date.now()}.jpg`);
       formData.append("useUniqueFileName", "true");
       formData.append("folder", `/${folder}`);
 
@@ -82,34 +92,34 @@ export const uploadImage = async (file, folder = "uploads") => {
       if (response.ok) {
         const data = await response.json();
         if (data && data.url) {
-          console.log("Uploaded successfully to ImageKit:", data.url);
+          console.log("Image uploaded to ImageKit CDN:", data.url);
           return data.url;
         }
       } else {
-        console.warn("ImageKit API upload warning:", response.status);
+        console.warn("ImageKit upload warning status:", response.status);
       }
     } catch (err) {
-      console.warn("ImageKit API upload error:", err?.message || err);
+      console.warn("ImageKit upload request failed:", err?.message || err);
     }
   }
 
-  // 2. Try Firebase Storage (silently handle errors)
-  if (storage && storage.app && storage.app.options && storage.app.options.storageBucket) {
+  // 2. Firebase Storage Fallback (silent)
+  if (typeof file !== "string" && storage && storage.app && storage.app.options && storage.app.options.storageBucket) {
     try {
       const newPath = `${folder}/${Date.now()}-${file.name || "file"}`;
       const storageRef = ref(storage, newPath);
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
       if (downloadURL) {
-        console.log("Uploaded successfully to Firebase Storage:", downloadURL);
+        console.log("Image uploaded to Firebase Storage:", downloadURL);
         return downloadURL;
       }
     } catch (err) {
-      console.warn("Firebase Storage upload skipped/failed:", err?.message || err);
+      console.warn("Firebase Storage skipped:", err?.message || err);
     }
   }
 
-  // 3. Guaranteed Fallback: Compressed Base64 Data URL
-  console.log("Using compressed Base64 fallback for image");
-  return await compressToBase64(file);
+  // 3. Complete Fallback: Base64 string
+  console.log("Using Base64 fallback for image upload");
+  return base64Data;
 };

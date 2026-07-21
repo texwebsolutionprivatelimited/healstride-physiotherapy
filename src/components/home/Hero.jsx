@@ -38,15 +38,15 @@ const Hero = () => {
 
           {/* Clinic Name */}
           <p
-            className="
-      text-teal-200
-      font-extrabold
-      text-3xl
-      sm:text-4xl
-      md:text-5xl
-      lg:text-7xl
-      leading-tight
-      mb-6
+  className="
+  text-teal-200
+  font-extrabold
+  text-xxl
+  sm:text-3xl
+  md:text-5xl
+  lg:text-7xl
+  leading-tight
+  mb-6
       sm:mb-8
       "
           >
@@ -59,8 +59,8 @@ const Hero = () => {
           <h1
             className="
       text-white
-      text-2xl
-      sm:text-3xl
+      text-xl
+      sm:text-2xl
       md:text-5xl
       lg:text-6xl
       font-semibold
@@ -114,12 +114,12 @@ const Hero = () => {
 
             {/* Book Appointment */}
             <Link
-              to="/contact"
+              to="/booking"
               className="
         bg-teal-600
         hover:bg-teal-700
         text-white
-        px-6
+        px-5
         sm:px-8
         py-3
         sm:py-4

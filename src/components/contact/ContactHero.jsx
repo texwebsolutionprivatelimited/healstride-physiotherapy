@@ -15,13 +15,13 @@ const ContactHero = () => {
     >
       {/* Background Image */}
       <img
-        src="https://thumbs.dreamstime.com/b/doctor-fills-patient-history-appointment-clinic-private-male-expresses-excitement-telling-disease-to-woman-325989321.jpg"
+        src="/appointment-bg.avif"
         alt="Contact Us"
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/75" />
+      <div className="absolute inset-0 bg-black/25" />
 
       {/* Decorative Blur */}
       <div className="absolute top-10 left-10 w-40 h-40 bg-blue-500/20 blur-3xl rounded-full" />
@@ -107,10 +107,10 @@ const ContactHero = () => {
           leading-tight
           "
         >
-          Book Your
+          Contact
 
           <span className="block text-blue-400">
-            Appointment
+            Us
           </span>
         </motion.h1>
 
@@ -141,10 +141,7 @@ const ContactHero = () => {
           md:leading-8
           "
         >
-          Start your recovery journey today with expert
-          physiotherapy care and personalized treatment
-          plans designed for faster recovery and long-term
-          wellness.
+          Start your recovery journey today with expert physiotherapy care and personalized treatment plans. Schedule your consultation with our experienced specialists and take the first step toward a healthier, pain-free life.
         </motion.p>
       </motion.div>
     </section>
