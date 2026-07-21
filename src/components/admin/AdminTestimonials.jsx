@@ -3,16 +3,14 @@ import {
   collection,
   addDoc,
   getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
   serverTimestamp,
 } from "firebase/firestore";
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
-
-import { db, storage } from "../../firebase/firebase";
+import { db } from "../../firebase/firebase";
+import { uploadImage } from "../../utils/imageUpload";
 
 const AdminTestimonials = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,37 +48,45 @@ const [editingId, setEditingId] = useState(null);
 
 
   const handleSave = async () => {
-  try {
-    if (editingId) {
-      await updateDoc(doc(db, "testimonials", editingId), {
+    try {
+      let imageUrl = formData.image;
+      if (selectedImage) {
+        imageUrl = await uploadImage(selectedImage, "testimonials");
+      }
+
+      const payload = {
         ...formData,
+        image: imageUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300",
+      };
+
+      if (editingId) {
+        await updateDoc(doc(db, "testimonials", editingId), payload);
+      } else {
+        await addDoc(collection(db, "testimonials"), {
+          ...payload,
+          createdAt: serverTimestamp(),
+        });
+      }
+
+      setIsModalOpen(false);
+      setEditingId(null);
+      setSelectedImage(null);
+
+      setFormData({
+        name: "",
+        designation: "",
+        review: "",
+        rating: 5,
+        image: "",
+        active: true,
       });
-    } else {
-      await addDoc(collection(db, "testimonials"), {
-        ...formData,
-        createdAt: serverTimestamp(),
-      });
+
+      fetchTestimonials();
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
     }
-
-    setIsModalOpen(false);
-    setEditingId(null);
-
-    setFormData({
-      name: "",
-      designation: "",
-      review: "",
-      rating: 5,
-      image: "",
-      active: true,
-    });
-
-    fetchTestimonials();
-
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
+  };
 
 const handleEdit = (item) => {
   setEditingId(item.id);
