@@ -53,24 +53,25 @@ const Navbar = () => {
 
   return (
     <nav className="w-full bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
         {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Link to="/" className="flex items-center gap-2 sm:gap-3">
+          <Link to="/" className="flex items-center gap-2 min-w-0">
             <img
               src={logo}
               alt="HealStride Logo"
               className="h-12 sm:h-14 md:h-16 w-auto"
             />
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-teal-700">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-teal-700 truncate">
                 HealStride
               </h1>
-              <p className="hidden sm:block text-xs text-gray-500">
+
+              <p className="hidden md:block text-xs text-gray-500">
                 Physiotherapy & Wellness
               </p>
             </div>
@@ -78,7 +79,7 @@ const Navbar = () => {
         </motion.div>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-6 lg:gap-8">
+        <ul className="hidden md:flex items-center gap-4 lg:gap-8">
           {NAVIGATION.map((item) => (
             <motion.li key={item.id} whileHover={{ y: -2 }}>
               <Link
@@ -134,7 +135,16 @@ const Navbar = () => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           transition={{ duration: 0.3 }}
-          className="md:hidden bg-white border-t px-6 py-5"
+          className="
+md:hidden
+bg-white
+border-t
+px-4
+py-5
+shadow-lg
+max-h-[calc(100vh-64px)]
+overflow-y-auto
+"
         >
           <ul className="flex flex-col gap-5">
             {NAVIGATION.map((item) => (
@@ -155,8 +165,19 @@ const Navbar = () => {
               setOpen(false);
               handleBookAppointment();
             }}
-            className="block w-full text-center mt-5 bg-teal-700 text-white px-5 py-3 rounded-xl"
+            className="
+w-full
+text-center
+mt-5
+bg-teal-700
+text-white
+px-5
+py-3
+rounded-xl
+font-medium
+"
           >
+
             Book Appointment
           </button>
 
