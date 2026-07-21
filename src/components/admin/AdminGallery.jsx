@@ -12,13 +12,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
-
-import { db, storage } from "../../firebase/firebase";
+import { db } from "../../firebase/firebase";
+import { uploadImage } from "../../utils/imageUpload";
 
 const AdminGallery = () => {
   const [images, setImages] = useState([]);
@@ -61,37 +56,18 @@ const AdminGallery = () => {
   };
 
   const handleUpload = async (e) => {
-    console.log(
-      "Bucket Name:",
-      storage.app.options.storageBucket
-    );
     const file = e.target.files?.[0];
-
     if (!file) return;
-
-    console.log("Storage:", storage);
-    console.log("File:", file);
 
     try {
       setLoading(true);
-
-      const storageRef = ref(
-        storage,
-        `gallery/${Date.now()}-${file.name}`
-      );
-
-      await uploadBytes(storageRef, file);
-
-      const downloadURL =
-        await getDownloadURL(storageRef);
-
+      const uploadedUrl = await uploadImage(file, "gallery");
       setForm((prev) => ({
         ...prev,
-        url: downloadURL,
+        url: uploadedUrl,
       }));
     } catch (error) {
-
-      alert(error.message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -103,9 +79,7 @@ const AdminGallery = () => {
       url: "",
     });
 
-    const fileInput =
-      document.getElementById("galleryImage");
-
+    const fileInput = document.getElementById("galleryImage");
     if (fileInput) {
       fileInput.value = "";
     }
@@ -115,7 +89,7 @@ const AdminGallery = () => {
     e.preventDefault();
 
     if (!form.title || !form.category) {
-      alert("Please fill all fields");
+      alert("Please fill title and category fields");
       return;
     }
 
@@ -126,26 +100,39 @@ const AdminGallery = () => {
         form.url ||
         "https://images.unsplash.com/photo-1584515933487-779824d29309?w=800";
 
-      await addDoc(collection(db, "gallery"), {
+      const payload = {
         title: form.title,
-        description: form.description,
+        description: form.description || "",
         category: form.category,
         imageUrl,
-        createdAt: Timestamp.now(),
-      });
+      };
 
+      if (editingId) {
+        await updateDoc(doc(db, "gallery", editingId), payload);
+        alert("Image Updated Successfully");
+      } else {
+        await addDoc(collection(db, "gallery"), {
+          ...payload,
+          createdAt: Timestamp.now(),
+        });
+        alert("Image Added Successfully");
+      }
+
+      setEditingId(null);
       setForm({
         title: "",
+        description: "",
         category: "",
         url: "",
       });
 
-      fetchImages();
+      const fileInput = document.getElementById("galleryImage");
+      if (fileInput) fileInput.value = "";
 
-      alert("Image Added Successfully");
+      fetchImages();
     } catch (error) {
-      console.log(error);
-      alert("Failed to add image");
+      console.error(error);
+      alert("Failed to save image");
     } finally {
       setLoading(false);
     }
@@ -230,15 +217,32 @@ const AdminGallery = () => {
           />
         </div>
 
-        <div className="mt-4">
-          <input
-            type="text"
-            name="url"
-            placeholder="Image URL"
-            value={form.url}
-            onChange={handleChange}
-            className="border rounded-xl px-4 py-3 focus:ring-2 focus:ring-teal-500 outline-none mt-4 w-full"
-          />
+        <div className="mt-4 grid md:grid-cols-2 gap-4 items-center">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Upload Image File
+            </label>
+            <input
+              type="file"
+              id="galleryImage"
+              accept="image/*"
+              onChange={handleUpload}
+              className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 cursor-pointer"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Or Image URL
+            </label>
+            <input
+              type="text"
+              name="url"
+              placeholder="https://..."
+              value={form.url}
+              onChange={handleChange}
+              className="border rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-teal-500 outline-none w-full text-sm"
+            />
+          </div>
         </div>
 
         {form.url && (

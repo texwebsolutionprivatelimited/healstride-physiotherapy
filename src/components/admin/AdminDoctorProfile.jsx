@@ -15,6 +15,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { db, storage } from "../../firebase/firebase";
+import { uploadImage } from "../../utils/imageUpload";
 
 const emptyForm = {
   slug: "",
@@ -97,7 +98,6 @@ const AdminDoctors = () => {
 
       // Upload new image if selected
       if (imageFile) {
-        // Delete old image if replacing
         if (imagePath) {
           try {
             await deleteObject(ref(storage, imagePath));
@@ -105,11 +105,8 @@ const AdminDoctors = () => {
             console.warn("Old image delete failed:", e.message);
           }
         }
-        const newPath = `doctors/${Date.now()}-${imageFile.name}`;
-        const storageRef = ref(storage, newPath);
-        await uploadBytes(storageRef, imageFile);
-        imageUrl = await getDownloadURL(storageRef);
-        imagePath = newPath;
+        imageUrl = await uploadImage(imageFile, "doctors");
+        imagePath = "";
       }
 
       const payload = {
