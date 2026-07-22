@@ -148,18 +148,22 @@ const Doctors = () => {
 
 
                 <div
-                  key={doctor.id}
-                  className="
-                  bg-white
-                  rounded-2xl
-                  sm:rounded-3xl
-                  shadow-md
-                  hover:shadow-xl
-                  transition-all
-                  duration-300
-                  overflow-hidden
-                  "
-                >
+  key={doctor.id}
+  className="
+    bg-white
+    rounded-3xl
+    shadow-lg
+    overflow-hidden
+    border
+    border-gray-100
+    hover:shadow-2xl
+    transition-all
+    duration-300
+    flex
+    flex-col
+    h-full
+  "
+>
 
 
 

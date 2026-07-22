@@ -10,8 +10,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
-const Specialists = () => {
+const Specialists = ({ limit = 3 }) => {
   const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -28,21 +29,34 @@ const Specialists = () => {
           ...doc.data(),
         }));
 
-        // Show only first 3 doctors on Home page
-        setDoctors(data.slice(0, 3));
+        // Show only first "limit" doctors
+        setDoctors(limit ? data.slice(0, limit) : data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDoctors();
-  }, []);
+  }, [limit]);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-slate-700">
+            Loading Specialists...
+          </h2>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Heading */}
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -75,62 +89,66 @@ const Specialists = () => {
         </motion.p>
 
         {/* Doctors */}
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 mt-10 sm:mt-16">
-          {doctors.map((doctor, index) => (
-            <motion.div
-              key={doctor.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-              }}
-              whileHover={{ y: -10 }}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
-            >
-              <img
-                src={doctor.image || "/default-user.png"}
-                alt={doctor.name}
-                className="w-full h-[280px] sm:h-[340px] lg:h-[380px] object-cover"
-              />
+          {doctors.length === 0 ? (
+            <div className="col-span-full text-center text-gray-500">
+              No doctors available.
+            </div>
+          ) : (
+            doctors.map((doctor, index) => (
+              <motion.div
+                key={doctor.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                }}
+                whileHover={{ y: -10 }}
+                className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
+              >
+                <img
+                  src={doctor.image || "/default-user.png"}
+                  alt={doctor.name}
+                  className="w-full h-[280px] sm:h-[340px] lg:h-[380px] object-cover"
+                />
 
-              <div className="p-5 sm:p-8">
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-                  {doctor.name}
-                </h3>
+                <div className="p-5 sm:p-8">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                    {doctor.name}
+                  </h3>
 
-                <p className="text-teal-600 font-semibold mt-2 text-sm sm:text-base">
-                  {doctor.role}
-                </p>
-
-                <div className="mt-5 space-y-3 text-gray-600 text-sm sm:text-base">
-                  <p className="flex gap-3 items-center">
-                    <FaAward className="text-teal-600 flex-shrink-0" />
-                    {doctor.experience}
+                  <p className="text-teal-600 font-semibold mt-2 text-sm sm:text-base">
+                    {doctor.role}
                   </p>
 
-                  <p className="flex gap-3 items-center">
-                    <FaAward className="text-teal-600 flex-shrink-0" />
-                    {doctor.specialization}
-                  </p>
+                  <div className="mt-5 space-y-3 text-gray-600 text-sm sm:text-base">
+                    <p className="flex gap-3 items-center">
+                      <FaAward className="text-teal-600 flex-shrink-0" />
+                      {doctor.experience}
+                    </p>
+
+                    <p className="flex gap-3 items-center">
+                      <FaAward className="text-teal-600 flex-shrink-0" />
+                      {doctor.specialization}
+                    </p>
+                  </div>
+
+                  <Link
+                    to={`/doctors/${doctor.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition"
+                  >
+                    View Profile
+                    <FaArrowRight />
+                  </Link>
                 </div>
-
-                <Link
-                  to={`/doctors/${doctor.slug}`}
-                  className="mt-6 inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition"
-                >
-                  View Profile
-                  <FaArrowRight />
-                </Link>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))
+          )}
         </div>
 
         {/* Button */}
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
