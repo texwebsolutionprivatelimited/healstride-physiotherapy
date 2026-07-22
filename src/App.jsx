@@ -12,7 +12,6 @@ import Booking from "./pages/Booking";
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
 import DoctorProfile from "./pages/DoctorProfile";
-import Specialists from "./pages/Specialists"; // <-- NEW
 
 import GalleryPage from "./pages/GalleryPage";
 import ClinicGallery from "./pages/ClinicGallery";
@@ -36,12 +35,6 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 import AdminTestimonials from "./components/admin/AdminTestimonials";
 import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
-import PhysiotherapyServices from "./pages/PhysiotherapyServices";
-import ToolsEquipment from "./pages/ToolsEquipment";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import UserProtectedRoute from "./user/UserProtectedRoute";
-import Profile from "./pages/Profile";
 import Doctors from "./pages/Doctors";
 
 function App() {
@@ -96,7 +89,6 @@ function App() {
         />
 
         {/* NEW Specialists Page */}
-        <Route path="/specialists" element={<Specialists />} />
 
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/gallery/clinic" element={<ClinicGallery />} />

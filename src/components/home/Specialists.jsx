@@ -1,42 +1,54 @@
+import { useEffect, useState } from "react";
 import { FaAward, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
-import doctor1 from "../../assets/images/doctors/doctor1.jpg";
-import doctor2 from "../../assets/images/doctors/doctor2.jpg";
-import doctor3 from "../../assets/images/doctors/doctor3.jpg";
-
-// Export doctors so other pages can reuse them
-export const specialists = [
-  {
-    image: doctor1,
-    name: "Dr. Sai Krishna",
-    designation: "Senior Physiotherapist",
-    experience: "10+ Years Experience",
-    specialization: "Sports Rehabilitation",
-    slug: "dr-sai-krishna",
-  },
-  {
-    image: doctor2,
-    name: "Dr. Priya Sharma",
-    designation: "Orthopedic Physiotherapist",
-    experience: "8+ Years Experience",
-    specialization: "Manual Therapy",
-    slug: "dr-priya-sharma",
-  },
-  {
-    image: doctor3,
-    name: "Dr. Rahul Verma",
-    designation: "Neuro Physiotherapist",
-    experience: "6+ Years Experience",
-    specialization: "Post Surgical Rehabilitation",
-    slug: "dr-rahul-verma",
-  },
-];
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 const Specialists = ({
-  doctorsToShow = specialists.slice(0, 3),
+  limit = 3,
   showViewAllButton = true,
 }) => {
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const q = query(
+          collection(db, "doctors"),
+          where("active", "==", true)
+        );
+
+        const snapshot = await getDocs(q);
+
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setDoctors(limit ? data.slice(0, limit) : data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctors();
+  }, [limit]);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold text-slate-700">
+            Loading Specialists...
+          </h2>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
@@ -55,42 +67,55 @@ const Specialists = ({
         </p>
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10 mt-16">
-          {doctorsToShow.map((doctor, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition duration-300 group"
-            >
-              <div className="overflow-hidden">
-                <img
-                  src={doctor.image}
-                  alt={doctor.name}
-                  className="w-full h-[380px] object-cover group-hover:scale-110 transition duration-700"
-                />
-              </div>
+          {doctors.length === 0 ? (
+            <div className="col-span-full text-center text-gray-500 py-10">
+              No doctors available.
+            </div>
+          ) : (
+            doctors.map((doctor) => (
+              <div
+                key={doctor.id}
+                className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition duration-300 group"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src={doctor.image}
+                    alt={doctor.name}
+                    className="w-full h-[380px] object-cover object-top group-hover:scale-110 transition duration-700"
+                  />
+                </div>
 
-              <div className="p-8">
-                <h3 className="text-2xl font-bold text-slate-900">
-                  {doctor.name}
-                </h3>
+                <div className="p-5 sm:p-8">
+                  <h3 className="text-2xl font-bold text-slate-900">
+                    {doctor.name}
+                  </h3>
 
-                <p className="text-teal-600 font-semibold mt-2">
-                  {doctor.designation}
-                </p>
+                  <p className="text-teal-600 font-semibold mt-2">
+                    {doctor.role}
+                  </p>
 
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <FaAward className="text-teal-600" />
-                    <span>{doctor.experience}</span>
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-center gap-3 text-gray-600">
+                      <FaAward className="text-teal-600" />
+                      <span>{doctor.experience}</span>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-gray-600">
+                      <FaAward className="text-teal-600" />
+                      <span>{doctor.specialization}</span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <FaAward className="text-teal-600" />
-                    <span>{doctor.specialization}</span>
-                  </div>
+                  <Link
+                    to={`/doctors/${doctor.slug}`}
+                    className="inline-flex items-center mt-6 text-teal-600 font-semibold hover:text-teal-700"
+                  >
+                    View Profile →
+                  </Link>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         {showViewAllButton && (
