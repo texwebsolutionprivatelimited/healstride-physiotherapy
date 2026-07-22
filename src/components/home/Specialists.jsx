@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaAward, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 const Specialists = () => {
@@ -23,7 +28,7 @@ const Specialists = () => {
           ...doc.data(),
         }));
 
-        // Home page only 3 doctors
+        // Show only first 3 doctors on Home page
         setDoctors(data.slice(0, 3));
       } catch (error) {
         console.log(error);
@@ -36,7 +41,6 @@ const Specialists = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
 
         <motion.p
@@ -70,10 +74,9 @@ const Specialists = () => {
           treatments.
         </motion.p>
 
-        {/* Doctors Grid */}
+        {/* Doctors */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 mt-10 sm:mt-16">
-
           {doctors.map((doctor, index) => (
             <motion.div
               key={doctor.id}
@@ -85,33 +88,15 @@ const Specialists = () => {
                 delay: index * 0.1,
               }}
               whileHover={{ y: -10 }}
-              className="
-                bg-white
-                rounded-3xl
-                shadow-lg
-                overflow-hidden
-                border
-                border-gray-100
-                hover:shadow-2xl
-                transition-all
-                duration-300
-              "
+              className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
             >
-
               <img
                 src={doctor.image || "/default-user.png"}
                 alt={doctor.name}
-                className="
-                  w-full
-                  h-[280px]
-                  sm:h-[340px]
-                  lg:h-[380px]
-                  object-cover
-                "
+                className="w-full h-[280px] sm:h-[340px] lg:h-[380px] object-cover"
               />
 
               <div className="p-5 sm:p-8">
-
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
                   {doctor.name}
                 </h3>
@@ -121,7 +106,6 @@ const Specialists = () => {
                 </p>
 
                 <div className="mt-5 space-y-3 text-gray-600 text-sm sm:text-base">
-
                   <p className="flex gap-3 items-center">
                     <FaAward className="text-teal-600 flex-shrink-0" />
                     {doctor.experience}
@@ -131,31 +115,18 @@ const Specialists = () => {
                     <FaAward className="text-teal-600 flex-shrink-0" />
                     {doctor.specialization}
                   </p>
-
                 </div>
 
                 <Link
                   to={`/doctors/${doctor.slug}`}
-                  className="
-                    mt-6
-                    inline-flex
-                    items-center
-                    gap-2
-                    text-teal-600
-                    font-semibold
-                    hover:text-teal-700
-                    transition
-                  "
+                  className="mt-6 inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition"
                 >
                   View Profile
                   <FaArrowRight />
                 </Link>
-
               </div>
-
             </motion.div>
           ))}
-
         </div>
 
         {/* Button */}
@@ -169,24 +140,11 @@ const Specialists = () => {
         >
           <Link
             to="/doctors"
-            className="
-              inline-flex
-              items-center
-              justify-center
-              bg-teal-600
-              hover:bg-teal-700
-              text-white
-              px-6 sm:px-8
-              py-3
-              rounded-xl
-              transition
-              font-medium
-            "
+            className="inline-flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white px-6 sm:px-8 py-3 rounded-xl transition font-medium"
           >
             View All Doctors
           </Link>
         </motion.div>
-
       </div>
     </section>
   );

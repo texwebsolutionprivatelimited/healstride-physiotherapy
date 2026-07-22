@@ -3,14 +3,28 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
-import Blogs from "./pages/Blogs";
-import BlogDetails from "./pages/BlogDetails";
-import Booking from "./pages/Booking";
+
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
+import Booking from "./pages/Booking";
+import Blogs from "./pages/Blogs";
+import BlogDetails from "./pages/BlogDetails";
 import DoctorProfile from "./pages/DoctorProfile";
+import Specialists from "./pages/Specialists"; // <-- NEW
+
+import GalleryPage from "./pages/GalleryPage";
+import ClinicGallery from "./pages/ClinicGallery";
+import MachineGallery from "./pages/MachineGallery";
+import TreatmentGallery from "./pages/TreatmentGallery";
+import PhysiotherapyServices from "./pages/PhysiotherapyServices";
+import ToolsEquipment from "./pages/ToolsEquipment";
+
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import UserProtectedRoute from "./user/UserProtectedRoute";
 
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
@@ -19,16 +33,10 @@ import AdminDoctorProfile from "./components/admin/AdminDoctorProfile";
 import AdminSettings from "./components/admin/AdminSettings";
 import AdminLogin from "./components/admin/AdminLogin";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
-import GalleryPage from "./pages/GalleryPage";
-import ClinicGallery from "./pages/ClinicGallery";
-import MachineGallery from "./pages/MachineGallery";
-import TreatmentGallery from "./pages/TreatmentGallery";
-import Gallery from "./components/admin/AdminGallery";
-import Testimonials from "./components/admin/AdminTestimonials";
-import FAQ from "./components/admin/AdminFAQ";
 import AdminTestimonials from "./components/admin/AdminTestimonials";
 import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
+<<<<<<< HEAD
 import PhysiotherapyServices from "./pages/PhysiotherapyServices";
 import ToolsEquipment from "./pages/ToolsEquipment";
 import Login from "./pages/Login";
@@ -36,6 +44,8 @@ import Signup from "./pages/Signup";
 import UserProtectedRoute from "./user/UserProtectedRoute";
 import Profile from "./pages/Profile";
 import Doctors from "./pages/Doctors";
+=======
+>>>>>>> 502bf91 (Added specialists page with detailed doctor profiles)
 
 function App() {
   const location = useLocation();
@@ -53,20 +63,21 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
+
         <Route path="/about" element={<About />} />
+
+        <Route path="/services" element={<Services />} />
         <Route
-          path="/services"
-          element={<Services />}
+          path="/services/physiotherapy"
+          element={<PhysiotherapyServices />}
         />
-        <Route path="/services/physiotherapy" element={<PhysiotherapyServices />} />
-        <Route path="/services/tools-equipment" element={<ToolsEquipment />} />
+        <Route
+          path="/services/tools-equipment"
+          element={<ToolsEquipment />}
+        />
         <Route path="/services/:slug" element={<Services />} />
-        <Route
-          path="/contact"
-          element={
-            <Contact />
-          }
-        />
+
+        <Route path="/contact" element={<Contact />} />
 
         <Route
           path="/booking"
@@ -76,7 +87,9 @@ function App() {
             </UserProtectedRoute>
           }
         />
+
         <Route path="/profile" element={<Profile />} />
+<<<<<<< HEAD
         <Route
           path="/doctors"
           element={<Doctors />}
@@ -85,25 +98,23 @@ function App() {
           path="/doctors/:doctorName"
           element={<DoctorProfile />}
         />
+=======
+
+        <Route path="/doctors/:doctorName" element={<DoctorProfile />} />
+
+        {/* NEW Specialists Page */}
+        <Route path="/specialists" element={<Specialists />} />
+>>>>>>> 502bf91 (Added specialists page with detailed doctor profiles)
 
         <Route path="/gallery" element={<GalleryPage />} />
-        <Route
-          path="/gallery/clinic"
-          element={<ClinicGallery />}
-        />
-
-        <Route
-          path="/gallery/machine"
-          element={<MachineGallery />}
-        />
-
+        <Route path="/gallery/clinic" element={<ClinicGallery />} />
+        <Route path="/gallery/machine" element={<MachineGallery />} />
         <Route
           path="/gallery/treatment"
           element={<TreatmentGallery />}
         />
 
         <Route path="/blogs" element={<Blogs />} />
-
         <Route path="/blogs/:id" element={<BlogDetails />} />
 
         <Route path="/login" element={<Login />} />
@@ -126,15 +137,15 @@ function App() {
             path="appointments"
             element={<Appointments />}
           />
-          <Route path="/admin/gallery" element={<AdminGallery />} />
-
+          <Route
+            path="/admin/gallery"
+            element={<AdminGallery />}
+          />
           <Route
             path="/admin/testimonials"
             element={<AdminTestimonials />}
           />
-
           <Route path="/admin/faq" element={<AdminFAQ />} />
-
           <Route
             path="/admin/doctor-profile"
             element={<AdminDoctorProfile />}
