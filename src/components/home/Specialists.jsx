@@ -5,7 +5,7 @@ import doctor1 from "../../assets/images/doctors/doctor1.jpg";
 import doctor2 from "../../assets/images/doctors/doctor2.jpg";
 import doctor3 from "../../assets/images/doctors/doctor3.jpg";
 
-// Export this array so it can be reused on other pages
+// Export doctors so other pages can reuse them
 export const specialists = [
   {
     image: doctor1,
@@ -13,6 +13,7 @@ export const specialists = [
     designation: "Senior Physiotherapist",
     experience: "10+ Years Experience",
     specialization: "Sports Rehabilitation",
+    slug: "dr-sai-krishna",
   },
   {
     image: doctor2,
@@ -20,6 +21,7 @@ export const specialists = [
     designation: "Orthopedic Physiotherapist",
     experience: "8+ Years Experience",
     specialization: "Manual Therapy",
+    slug: "dr-priya-sharma",
   },
   {
     image: doctor3,
@@ -27,17 +29,18 @@ export const specialists = [
     designation: "Neuro Physiotherapist",
     experience: "6+ Years Experience",
     specialization: "Post Surgical Rehabilitation",
+    slug: "dr-rahul-verma",
   },
 ];
 
 const Specialists = ({
-  doctorsToShow = specialists,
-  showViewAllButton = false,
+  doctorsToShow = specialists.slice(0, 3),
+  showViewAllButton = true,
 }) => {
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
+
         <p className="text-center uppercase tracking-[5px] text-teal-600 font-semibold">
           OUR SPECIALISTS
         </p>
@@ -51,7 +54,6 @@ const Specialists = ({
           treatments focused on helping you recover faster and live pain-free.
         </p>
 
-        {/* Cards */}
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10 mt-16">
           {doctorsToShow.map((doctor, index) => (
             <div
@@ -78,12 +80,12 @@ const Specialists = ({
                 <div className="mt-6 space-y-3">
                   <div className="flex items-center gap-3 text-gray-600">
                     <FaAward className="text-teal-600" />
-                    {doctor.experience}
+                    <span>{doctor.experience}</span>
                   </div>
 
                   <div className="flex items-center gap-3 text-gray-600">
                     <FaAward className="text-teal-600" />
-                    {doctor.specialization}
+                    <span>{doctor.specialization}</span>
                   </div>
                 </div>
               </div>
@@ -94,7 +96,7 @@ const Specialists = ({
         {showViewAllButton && (
           <div className="flex justify-center mt-12">
             <Link
-              to="/specialists"
+              to="/doctors"
               className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-xl font-semibold transition duration-300"
             >
               View All Specialists

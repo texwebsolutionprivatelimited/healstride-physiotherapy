@@ -35,7 +35,7 @@ const ServicesCTA = () => {
           >
 
             <Link
-              to="/contact"
+              to="/booking"
               className="
               inline-block
               mt-8

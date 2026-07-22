@@ -16,6 +16,9 @@ import {
   TrendingUp,
   Image,
   MessageSquare,
+  CheckCircle,
+  XCircle,
+  Star,
 } from "lucide-react";
 
 import {
@@ -85,26 +88,28 @@ const StatCard = ({
   icon: Icon,
   label,
   value,
-  tone = "blue"
+  tone = "blue",
 }) => (
-  <div className="flex items-center justify-between rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-100">
+  <div className="bg-white rounded-2xl p-4 shadow-sm ring-1 ring-slate-100 hover:shadow-md transition">
+    <div className="flex items-center gap-4">
 
-    <div className={`grid h-11 w-11 place-items-center rounded-xl ${STAT_STYLES[tone]}`}>
-      <Icon className="h-5 w-5" />
+      <div
+        className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl ${STAT_STYLES[tone]}`}
+      >
+        <Icon className="h-5 w-5" />
+      </div>
+
+      <div className="min-w-0">
+        <p className="text-xs sm:text-sm text-slate-500">
+          {label}
+        </p>
+
+        <p className="text-xl sm:text-2xl font-bold text-slate-900">
+          {value}
+        </p>
+      </div>
+
     </div>
-
-
-    <div>
-      <p className="text-sm text-slate-500">
-        {label}
-      </p>
-
-      <p className="text-2xl font-semibold text-slate-900">
-        {value}
-      </p>
-
-    </div>
-
   </div>
 );
 
@@ -495,16 +500,16 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      <main className="mx-auto max-w-7xl px-4 md:px-6 py-6">
+      <main className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 py-4 sm:py-6">
 
 
         {/* Header */}
 
-        <header className="mb-6 flex flex-col gap-4 lg:flex-row lg:justify-between">
+        <header className="mb-6 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
 
           <div>
 
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
               Admin Dashboard
             </h1>
 
@@ -516,14 +521,14 @@ const AdminDashboard = () => {
 
 
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
 
             {RANGE_PRESETS.map((item) => (
 
               <button
                 key={item.key}
                 onClick={() => setPreset(item.key)}
-                className={`px-4 py-2 rounded-xl text-sm transition ${preset === item.key
+                className={`px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm transition whitespace-nowrap ${preset === item.key
                   ?
                   "bg-teal-600 text-white"
                   :
@@ -614,7 +619,7 @@ const AdminDashboard = () => {
 grid 
 grid-cols-1
 sm:grid-cols-2
-lg:grid-cols-3
+md:grid-cols-3
 xl:grid-cols-6
 gap-4
 ">
@@ -717,7 +722,7 @@ mt-8
 bg-white
 rounded-3xl
 shadow-sm
-p-5
+p-3 sm:p-5
 ">
 
 
@@ -736,7 +741,7 @@ p-5
 
 
 
-                <div className="h-[350px]">
+                <div className="h-[250px] sm:h-[320px] md:h-[350px]">
 
 
                   <ResponsiveContainer width="100%" height="100%">
@@ -833,11 +838,10 @@ p-5
 
 
 
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto rounded-xl">
 
 
-                  <table className="w-full min-w-[900px]">
-
+                  <table className="w-full min-w-[700px] lg:min-w-[900px]">
 
                     <thead className="bg-teal-600 text-white">
 
@@ -903,39 +907,39 @@ p-5
                             >
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
                                 {item.name}
                               </td>
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
                                 {item.phone}
                               </td>
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
                                 {item.email}
                               </td>
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
                                 {item.condition}
                               </td>
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
                                 {item.date}
                               </td>
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
                                 {item.time}
                               </td>
 
 
 
 
-                              <td className="p-4">
+                              <td className="p-2 sm:p-4">
 
 
                                 <span
@@ -1044,59 +1048,73 @@ ${item.status === "confirmed"
               {/* Extra Summary */}
 
 
-              <section className="
-mt-8
-grid
-grid-cols-1
-md:grid-cols-3
-gap-4
-">
+              <section
+                className="
+  mt-8
+  grid
+  grid-cols-1
+  sm:grid-cols-2
+  lg:grid-cols-3
+  gap-4
+  "
+              >
+                {/* Completed */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 hover:shadow-md transition">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                      <CheckCircle className="h-6 w-6 text-blue-600" />
+                    </div>
 
+                    <div>
+                      <p className="text-sm text-slate-500">
+                        Completed
+                      </p>
 
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-
-                  <h3 className="font-semibold">
-                    Completed
-                  </h3>
-
-                  <p className="text-3xl font-bold text-blue-600 mt-2">
-                    {stats.completed}
-                  </p>
-
+                      <p className="text-2xl sm:text-3xl font-bold text-blue-600">
+                        {stats.completed}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
+                {/* Cancelled */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 hover:shadow-md transition">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-xl bg-red-50 flex items-center justify-center">
+                      <XCircle className="h-6 w-6 text-red-600" />
+                    </div>
 
+                    <div>
+                      <p className="text-sm text-slate-500">
+                        Cancelled
+                      </p>
 
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-
-                  <h3 className="font-semibold">
-                    Cancelled
-                  </h3>
-
-                  <p className="text-3xl font-bold text-red-600 mt-2">
-                    {stats.cancelled}
-                  </p>
-
+                      <p className="text-2xl sm:text-3xl font-bold text-red-600">
+                        {stats.cancelled}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
+                {/* Reviews */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 hover:shadow-md transition">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-xl bg-teal-50 flex items-center justify-center">
+                      <Star className="h-6 w-6 text-teal-600" />
+                    </div>
 
+                    <div>
+                      <p className="text-sm text-slate-500">
+                        Total Reviews
+                      </p>
 
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-
-                  <h3 className="font-semibold">
-                    Total Reviews
-                  </h3>
-
-                  <p className="text-3xl font-bold text-teal-600 mt-2">
-                    {reviews.length}
-                  </p>
-
+                      <p className="text-2xl sm:text-3xl font-bold text-teal-600">
+                        {reviews.length}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-
-
-
               </section>
-
 
 
 

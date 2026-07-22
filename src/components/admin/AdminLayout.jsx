@@ -65,10 +65,20 @@ const AdminLayout = () => {
   ];
 
   const getButtonClass = (path) => {
-    return `flex items-center gap-3 w-full px-4 py-3 rounded-xl transition-all duration-300 ${location.pathname === path
-        ? "bg-teal-500 text-white shadow-lg shadow-teal-500/30"
-        : "bg-slate-800 text-slate-300 hover:bg-teal-600 hover:text-white"
-      }`;
+    return `
+      flex items-center gap-3
+      w-full
+      px-3 sm:px-4
+      py-3
+      rounded-xl
+      text-sm sm:text-base
+      transition-all duration-300
+      ${
+        location.pathname === path
+          ? "bg-teal-500 text-white shadow-lg shadow-teal-500/30"
+          : "bg-slate-800 text-slate-300 hover:bg-teal-600 hover:text-white"
+      }
+    `;
   };
 
   const handleLogout = async () => {
@@ -81,17 +91,32 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen w-full bg-gray-100 flex overflow-x-hidden">
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-72 bg-[#0F172A] text-white p-6 flex-col">
-
-        <h1 className="text-2xl font-bold mb-10">
+      <aside
+        className="
+        hidden
+        md:flex
+        fixed
+        left-0
+        top-0
+        h-screen
+        w-64
+        lg:w-72
+        bg-[#0F172A]
+        text-white
+        p-5
+        lg:p-6
+        flex-col
+        z-40
+        "
+      >
+        <h1 className="text-xl lg:text-2xl font-bold mb-8 lg:mb-10">
           HealStride Admin
         </h1>
 
-        <nav className="space-y-3 flex-1">
-
+        <nav className="space-y-3 flex-1 overflow-y-auto">
           {menuItems.map((item) => (
             <button
               key={item.name}
@@ -99,42 +124,56 @@ const AdminLayout = () => {
               className={getButtonClass(item.path)}
             >
               {item.icon}
-              {item.name}
+              <span>{item.name}</span>
             </button>
           ))}
-
         </nav>
 
-        {/* Logout Button */}
         <button
           onClick={handleLogout}
-          className="flex items-center justify-center gap-3 w-full mt-6 px-4 py-3 rounded-xl bg-red-600 hover:bg-red-700 transition text-white"
+          className="
+          flex items-center justify-center gap-3
+          w-full
+          mt-6
+          px-4 py-3
+          rounded-xl
+          bg-red-600
+          hover:bg-red-700
+          transition
+          text-white
+          "
         >
           <LogOut size={18} />
           Logout
         </button>
-
       </aside>
 
       {/* Mobile Sidebar */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
 
-          <aside className="w-72 bg-[#0F172A] text-white p-6 flex flex-col">
-
+          <aside
+            className="
+            w-[85vw]
+            max-w-[300px]
+            bg-[#0F172A]
+            text-white
+            p-5
+            flex flex-col
+            "
+          >
             <button
               onClick={() => setSidebarOpen(false)}
-              className="mb-8"
+              className="mb-6 self-end"
             >
               <X size={26} />
             </button>
 
-            <h1 className="text-2xl font-bold mb-10">
+            <h1 className="text-xl font-bold mb-8">
               HealStride Admin
             </h1>
 
-            <nav className="space-y-3 flex-1">
-
+            <nav className="space-y-3 flex-1 overflow-y-auto">
               {menuItems.map((item) => (
                 <button
                   key={item.name}
@@ -145,47 +184,74 @@ const AdminLayout = () => {
                   className={getButtonClass(item.path)}
                 >
                   {item.icon}
-                  {item.name}
+                  <span>{item.name}</span>
                 </button>
               ))}
-
             </nav>
 
-            {/* Mobile Logout */}
             <button
               onClick={async () => {
                 await handleLogout();
                 setSidebarOpen(false);
               }}
-              className="flex items-center justify-center gap-3 w-full mt-6 px-4 py-3 rounded-xl bg-red-600 hover:bg-red-700 transition text-white"
+              className="
+              flex items-center justify-center gap-3
+              w-full
+              mt-6
+              px-4 py-3
+              rounded-xl
+              bg-red-600
+              hover:bg-red-700
+              transition
+              text-white
+              "
             >
               <LogOut size={18} />
               Logout
             </button>
-
           </aside>
 
           <div
-            className="flex-1 bg-black/50"
+            className="flex-1 bg-black/60 backdrop-blur-sm"
             onClick={() => setSidebarOpen(false)}
           />
-
         </div>
       )}
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-72 p-4 md:p-8">
-
+      <main
+        className="
+        flex-1
+        w-full
+        min-w-0
+        md:ml-64
+        lg:ml-72
+        px-3
+        sm:px-4
+        md:px-6
+        lg:px-8
+        py-4
+        overflow-x-hidden
+        "
+      >
         {/* Mobile Menu Button */}
         <button
           onClick={() => setSidebarOpen(true)}
-          className="md:hidden mb-5 bg-white p-2 rounded-lg shadow hover:bg-gray-200 transition"
+          className="
+          md:hidden
+          mb-4
+          bg-white
+          p-2.5
+          rounded-lg
+          shadow
+          hover:bg-gray-100
+          transition
+          "
         >
-          <Menu size={25} />
+          <Menu size={24} />
         </button>
 
         <Outlet />
-
       </main>
 
     </div>
