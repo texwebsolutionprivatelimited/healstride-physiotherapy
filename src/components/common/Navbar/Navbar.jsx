@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { UserCircle } from "lucide-react";
 import { signOut, onAuthStateChanged } from "firebase/auth";
@@ -14,15 +13,23 @@ import { auth } from "../../../firebase/firebase";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => setUser(u));
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+    });
+
     return () => unsubscribe();
   }, []);
 
   const handleBookAppointment = () => {
-    if (!auth.currentUser) return navigate("/login");
+    if (!auth.currentUser) {
+      navigate("/login");
+      return;
+    }
+
     navigate("/booking");
   };
 
@@ -32,13 +39,12 @@ const Navbar = () => {
       localStorage.removeItem("role");
       toast.success("Logged out successfully");
       navigate("/");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
       toast.error("Logout failed");
     }
   };
 
-  // Reusable profile icon (desktop + mobile)
   const ProfileIcon = ({ size = 40 }) =>
     user?.photoURL ? (
       <img
@@ -52,140 +58,282 @@ const Navbar = () => {
     );
 
   return (
-    <nav className="w-full bg-white shadow-md sticky top-0 z-50">
-<div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 w-full bg-white shadow-md">
+      <div className="max-w-7xl mx-auto h-16 md:h-20 px-3 sm:px-5 lg:px-8">
+        <div className="flex items-center justify-between h-full">
           {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-<Link
-  to="/"
-  className="flex items-center gap-2 min-w-0 flex-1"
->
-              <img
-              src={logo}
-              alt="HealStride Logo"
-              className="h-12 sm:h-14 md:h-16 w-auto"
-            />
-            <div className="min-w-0">
-<h1 className="text-lg sm:text-2xl font-bold text-teal-700 truncate">
-                  HealStride
-              </h1>
-              <p className="hidden sm:block text-xs text-gray-500">
-                Physiotherapy & Wellness
-              </p>
-            </div>
-          </Link>
-        </motion.div>
-
-        {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-6 lg:gap-8">
-          {NAVIGATION.map((item) => (
-            <motion.li key={item.id} whileHover={{ y: -2 }}>
-              <Link
-                to={item.path}
-                className="text-gray-700 hover:text-teal-700 transition font-medium"
-              >
-                {item.title}
-              </Link>
-            </motion.li>
-          ))}
-        </ul>
-
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={handleBookAppointment}
-            className="bg-teal-700 text-white px-5 py-2 rounded-xl hover:bg-teal-800 transition"
+          <motion.div
+            initial={{ opacity: 0, x: -25 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            Book Appointment
-          </button>
-
-          {!user ? (
             <Link
-              to="/login"
-              className="border border-teal-700 text-teal-700 px-5 py-2 rounded-xl hover:bg-teal-50 transition"
+              to="/"
+              className="flex items-center gap-2 sm:gap-3 min-w-0"
             >
-              Login
+              <img
+                src={logo}
+                alt="HealStride Logo"
+                className="
+                  h-10 w-10
+                  sm:h-12 sm:w-12
+                  md:h-14 md:w-14
+                  object-contain
+                  flex-shrink-0
+                "
+              />
+
+              <div className="min-w-0">
+                <h1
+                  className="
+                  text-base
+                  sm:text-lg
+                  md:text-xl
+                  lg:text-2xl
+                  font-bold
+                  text-teal-700
+                  truncate
+                "
+                >
+                  HealStride
+                </h1>
+
+                <p className="hidden lg:block text-xs text-gray-500">
+                  Physiotherapy & Wellness
+                </p>
+              </div>
             </Link>
-          ) : (
-            // ONLY profile icon — click goes to /profile
-            <button
-              onClick={() => navigate("/profile")}
-              title="My Profile"
-              className="rounded-full hover:ring-2 hover:ring-teal-500 transition"
-            >
-              <ProfileIcon size={42} />
-            </button>
-          )}
-        </div>
+          </motion.div>
 
-        {/* Mobile Menu Button */}
-        <button
-  onClick={() => setOpen(!open)}
-  className="md:hidden text-teal-700 text-2xl shrink-0"
->
-          {open ? <FaTimes /> : <FaBars />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden bg-white border-t px-6 py-5"
-        >
-          <ul className="flex flex-col gap-5">
+          {/* Desktop Navigation */}
+          <ul className="hidden lg:flex items-center gap-8">
             {NAVIGATION.map((item) => (
-              <li key={item.id}>
+              <motion.li
+                key={item.id}
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+              >
                 <Link
                   to={item.path}
-                  onClick={() => setOpen(false)}
-                  className="text-gray-700 hover:text-teal-700 font-medium"
+                  className="font-medium text-gray-700 hover:text-teal-700 transition"
                 >
                   {item.title}
                 </Link>
-              </li>
+              </motion.li>
             ))}
           </ul>
 
-          <button
-            onClick={() => {
-              setOpen(false);
-              handleBookAppointment();
-            }}
-            className="block w-full text-center mt-5 bg-teal-700 text-white px-5 py-3 rounded-xl"
-          >
-            Book Appointment
-          </button>
-
-          {!user ? (
-            <Link
-              to="/login"
-              onClick={() => setOpen(false)}
-              className="block w-full text-center mt-3 border border-teal-700 text-teal-700 px-5 py-3 rounded-xl"
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex items-center gap-4">
+            <button
+              onClick={handleBookAppointment}
+              className="
+                bg-teal-700
+                text-white
+                px-5
+                py-2.5
+                rounded-xl
+                hover:bg-teal-800
+                transition
+              "
             >
-              Login
-            </Link>
-          ) : (
-            // Same logic on mobile — sirf profile icon
+              Book Appointment
+            </button>
+
+            {!user ? (
+              <Link
+                to="/login"
+                className="
+                  border
+                  border-teal-700
+                  text-teal-700
+                  px-5
+                  py-2.5
+                  rounded-xl
+                  hover:bg-teal-50
+                  transition
+                "
+              >
+                Login
+              </Link>
+            ) : (
+              <button
+                onClick={() => navigate("/profile")}
+                className="rounded-full hover:ring-2 hover:ring-teal-500 transition"
+              >
+                <ProfileIcon size={42} />
+              </button>
+            )}
+          </div>
+
+          {/* Tablet CTA */}
+          <div className="hidden md:flex lg:hidden items-center gap-3">
+            <button
+              onClick={handleBookAppointment}
+              className="
+                bg-teal-700
+                text-white
+                px-4
+                py-2
+                rounded-lg
+                text-sm
+              "
+            >
+              Book
+            </button>
+
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-teal-700 text-2xl"
+            >
+              {open ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="
+              md:hidden
+              text-teal-700
+              text-xl
+              p-2
+            "
+          >
+            {open ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile / Tablet Menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.25 }}
+            className="
+              lg:hidden
+              bg-white
+              border-t
+              shadow-lg
+              px-4
+              py-5
+              max-h-[80vh]
+              overflow-y-auto
+            "
+          >
+            <ul className="flex flex-col gap-1">
+              {NAVIGATION.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={item.path}
+                    onClick={() => setOpen(false)}
+                    className="
+                      block
+                      py-3
+                      px-3
+                      rounded-lg
+                      text-gray-700
+                      font-medium
+                      hover:bg-teal-50
+                      hover:text-teal-700
+                      transition
+                    "
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
             <button
               onClick={() => {
                 setOpen(false);
-                navigate("/profile");
+                handleBookAppointment();
               }}
-              className="w-full mt-4 flex items-center justify-center gap-3 bg-gray-50 hover:bg-gray-100 p-3 rounded-xl transition"
+              className="
+                w-full
+                mt-5
+                bg-teal-700
+                text-white
+                py-3
+                rounded-xl
+                font-medium
+              "
             >
-              <ProfileIcon size={40} />
-              <span className="font-semibold text-slate-800">My Profile</span>
+              Book Appointment
             </button>
-          )}
-        </motion.div>
-      )}
+
+            {!user ? (
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="
+                  block
+                  w-full
+                  mt-3
+                  text-center
+                  border
+                  border-teal-700
+                  text-teal-700
+                  py-3
+                  rounded-xl
+                  font-medium
+                "
+              >
+                Login
+              </Link>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    navigate("/profile");
+                  }}
+                  className="
+                    w-full
+                    mt-4
+                    flex
+                    items-center
+                    justify-center
+                    gap-3
+                    p-3
+                    rounded-xl
+                    bg-gray-50
+                    hover:bg-gray-100
+                  "
+                >
+                  <ProfileIcon size={40} />
+                  <span className="font-semibold text-gray-800">
+                    My Profile
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    handleLogout();
+                  }}
+                  className="
+                    w-full
+                    mt-3
+                    border
+                    border-red-500
+                    text-red-500
+                    py-3
+                    rounded-xl
+                    font-medium
+                  "
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

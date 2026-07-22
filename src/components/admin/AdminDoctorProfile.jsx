@@ -8,12 +8,21 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
+
 import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
   deleteObject,
+  ref,
 } from "firebase/storage";
+
+import {
+  Plus,
+  Edit,
+  Trash2,
+  CheckCircle,
+  XCircle,
+  X,
+} from "lucide-react";
+
 import { db, storage } from "../../firebase/firebase";
 import { uploadImage } from "../../utils/imageUpload";
 
@@ -21,8 +30,8 @@ const emptyForm = {
   slug: "",
   name: "",
   role: "",
-  image: "",
-  imagePath: "", 
+  image: "", // Image URL
+  imagePath: "",
   education: "",
   experience: "",
   registration: "",
@@ -54,7 +63,13 @@ const AdminDoctors = () => {
   const fetchDoctors = async () => {
     try {
       const snap = await getDocs(collection(db, "doctors"));
-      setDoctors(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+
+      setDoctors(
+        snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+        }))
+      );
     } catch (err) {
       console.error(err);
     }
@@ -67,37 +82,51 @@ const AdminDoctors = () => {
     setIsModalOpen(true);
   };
 
-  const openEdit = (doc) => {
-    setEditingId(doc.id);
-    setFormData({ ...emptyForm, ...doc });
+  const openEdit = (doctor) => {
+    setEditingId(doctor.id);
+    setFormData({
+      ...emptyForm,
+      ...doctor,
+    });
+
     setImageFile(null);
     setIsModalOpen(true);
   };
 
   const handleChange = (field, value) => {
     setFormData((prev) => {
-      const next = { ...prev, [field]: value };
-      // Auto-generate slug from name if slug empty & not editing
-      if (field === "name" && !editingId && !prev.slug) {
+      const next = {
+        ...prev,
+        [field]: value,
+      };
+
+      if (
+        field === "name" &&
+        !editingId &&
+        !prev.slug
+      ) {
         next.slug = slugify(value);
       }
+
       return next;
     });
   };
 
   const handleSave = async () => {
     if (!formData.name.trim() || !formData.slug.trim()) {
-      alert("Name and slug are required");
+      alert("Name and Slug are required");
       return;
     }
 
     try {
       setUploading(true);
-      let imageUrl = formData.image;
-      let imagePath = formData.imagePath;
 
-      // Upload new image if selected
+      let imageUrl = "";
+      let imagePath = formData.imagePath || "";
+
+      // Priority 1: Upload Image
       if (imageFile) {
+        // Delete old uploaded image (while editing)
         if (imagePath) {
           try {
             await deleteObject(ref(storage, imagePath));
@@ -105,8 +134,20 @@ const AdminDoctors = () => {
             console.warn("Old image delete failed:", e.message);
           }
         }
+
         imageUrl = await uploadImage(imageFile, "doctors");
         imagePath = "";
+      }
+
+      // Priority 2: Image URL
+      else if (formData.image.trim()) {
+        imageUrl = formData.image.trim();
+      }
+
+      // Default Placeholder
+      else {
+        imageUrl =
+          "https://ui-avatars.com/api/?name=Doctor&background=0D9488&color=fff&size=300";
       }
 
       const payload = {
@@ -114,22 +155,32 @@ const AdminDoctors = () => {
         slug: slugify(formData.slug),
         image: imageUrl,
         imagePath,
+        active: formData.active,
       };
 
       if (editingId) {
-        await updateDoc(doc(db, "doctors", editingId), payload);
+        await updateDoc(
+          doc(db, "doctors", editingId),
+          payload
+        );
       } else {
-        await addDoc(collection(db, "doctors"), {
-          ...payload,
-          createdAt: serverTimestamp(),
-        });
+        await addDoc(
+          collection(db, "doctors"),
+          {
+            ...payload,
+            createdAt: serverTimestamp(),
+          }
+        );
       }
 
+      // Reset Form
       setIsModalOpen(false);
       setEditingId(null);
-      setFormData(emptyForm);
       setImageFile(null);
+      setFormData(emptyForm);
+
       await fetchDoctors();
+
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -138,122 +189,246 @@ const AdminDoctors = () => {
     }
   };
 
-  const handleDelete = async (docItem) => {
-    if (!window.confirm(`Delete ${docItem.name}?`)) return;
+  const handleDelete = async (doctor) => {
+    if (
+      !window.confirm(
+        `Delete ${doctor.name}?`
+      )
+    )
+      return;
+
     try {
-      if (docItem.imagePath) {
+      if (doctor.imagePath) {
         try {
-          await deleteObject(ref(storage, docItem.imagePath));
+          await deleteObject(
+            ref(storage, doctor.imagePath)
+          );
         } catch (e) {
-          console.warn("Image delete failed:", e.message);
+          console.warn(e.message);
         }
       }
-      await deleteDoc(doc(db, "doctors", docItem.id));
-      await fetchDoctors();
+
+      await deleteDoc(
+        doc(db, "doctors", doctor.id)
+      );
+
+      fetchDoctors();
     } catch (err) {
       console.error(err);
       alert(err.message);
     }
   };
 
-  const toggleActive = async (docItem) => {
+  const toggleActive = async (doctor) => {
     try {
-      await updateDoc(doc(db, "doctors", docItem.id), {
-        active: !docItem.active,
-      });
-      await fetchDoctors();
+      await updateDoc(
+        doc(db, "doctors", doctor.id),
+        {
+          active: !doctor.active,
+        }
+      );
+
+      fetchDoctors();
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 sm:p-6 lg:p-8">
+
+      {/* Header */}
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
             Doctor Management
           </h1>
-          <p className="text-slate-500 mt-2">
+
+          <p className="text-slate-500 mt-1 text-sm sm:text-base">
             Add, edit, or remove doctor profiles.
           </p>
         </div>
+
         <button
           onClick={openAdd}
-          className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-lg font-medium"
+          className="flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-5 py-3 rounded-xl font-medium w-full sm:w-auto"
         >
-          + Add Doctor
+          <Plus size={18} />
+          Add Doctor
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-teal-600 text-white">
-            <tr>
-              <th className="p-4 text-left">Photo</th>
-              <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Role</th>
-              <th className="p-4 text-left">Slug</th>
-              <th className="p-4 text-left">Status</th>
-              <th className="p-4 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {doctors.length === 0 ? (
+      {/* Table */}
+
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+
+          <table className="w-full min-w-[900px]">
+
+            <thead className="bg-teal-600 text-white">
+
               <tr>
-                <td colSpan={6} className="text-center py-10 text-gray-500">
-                  No doctors added yet.
-                </td>
+                <th className="p-4 text-left">
+                  Photo
+                </th>
+
+                <th className="p-4 text-left">
+                  Name
+                </th>
+
+                <th className="p-4 text-left">
+                  Role
+                </th>
+
+                <th className="p-4 text-left">
+                  Slug
+                </th>
+
+                <th className="p-4 text-left">
+                  Status
+                </th>
+
+                <th className="p-4 text-center">
+                  Actions
+                </th>
               </tr>
-            ) : (
-              doctors.map((d) => (
-                <tr key={d.id} className="border-b">
-                  <td className="p-4">
-                    {d.image ? (
-                      <img
-                        src={d.image}
-                        alt={d.name}
-                        className="w-14 h-14 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-14 h-14 rounded-full bg-gray-200" />
-                    )}
-                  </td>
-                  <td className="p-4 font-medium">{d.name}</td>
-                  <td className="p-4 text-gray-600">{d.role}</td>
-                  <td className="p-4 text-gray-500 text-sm">{d.slug}</td>
-                  <td className="p-4">
-                    <button
-                      onClick={() => toggleActive(d)}
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${d.active
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-200 text-gray-600"
-                        }`}
-                    >
-                      {d.active ? "Active" : "Inactive"}
-                    </button>
-                  </td>
-                  <td className="p-4">
-                    <div className="flex justify-center gap-4">
-                      <button title="Edit" onClick={() => openEdit(d)}>
-                        ✏️
-                      </button>
-                      <button title="Delete" onClick={() => handleDelete(d)}>
-                        🗑️
-                      </button>
-                    </div>
+
+            </thead>
+
+            <tbody>
+
+              {doctors.length === 0 ? (
+
+                <tr>
+                  <td
+                    colSpan={6}
+                    className="text-center py-10 text-gray-500"
+                  >
+                    No doctors added yet.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+
+              ) : (
+
+                doctors.map((doctor) => (
+
+                  <tr
+                    key={doctor.id}
+                    className="border-b hover:bg-slate-50"
+                  >
+                    <td className="p-4">
+
+                      {doctor.image ? (
+                        <img
+                          src={doctor.image}
+                          alt={doctor.name}
+                          className="w-14 h-14 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-full bg-slate-200" />
+                      )}
+
+                    </td>
+
+                    <td className="p-4 font-medium">
+                      {doctor.name}
+                    </td>
+
+                    <td className="p-4 text-slate-600">
+                      {doctor.role}
+                    </td>
+
+                    <td className="p-4 text-sm text-slate-500">
+                      {doctor.slug}
+                    </td>
+
+                    <td className="p-4">
+
+                      <button
+                        onClick={() =>
+                          toggleActive(doctor)
+                        }
+                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${doctor.active
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                          }`}
+                      >
+                        {doctor.active ? (
+                          <>
+                            <CheckCircle size={14} />
+                            Active
+                          </>
+                        ) : (
+                          <>
+                            <XCircle size={14} />
+                            Inactive
+                          </>
+                        )}
+                      </button>
+
+                    </td>
+
+                    <td className="p-4">
+
+                      <div className="flex justify-center gap-3">
+
+                        <button
+                          onClick={() =>
+                            openEdit(doctor)
+                          }
+                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
+                        >
+                          <Edit size={18} />
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleDelete(doctor)
+                          }
+                          className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+
+                      </div>
+
+                    </td>
+
+                  </tr>
+
+                ))
+              )}
+
+            </tbody>
+
+          </table>
+
+        </div>
       </div>
+      {/* Modal */}
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-auto py-10">
-          <div className="bg-white rounded-xl p-8 w-full max-w-2xl my-auto relative">
-            {/* Close (X) button */}
+
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+
+          <div
+            className="
+            bg-white
+            rounded-2xl
+            w-full
+            max-w-3xl
+            max-h-[90vh]
+            overflow-y-auto
+            p-5
+            sm:p-8
+            relative
+          "
+          >
+
+            {/* Close Button */}
+
             <button
               onClick={() => {
                 setIsModalOpen(false);
@@ -262,129 +437,346 @@ const AdminDoctors = () => {
                 setImageFile(null);
               }}
               disabled={uploading}
-              aria-label="Close"
-              className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 text-xl leading-none"
+              className="
+              absolute
+              top-4
+              right-4
+              w-9
+              h-9
+              flex
+              items-center
+              justify-center
+              rounded-full
+              hover:bg-slate-100
+            "
             >
-              ✕
+              <X size={20} />
             </button>
 
             <h2 className="text-2xl font-bold mb-6 pr-10">
-              {editingId ? "Edit Doctor" : "Add Doctor"}
+              {editingId
+                ? "Edit Doctor"
+                : "Add Doctor"}
             </h2>
 
+            {/* Form */}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+              {/* Image Upload */}
+
+              {/* Profile Image */}
+
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium mb-1">
+
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Profile Image
                 </label>
+
+                {/* Upload Image */}
+
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                  className="w-full border rounded-lg p-2"
+                  onChange={(e) =>
+                    setImageFile(e.target.files?.[0] || null)
+                  }
+                  className="
+      w-full
+      border
+      rounded-lg
+      p-2
+      file:mr-4
+      file:px-4
+      file:py-2
+      file:border-0
+      file:rounded-lg
+      file:bg-teal-50
+      file:text-teal-700
+      file:font-medium
+      hover:file:bg-teal-100
+    "
                 />
+
+                <p className="text-center text-sm text-slate-500 my-3">
+                  OR
+                </p>
+
+                {/* Image URL */}
+
+                <input
+                  type="url"
+                  placeholder="https://example.com/doctor.jpg"
+                  value={formData.image}
+                  onChange={(e) =>
+                    handleChange("image", e.target.value)
+                  }
+                  className="
+      w-full
+      border
+      rounded-lg
+      p-3
+      focus:ring-2
+      focus:ring-teal-500
+      outline-none
+    "
+                />
+
+                {/* Preview */}
+
                 {(imageFile || formData.image) && (
-                  <img
-                    src={
-                      imageFile
-                        ? URL.createObjectURL(imageFile)
-                        : formData.image
-                    }
-                    alt="preview"
-                    className="mt-3 w-24 h-24 rounded-full object-cover"
-                  />
+                  <div className="mt-5 flex justify-center">
+
+                    <img
+                      src={
+                        imageFile
+                          ? URL.createObjectURL(imageFile)
+                          : formData.image
+                      }
+                      alt="Preview"
+                      className="
+          w-24
+          h-24
+          rounded-full
+          object-cover
+          border-4
+          border-teal-100
+          shadow
+        "
+                    />
+
+                  </div>
                 )}
+
               </div>
+
+
+
+              {/* Name */}
 
               <input
                 type="text"
-                placeholder="Name (e.g. Dr. Sai Krishna)"
-                className="border rounded-lg p-3"
+                placeholder="Doctor Name"
                 value={formData.name}
-                onChange={(e) => handleChange("name", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "name",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+              "
               />
+
+              {/* Slug */}
+
               <input
                 type="text"
-                placeholder="Slug (e.g. dr-sai-krishna)"
-                className="border rounded-lg p-3"
+                placeholder="doctor-slug"
                 value={formData.slug}
-                onChange={(e) => handleChange("slug", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "slug",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+              "
               />
+
+              {/* Role */}
+
               <input
                 type="text"
-                placeholder="Role (e.g. Senior Physiotherapist)"
-                className="border rounded-lg p-3 md:col-span-2"
+                placeholder="Role"
                 value={formData.role}
-                onChange={(e) => handleChange("role", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "role",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+                md:col-span-2
+              "
               />
+
+              {/* Education */}
+
               <input
                 type="text"
                 placeholder="Education"
-                className="border rounded-lg p-3"
                 value={formData.education}
-                onChange={(e) => handleChange("education", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "education",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+              "
               />
+
+              {/* Experience */}
+
               <input
                 type="text"
-                placeholder="Experience (e.g. 10+ Years)"
-                className="border rounded-lg p-3"
+                placeholder="Experience"
                 value={formData.experience}
-                onChange={(e) => handleChange("experience", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "experience",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+              "
               />
+
+              {/* Registration */}
+
               <input
                 type="text"
-                placeholder="Registration No."
-                className="border rounded-lg p-3"
+                placeholder="Registration Number"
                 value={formData.registration}
-                onChange={(e) => handleChange("registration", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "registration",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+              "
               />
+
+              {/* Specialization */}
+
               <input
                 type="text"
                 placeholder="Specialization"
-                className="border rounded-lg p-3"
                 value={formData.specialization}
-                onChange={(e) => handleChange("specialization", e.target.value)}
-              />
-              <textarea
-                rows="4"
-                placeholder="Description"
-                className="border rounded-lg p-3 md:col-span-2"
-                value={formData.description}
-                onChange={(e) => handleChange("description", e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    "specialization",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+              "
               />
 
+              {/* Description */}
+
+              <textarea
+                rows="5"
+                placeholder="Description"
+                value={formData.description}
+                onChange={(e) =>
+                  handleChange(
+                    "description",
+                    e.target.value
+                  )
+                }
+                className="
+                border
+                rounded-lg
+                p-3
+                md:col-span-2
+              "
+              />
+
+              {/* Active */}
+
               <label className="flex items-center gap-3 md:col-span-2">
+
                 <input
                   type="checkbox"
                   checked={formData.active}
-                  onChange={(e) => handleChange("active", e.target.checked)}
+                  onChange={(e) =>
+                    handleChange(
+                      "active",
+                      e.target.checked
+                    )
+                  }
                 />
-                Active (show on public site)
+
+                Active (Show on website)
+
               </label>
+
             </div>
 
-            <div className="flex justify-end gap-3 mt-8">
+            {/* Footer Buttons */}
+
+            <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
+
               <button
                 onClick={() => {
                   setIsModalOpen(false);
                   setEditingId(null);
                 }}
                 disabled={uploading}
-                className="px-5 py-2 border rounded-lg"
+                className="
+                px-5
+                py-3
+                border
+                rounded-lg
+                w-full
+                sm:w-auto
+              "
               >
                 Cancel
               </button>
+
               <button
                 onClick={handleSave}
                 disabled={uploading}
-                className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg disabled:opacity-60"
+                className="
+                bg-teal-600
+                hover:bg-teal-700
+                text-white
+                px-5
+                py-3
+                rounded-lg
+                w-full
+                sm:w-auto
+                disabled:opacity-50
+              "
               >
-                {uploading ? "Saving..." : "Save"}
+                {uploading
+                  ? "Saving..."
+                  : "Save Doctor"}
               </button>
+
             </div>
+
           </div>
+
         </div>
+
       )}
+
     </div>
   );
 };

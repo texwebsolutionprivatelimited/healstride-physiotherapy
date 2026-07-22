@@ -35,6 +35,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import UserProtectedRoute from "./user/UserProtectedRoute";
 import Profile from "./pages/Profile";
+import Doctors from "./pages/Doctors";
 
 function App() {
   const location = useLocation();
@@ -76,7 +77,10 @@ function App() {
           }
         />
         <Route path="/profile" element={<Profile />} />
-
+        <Route
+          path="/doctors"
+          element={<Doctors />}
+        />
         <Route
           path="/doctors/:doctorName"
           element={<DoctorProfile />}
