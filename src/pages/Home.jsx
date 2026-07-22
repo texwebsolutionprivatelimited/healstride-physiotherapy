@@ -24,7 +24,7 @@ const Home = () => {
       <OurServices /> 
       <Conditions /> 
       <GalleryPreview /> 
-      <Specialists /> 
+      <Specialists showViewAllButton={true} /> 
       <BlogSection
   blogsToShow={blogs.slice(0, 3)}
   showButton={false}
