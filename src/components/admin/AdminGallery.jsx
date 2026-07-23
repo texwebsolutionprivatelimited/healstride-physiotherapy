@@ -20,6 +20,8 @@ const AdminGallery = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [confirmEditImage, setConfirmEditImage] = useState(null);
+
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -284,8 +286,14 @@ const AdminGallery = () => {
           className="mt-5 flex items-center gap-2 bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700 transition disabled:opacity-50"
         >
           <ImagePlus size={18} />
-          {loading ? "Uploading..." : "Add Image"}
-        </button>
+{loading
+  ? editingId
+    ? "Updating..."
+    : "Uploading..."
+  : editingId
+    ? "Update Image"
+    : "Add Image"}
+            </button>
       </motion.form>
 
       {/* Gallery Grid */}
@@ -330,16 +338,7 @@ const AdminGallery = () => {
 
                 <div className="flex items-center gap-4 mt-4">
                   <button
-                    onClick={() => {
-                      setEditingId(img.id);
-
-                      setForm({
-                        title: img.title,
-                        description: img.description || "",
-                        category: img.category,
-                        url: img.imageUrl,
-                      });
-                    }}
+                    onClick={() => setConfirmEditImage(img)}
                     className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
                   >
                     <Edit size={16} />
@@ -382,6 +381,49 @@ const AdminGallery = () => {
           </p>
         </motion.div>
       )}
+
+      {/* Edit Confirmation Modal */}
+{confirmEditImage && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+      <h2 className="text-2xl font-bold text-gray-900">
+        Edit Gallery Image
+      </h2>
+
+      <p className="mt-4 text-gray-600">
+        Do you want to edit this gallery image?
+      </p>
+
+      <div className="mt-8 flex justify-end gap-3">
+        <button
+          onClick={() => setConfirmEditImage(null)}
+          className="rounded-lg border px-5 py-2 hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+            setEditingId(confirmEditImage.id);
+
+            setForm({
+              title: confirmEditImage.title,
+              description: confirmEditImage.description || "",
+              category: confirmEditImage.category,
+              url: confirmEditImage.imageUrl,
+            });
+
+            setConfirmEditImage(null);
+          }}
+          className="rounded-lg bg-teal-600 px-5 py-2 text-white hover:bg-teal-700"
+        >
+          Yes, Edit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

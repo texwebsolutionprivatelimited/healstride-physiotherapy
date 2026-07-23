@@ -15,13 +15,19 @@ const Login = () => {
     });
 
     const handleGoogleLogin = async () => {
-        try {
-            await signInWithPopup(auth, googleProvider);
-            navigate("/");
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+
+        console.log("Google Login Success:", result.user);
+
+        navigate("/");
+    } catch (error) {
+        console.error("Google Login Error:");
+        console.error(error.code);
+        console.error(error.message);
+        console.error(error);
+    }
+};
 
 
     const handleEmailLogin = async (e) => {
