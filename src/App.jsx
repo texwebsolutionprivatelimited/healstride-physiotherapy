@@ -9,20 +9,26 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Booking from "./pages/Booking";
+
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
+
+import Doctors from "./pages/Doctors";
 import DoctorProfile from "./pages/DoctorProfile";
+import Specialists from "./components/home/Specialists";
 
 import GalleryPage from "./pages/GalleryPage";
 import ClinicGallery from "./pages/ClinicGallery";
 import MachineGallery from "./pages/MachineGallery";
 import TreatmentGallery from "./pages/TreatmentGallery";
+
 import PhysiotherapyServices from "./pages/PhysiotherapyServices";
 import ToolsEquipment from "./pages/ToolsEquipment";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+
 import UserProtectedRoute from "./user/UserProtectedRoute";
 
 import AdminLayout from "./components/admin/AdminLayout";
@@ -31,23 +37,10 @@ import Appointments from "./components/admin/Appointments";
 import AdminDoctorProfile from "./components/admin/AdminDoctorProfile";
 import AdminSettings from "./components/admin/AdminSettings";
 import AdminLogin from "./components/admin/AdminLogin";
-import ProtectedRoute from "./components/admin/ProtectedRoute";
 import AdminTestimonials from "./components/admin/AdminTestimonials";
 import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import PhysiotherapyServices from "./pages/PhysiotherapyServices";
-import ToolsEquipment from "./pages/ToolsEquipment";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import UserProtectedRoute from "./user/UserProtectedRoute";
-import Profile from "./pages/Profile";
-=======
->>>>>>> 5badd8e (Connect doctor pages to Firebase and remove hardcoded specialists)
-import Doctors from "./pages/Doctors";
-=======
->>>>>>> 502bf91 (Added specialists page with detailed doctor profiles)
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -91,26 +84,24 @@ function App() {
         />
 
         <Route path="/profile" element={<Profile />} />
-<<<<<<< HEAD
-        <Route
-          path="/doctors"
-          element={<Doctors />}
-        />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Doctors */}
+        <Route path="/doctors" element={<Doctors />} />
         <Route
           path="/doctors/:doctorName"
           element={<DoctorProfile />}
         />
-=======
 
-        <Route path="/doctors/:doctorName" element={<DoctorProfile />} />
+        {/* Specialists */}
+        <Route
+          path="/specialists"
+          element={<Specialists limit={0} />}
+        />
 
-        {/* NEW Specialists Page */}
-<<<<<<< HEAD
-        <Route path="/specialists" element={<Specialists />} />
->>>>>>> 502bf91 (Added specialists page with detailed doctor profiles)
-=======
->>>>>>> 5badd8e (Connect doctor pages to Firebase and remove hardcoded specialists)
-
+        {/* Gallery */}
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/gallery/clinic" element={<ClinicGallery />} />
         <Route path="/gallery/machine" element={<MachineGallery />} />
@@ -119,16 +110,14 @@ function App() {
           element={<TreatmentGallery />}
         />
 
+        {/* Blogs */}
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
 
         {/* Admin Login */}
         <Route path="/adminlogin" element={<AdminLogin />} />
 
-        {/* Admin Routes */}
+        {/* Admin */}
         <Route
           path="/admin"
           element={
@@ -143,16 +132,19 @@ function App() {
             element={<Appointments />}
           />
           <Route
-            path="/admin/gallery"
+            path="gallery"
             element={<AdminGallery />}
           />
           <Route
-            path="/admin/testimonials"
+            path="testimonials"
             element={<AdminTestimonials />}
           />
-          <Route path="/admin/faq" element={<AdminFAQ />} />
           <Route
-            path="/admin/doctor-profile"
+            path="faq"
+            element={<AdminFAQ />}
+          />
+          <Route
+            path="doctor-profile"
             element={<AdminDoctorProfile />}
           />
           <Route
