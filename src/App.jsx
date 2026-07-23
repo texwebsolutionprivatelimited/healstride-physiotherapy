@@ -36,6 +36,7 @@ import AdminTestimonials from "./components/admin/AdminTestimonials";
 import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
 import Doctors from "./pages/Doctors";
+import AdminBlogs from "./components/admin/AdminBlogs";
 
 function App() {
   const location = useLocation();
@@ -134,6 +135,10 @@ function App() {
             path="/admin/doctor-profile"
             element={<AdminDoctorProfile />}
           />
+          <Route
+  path="/admin/blogs"
+  element={<AdminBlogs />}
+/>
           <Route
             path="settings"
             element={<AdminSettings />}
