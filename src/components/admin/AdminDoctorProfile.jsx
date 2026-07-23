@@ -54,6 +54,7 @@ const AdminDoctors = () => {
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState(emptyForm);
   const [imageFile, setImageFile] = useState(null);
+  const [confirmEditDoctor, setConfirmEditDoctor] = useState(null);
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
@@ -375,13 +376,11 @@ const AdminDoctors = () => {
                       <div className="flex justify-center gap-3">
 
                         <button
-                          onClick={() =>
-                            openEdit(doctor)
-                          }
-                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
-                        >
-                          <Edit size={18} />
-                        </button>
+  onClick={() => setConfirmEditDoctor(doctor)}
+  className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
+>
+  <Edit size={18} />
+</button>
 
                         <button
                           onClick={() =>
@@ -776,6 +775,47 @@ const AdminDoctors = () => {
         </div>
 
       )}
+
+{/* Edit Confirmation */}
+{confirmEditDoctor && (
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60] p-4">
+    <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+
+      <h3 className="text-xl font-bold text-slate-900">
+        Edit Doctor
+      </h3>
+
+      <p className="text-slate-600 mt-3">
+        Do you want to edit
+        <span className="font-semibold">
+          {" "}{confirmEditDoctor.name}
+        </span>
+        ?
+      </p>
+
+      <div className="flex justify-end gap-3 mt-8">
+
+        <button
+          onClick={() => setConfirmEditDoctor(null)}
+          className="px-5 py-2 rounded-lg border hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+            openEdit(confirmEditDoctor);
+            setConfirmEditDoctor(null);
+          }}
+          className="px-5 py-2 rounded-lg bg-teal-600 text-white hover:bg-teal-700"
+        >
+          Yes, Edit
+        </button>
+
+      </div>
+    </div>
+  </div>
+)}
 
     </div>
   );

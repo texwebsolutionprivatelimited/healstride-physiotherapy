@@ -38,6 +38,8 @@ const Appointments = () => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [viewAppointment, setViewAppointment] = useState(null);
 
+  const [confirmEditAppointment, setConfirmEditAppointment] = useState(null);
+
   const [query, setQuery] = useState("");
 
   const [statusFilter, setStatusFilter] = useState("all");
@@ -613,7 +615,7 @@ ${appointment.status === "confirmed"
                   </button>
 
                   <button
-                    onClick={() => handleEdit(appointment)}
+onClick={() => setConfirmEditAppointment(appointment)}
                     className="text-blue-600"
                   >
                     <Pencil size={20} />
@@ -850,7 +852,7 @@ ${appointment.status === "confirmed"
                         </button>
 
                         <button
-                          onClick={() => handleEdit(appointment)}
+onClick={() => setConfirmEditAppointment(appointment)}
                           className="text-blue-600"
                         >
                           <Pencil size={18} />
