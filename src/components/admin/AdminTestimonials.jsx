@@ -18,6 +18,7 @@ const AdminTestimonials = () => {
     useState(null);
 
   const [editingId, setEditingId] = useState(null);
+  const [confirmEditTestimonial, setConfirmEditTestimonial] = useState(null);
 
   const [testimonials, setTestimonials] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -348,14 +349,12 @@ w-full sm:w-auto
 
 
                         <button
-                          onClick={() =>
-                            handleEdit(item)
-                          }
-                          title="Edit"
-                          className="h-9 w-9 rounded-lg bg-yellow-50 hover:bg-yellow-100"
-                        >
-                          ✏️
-                        </button>
+  title="Edit"
+onClick={() => setConfirmEditTestimonial(item)}
+  className="h-9 w-9 rounded-lg bg-yellow-50 hover:bg-yellow-100"
+>
+  ✏️
+</button>
 
 
                         <button
@@ -387,7 +386,45 @@ w-full sm:w-auto
 
       </div>
 
+{/* Edit Confirmation */}
+{confirmEditTestimonial && (
+  <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
 
+    <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+
+      <h3 className="text-xl font-bold text-slate-900">
+        Edit Testimonial
+      </h3>
+
+      <p className="mt-3 text-slate-600">
+        Do you want to edit this testimonial?
+      </p>
+
+      <div className="mt-8 flex justify-end gap-3">
+
+        <button
+          onClick={() => setConfirmEditTestimonial(null)}
+          className="rounded-lg border px-5 py-2 hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+            handleEdit(confirmEditTestimonial);
+            setConfirmEditTestimonial(null);
+          }}
+          className="rounded-lg bg-teal-600 px-5 py-2 text-white hover:bg-teal-700"
+        >
+          Yes, Edit
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
 
       {/* Add / Edit Modal */}
 

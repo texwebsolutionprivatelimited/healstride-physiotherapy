@@ -38,6 +38,8 @@ const Appointments = () => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [viewAppointment, setViewAppointment] = useState(null);
 
+  const [confirmEditAppointment, setConfirmEditAppointment] = useState(null);
+
   const [query, setQuery] = useState("");
 
   const [statusFilter, setStatusFilter] = useState("all");
@@ -195,7 +197,10 @@ const Appointments = () => {
 
 
 
-
+const confirmAndEdit = () => {
+  handleEdit(confirmEditAppointment);
+  setConfirmEditAppointment(null);
+};
 
 
 
@@ -613,7 +618,7 @@ ${appointment.status === "confirmed"
                   </button>
 
                   <button
-                    onClick={() => handleEdit(appointment)}
+onClick={() => setConfirmEditAppointment(appointment)}
                     className="text-blue-600"
                   >
                     <Pencil size={20} />
@@ -850,7 +855,7 @@ ${appointment.status === "confirmed"
                         </button>
 
                         <button
-                          onClick={() => handleEdit(appointment)}
+onClick={() => setConfirmEditAppointment(appointment)}
                           className="text-blue-600"
                         >
                           <Pencil size={18} />
@@ -1153,6 +1158,39 @@ mb-5
 
 
       </div>
+
+
+{/* Edit Confirmation Modal */}
+{confirmEditAppointment && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="bg-white rounded-2xl shadow-2xl w-[90%] max-w-md p-7">
+      <h2 className="text-3xl font-bold text-slate-900 mb-5">
+        Edit Appointment
+      </h2>
+
+      <p className="text-gray-600 mb-8">
+        Do you want to edit this appointment?
+      </p>
+
+      <div className="flex justify-end gap-4">
+        <button
+          onClick={() => setConfirmEditAppointment(null)}
+          className="rounded-lg border px-5 py-2 hover:bg-gray-50"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={confirmAndEdit}
+          className="rounded-lg bg-teal-600 px-5 py-2 text-white hover:bg-teal-700"
+        >
+          Yes, Edit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
     </div>
   );
