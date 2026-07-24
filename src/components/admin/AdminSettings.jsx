@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   Building2,
@@ -11,7 +11,6 @@ import {
   Stethoscope,
   MapPin,
   Share2,
-  Sparkles,
 } from "lucide-react";
 
 import {
@@ -20,6 +19,13 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 
+import {
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/firebase";
 
 const SECTIONS = [
   {
@@ -39,7 +45,7 @@ const SECTIONS = [
       {
         key: "hours",
         label: "Working Hours",
-        placeholder: "Mon-Fri, 9:00 - 18:00",
+        placeholder: "Mon-Sat, 9:00 AM - 8:00 PM",
         type: "text",
         icon: Clock,
         full: true,
@@ -52,7 +58,6 @@ const SECTIONS = [
     title: "Contact Channels",
     description: "Primary ways for patients to reach you.",
     icon: Phone,
-
     fields: [
       {
         key: "phone",
@@ -79,13 +84,11 @@ const SECTIONS = [
     ],
   },
 
-
   {
     id: "social",
     title: "Social Presence",
     description: "Links shown in your public footer.",
     icon: Share2,
-
     fields: [
       {
         key: "instagram",
@@ -113,317 +116,303 @@ const SECTIONS = [
   },
 ];
 
-
 const ALL_FIELDS = SECTIONS.flatMap(
-  (section)=>section.fields
+  (section) => section.fields
 );
 
-
 const INITIAL = ALL_FIELDS.reduce(
-  (acc,field)=>({
+  (acc, field) => ({
     ...acc,
-    [field.key]:""
+    [field.key]: "",
   }),
   {}
 );
 
+function AdminSettings() {
+  const [values, setValues] = useState(INITIAL);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(true);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const snap = await getDoc(
+          doc(db, "settings", "clinic")
+        );
 
-function AdminSettings(){
+        if (snap.exists()) {
+          setValues({
+            ...INITIAL,
+            ...snap.data(),
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const [values,setValues] = useState(INITIAL);
+    fetchSettings();
+  }, []);
 
-  const [saving,setSaving] = useState(false);
-
-  const [saved,setSaved] = useState(false);
-
-
-
-  const update = (key,value)=>{
-
-    setValues(prev=>({
+  const update = (key, value) => {
+    setValues((prev) => ({
       ...prev,
-      [key]:value
+      [key]: value,
     }));
-
   };
 
-
-
-  const filledCount =
-    Object.values(values)
-    .filter(value=>value.trim()!=="")
+  const filledCount = Object.values(values)
+    .filter((value) => value.trim() !== "")
     .length;
 
+  const progress = Math.round(
+    (filledCount / ALL_FIELDS.length) * 100
+  );
 
-  const progress =
-    Math.round(
-      (filledCount / ALL_FIELDS.length) * 100
-    );
-
-
-
-  const handleSubmit=(e)=>{
-
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setSaving(true);
+    try {
+      setSaving(true);
 
-
-    setTimeout(()=>{
-
-      setSaving(false);
+      await setDoc(
+        doc(db, "settings", "clinic"),
+        values,
+        { merge: true }
+      );
 
       setSaved(true);
+      setIsEditing(false);
 
-
-      setTimeout(()=>{
+      setTimeout(() => {
         setSaved(false);
-      },2500);
+      }, 2500);
 
-
-    },700);
-
+    } catch (error) {
+      console.error(error);
+      alert("Failed to save settings");
+    } finally {
+      setSaving(false);
+    }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading Settings...
+      </div>
+    );
+  }
 
-  return (
+    return (
+    <div className="min-h-screen bg-slate-50">
 
-<div className="min-h-screen bg-slate-50">
+      <div className="mx-auto max-w-5xl px-4 py-10">
 
-<div className="mx-auto max-w-5xl px-4 py-10">
+        <header className="mb-8">
 
+          <div className="flex items-center gap-3">
 
-<header className="mb-8">
+            <div className="h-10 w-10 rounded-xl bg-teal-600 flex items-center justify-center">
+              <Stethoscope className="text-white" />
+            </div>
 
-<div className="flex items-center gap-3">
+            <p className="font-semibold text-teal-700">
+              Admin / Clinic Settings
+            </p>
 
-<div className="h-10 w-10 rounded-xl bg-teal-600 flex items-center justify-center">
-<Stethoscope className="text-white"/>
-</div>
+          </div>
 
-<p className="font-semibold text-teal-700">
-Admin / Clinic Settings
-</p>
+          <h1 className="text-4xl font-bold mt-5">
+            Clinic Settings
+          </h1>
 
-</div>
+          <p className="text-slate-500 mt-2">
+            Manage clinic contact information and social links.
+          </p>
 
+          <div className="mt-6">
 
-<h1 className="text-4xl font-bold mt-5">
-Clinic Settings
-</h1>
+            <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
 
+              <div
+                className="h-full bg-teal-600 transition-all"
+                style={{
+                  width: `${progress}%`,
+                }}
+              />
 
-<p className="text-slate-500 mt-2">
-Manage clinic contact information and social links.
-</p>
+            </div>
 
+            <p className="text-sm mt-2">
+              Profile completeness {filledCount}/{ALL_FIELDS.length}
+            </p>
 
+          </div>
 
-<div className="mt-6">
+        </header>
 
-<div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
 
-<div
-className="h-full bg-teal-600 transition-all"
-style={{
-width:`${progress}%`
-}}
-/>
+          {SECTIONS.map((section) => {
 
-</div>
+            const SectionIcon = section.icon;
 
+            return (
+              <section
+                key={section.id}
+                className="bg-white rounded-2xl border shadow-sm"
+              >
 
-<p className="text-sm mt-2">
-Profile completeness {filledCount}/{ALL_FIELDS.length}
-</p>
+                <div className="flex gap-3 p-5 border-b">
 
-</div>
+                  <SectionIcon className="text-teal-600" />
 
+                  <div>
+                    <h2 className="font-semibold">
+                      {section.title}
+                    </h2>
 
-</header>
+                    <p className="text-sm text-slate-500">
+                      {section.description}
+                    </p>
+                  </div>
 
+                </div>
 
+                <div className="grid md:grid-cols-2 gap-5 p-6">
 
-<form
-onSubmit={handleSubmit}
-className="space-y-6"
->
+                  {section.fields.map((field) => {
 
+                    const Icon = field.icon;
 
-{
-SECTIONS.map(section=>{
+                    return (
+                      <div
+                        key={field.key}
+                        className={
+                          field.full
+                            ? "md:col-span-2"
+                            : ""
+                        }
+                      >
 
-const SectionIcon = section.icon;
+                        <label className="block text-sm font-medium mb-2">
+                          {field.label}
+                        </label>
 
+                        <div className="relative">
 
-return (
+                          <Icon
+                            className="absolute left-3 top-3 text-slate-400"
+                            size={18}
+                          />
 
-<section
-key={section.id}
-className="bg-white rounded-2xl border shadow-sm"
->
+                          <input
+                            type={field.type}
+                            value={values[field.key]}
+                            placeholder={field.placeholder}
+                            disabled={!isEditing}
+                            onChange={(e) =>
+                              update(
+                                field.key,
+                                e.target.value
+                              )
+                            }
+                            className="
+                              w-full
+                              border
+                              rounded-xl
+                              py-3
+                              pl-10
+                              pr-3
+                              outline-none
+                              focus:border-teal-500
+                              disabled:bg-slate-100
+                            "
+                          />
 
+                        </div>
 
-<div className="flex gap-3 p-5 border-b">
+                      </div>
+                    );
 
-<SectionIcon className="text-teal-600"/>
+                  })}
 
-<div>
+                </div>
 
-<h2 className="font-semibold">
-{section.title}
-</h2>
+              </section>
+            );
+          })}
 
-<p className="text-sm text-slate-500">
-{section.description}
-</p>
+          <div className="flex justify-end gap-3">
 
-</div>
+            {!isEditing ? (
 
-</div>
+              <button
+                type="button"
+                onClick={() => setIsEditing(true)}
+                className="
+                  px-6
+                  py-3
+                  rounded-xl
+                  border
+                  border-teal-600
+                  text-teal-600
+                  font-medium
+                "
+              >
+                Edit Settings
+              </button>
 
+            ) : (
 
+              <button
+                type="submit"
+                disabled={saving}
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  bg-teal-600
+                  text-white
+                  px-6
+                  py-3
+                  rounded-xl
+                  disabled:opacity-50
+                "
+              >
+                {saved ? (
+                  <>
+                    <Check size={18} />
+                    Saved
+                  </>
+                ) : saving ? (
+                  "Saving..."
+                ) : (
+                  <>
+                    <Save size={18} />
+                    Save Settings
+                  </>
+                )}
+              </button>
 
-<div className="grid md:grid-cols-2 gap-5 p-6">
+            )}
 
+          </div>
 
-{
-section.fields.map(field=>{
+        </form>
 
+      </div>
 
-const Icon = field.icon;
-
-
-return (
-
-<div
-key={field.key}
-className={
-field.full
-?"md:col-span-2"
-:""
+    </div>
+  );
 }
->
-
-
-<label className="block text-sm font-medium mb-2">
-{field.label}
-</label>
-
-
-<div className="relative">
-
-<Icon
-className="absolute left-3 top-3 text-slate-400"
-size={18}
-/>
-
-
-<input
-
-type={field.type}
-
-value={values[field.key]}
-
-placeholder={field.placeholder}
-
-onChange={(e)=>
-update(
-field.key,
-e.target.value
-)
-}
-
-className="w-full border rounded-xl py-3 pl-10 pr-3 outline-none focus:border-teal-500"
-
-/>
-
-
-</div>
-
-
-</div>
-
-
-)
-
-
-})
-
-}
-
-
-</div>
-
-
-</section>
-
-)
-
-})
-
-}
-
-
-
-
-<div className="flex justify-end">
-
-
-<button
-
-disabled={saving}
-
-className="flex items-center gap-2 bg-teal-600 text-white px-6 py-3 rounded-xl disabled:opacity-50"
-
->
-
-
-{
-saved
-?
-<>
-<Check size={18}/>
-Saved
-</>
-
-:
-
-saving
-
-?
-
-"Saving..."
-
-:
-
-<>
-<Save size={18}/>
-Save Settings
-</>
-
-}
-
-
-</button>
-
-
-</div>
-
-
-
-</form>
-
-
-</div>
-
-
-</div>
-
-)
-
-}
-
 
 export default AdminSettings;
