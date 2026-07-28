@@ -14,25 +14,27 @@ import WhatsAppFloat from "../components/common/WhatsAppFloat";
 
 
 
+
 const Home = () => {
   return (
     <>
-      <Hero /> 
-      <GoogleRating /> 
-      <TreatmentSlider /> 
-      <WhyChooseUs /> 
-      <OurServices /> 
-      <Conditions /> 
-      <GalleryPreview /> 
-      <Specialists showViewAllButton={true} /> 
+      <Hero />
+      <GoogleRating />
+      <TreatmentSlider />
+      <WhyChooseUs />
+      <OurServices />
+      <Conditions />
+      <GalleryPreview />
+      <Specialists showViewAllButton={true} />
       <BlogSection
-  blogsToShow={blogs.slice(0, 3)}
-  showButton={false}
-  showViewAllButton={true}
-/>
+        blogsToShow={blogs.slice(0, 3)}
+        showButton={false}
+        showViewAllButton={true}
+      />
       <Testimonials />
       <WhatsAppFloat />
-       
+
+
     </>
   );
 };
