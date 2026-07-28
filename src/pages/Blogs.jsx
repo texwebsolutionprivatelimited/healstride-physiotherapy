@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import {
   collection,
@@ -23,7 +25,6 @@ const Blogs = () => {
       const q = query(
         collection(db, "blogs"),
         where("active", "==", true),
-        orderBy("createdAt", "desc")
       );
 
       const snap = await getDocs(q);
@@ -52,6 +53,15 @@ const Blogs = () => {
   return (
     <section className="bg-gray-50 py-20">
       <div className="max-w-3xl mx-auto px-6">
+        <div className="mb-8">
+  <Link
+    to="/#blogs"
+    className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-medium transition"
+  >
+    <ArrowLeft size={20} />
+    Back to Home
+  </Link>
+</div>
         {/* Page Header */}
         <div className="text-center mb-20">
           <p className="text-teal-600 font-semibold uppercase tracking-widest">
@@ -90,6 +100,10 @@ const Blogs = () => {
               <h2 className="text-3xl font-bold mt-3 text-gray-900">
                 {blog.title}
               </h2>
+
+<p className="text-sm text-slate-500 mt-2">
+  By {blog.author} • {blog.designation}
+</p>
 
               <p className="text-gray-600 text-base leading-6 mt-4">
                 {blog.description}

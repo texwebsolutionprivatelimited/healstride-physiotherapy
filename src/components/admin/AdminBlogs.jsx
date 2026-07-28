@@ -19,6 +19,7 @@ import {
 } from "firebase/storage";
 
 import { db, storage } from "../../firebase/firebase";
+import { Link } from "react-router-dom";
 
 import toast from "react-hot-toast";
 
@@ -62,6 +63,8 @@ const AdminBlogs = () => {
 
   const [editingId, setEditingId] = useState(null);
 
+  const [viewBlog, setViewBlog] = useState(null);
+
   const [confirmEditBlog, setConfirmEditBlog] = useState(null);
 
   const [confirmDeleteBlog, setConfirmDeleteBlog] = useState(null);
@@ -81,10 +84,17 @@ const fetchBlogs = async () => {
     const q = query(
       collection(db, "blogs"),
       where("active", "==", true),
-      orderBy("createdAt", "desc")
     );
 
     const snap = await getDocs(q);
+
+    console.log("Documents found:", snap.docs.length);
+console.log(
+  snap.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }))
+);
 
     const data = snap.docs.map((doc) => ({
       id: doc.id,
@@ -92,6 +102,7 @@ const fetchBlogs = async () => {
     }));
 
     setBlogs(data);
+    console.log("Fetched blogs:", data);
   } catch (err) {
     console.error(err);
   } finally {
@@ -316,6 +327,10 @@ const handleDelete = async (blog) => {
     toast.error("Failed to delete blog.");
   }
 };
+
+console.log("Rendering, blogs =", blogs);
+console.log("Rendering, blogs length =", blogs.length);
+
   return (
     <div className="space-y-6">
 
@@ -516,23 +531,35 @@ const handleDelete = async (blog) => {
   </td>
 
   {/* Actions */}
-  <td className="p-4 text-center">
-    <div className="flex justify-center gap-2">
-      <button
-  onClick={() => setConfirmEditBlog(blog)}
-  className="px-3 py-1 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200"
+  <td className="px-6 py-4">
+  <div className="flex gap-2">
+
+    <button
+  onClick={() => {
+    console.log(blog);
+    setViewBlog(blog);
+  }}
 >
-  Edit
+  View
 </button>
 
-      <button
-  onClick={() => setConfirmDeleteBlog(blog)}
-  className="px-3 py-1 rounded-lg bg-red-100 text-red-700 hover:bg-red-200"
->
-  Delete
-</button>
-    </div>
-  </td>
+    <button
+      onClick={() => setConfirmEditBlog(blog)}
+      className="px-4 py-2 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 transition text-sm font-medium"
+    >
+      Edit
+    </button>
+
+    <button
+      onClick={() => setConfirmDeleteBlog(blog)}
+      className="px-4 py-2 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition text-sm font-medium"
+    >
+      Delete
+    </button>
+
+  </div>
+</td>
+
 </tr>
         ))}
       </tbody>
@@ -918,6 +945,143 @@ onClick={() => handleDelete(confirmDeleteBlog)}
 </button>
       </div>
 
+    </div>
+  </div>
+)}
+
+{/* View Blog Modal */}
+{viewBlog && (
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+
+      {/* Header */}
+      <div className="flex items-center justify-between border-b px-6 py-4">
+        <h2 className="text-2xl font-bold text-slate-800">
+          Blog Details
+        </h2>
+
+        <button
+          onClick={() => setViewBlog(null)}
+          className="text-gray-500 hover:text-red-500 text-2xl"
+        >
+          ×
+        </button>
+      </div>
+
+      <div className="p-6 space-y-6">
+
+        {/* Cover Image */}
+        <img
+          src={viewBlog.coverImage}
+          alt={viewBlog.title}
+          className="w-full h-64 object-cover rounded-xl"
+        />
+
+        {/* Title */}
+        <div>
+          <p className="text-sm text-gray-500">Title</p>
+          <h3 className="text-3xl font-bold text-slate-900">
+            {viewBlog.title}
+          </h3>
+        </div>
+
+        {/* Author Details */}
+        <div className="grid md:grid-cols-2 gap-6">
+
+          <div>
+            <p className="text-sm text-gray-500">Author</p>
+            <p className="font-semibold">
+              {viewBlog.author || "-"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm text-gray-500">Designation</p>
+            <p className="font-semibold">
+              {viewBlog.designation || "-"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm text-gray-500">Category</p>
+            <p className="font-semibold">
+              {viewBlog.category || "-"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm text-gray-500">Status</p>
+
+            <span
+              className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-medium ${
+                viewBlog.active
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {viewBlog.active ? "Published" : "Draft"}
+            </span>
+          </div>
+
+        </div>
+
+        {/* Short Description */}
+        <div>
+          <p className="text-sm text-gray-500 mb-2">
+            Short Description
+          </p>
+
+          <div className="bg-gray-50 rounded-lg p-4">
+            {viewBlog.description}
+          </div>
+        </div>
+
+        {/* Blog Content */}
+        <div>
+          <p className="text-sm text-gray-500 mb-2">
+            Blog Content
+          </p>
+
+          <div className="bg-gray-50 rounded-lg p-4 whitespace-pre-wrap leading-8">
+{viewBlog.content.map((section, index) => (
+  <div key={index} className="mb-4">
+    <h4 className="font-semibold text-lg">
+      {section.heading}
+    </h4>
+
+    <p className="text-gray-700 mt-1">
+      {section.text}
+    </p>
+  </div>
+))}          </div>
+        </div>
+
+        {/* Created Date */}
+        <div>
+          <p className="text-sm text-gray-500">
+            Created On
+          </p>
+
+          <p className="font-semibold">
+            {viewBlog.createdAt?.seconds
+              ? new Date(
+                  viewBlog.createdAt.seconds * 1000
+                ).toLocaleDateString()
+              : "-"}
+          </p>
+        </div>
+
+        {/* Footer */}
+        <div className="pt-2">
+          <button
+            onClick={() => setViewBlog(null)}
+            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded-lg"
+          >
+            Close
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
 )}

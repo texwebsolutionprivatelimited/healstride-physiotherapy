@@ -7,16 +7,18 @@ const BlogCard = ({ blog, showButton = false }) => {
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
 
       <img
-        src={blog.image}
-        alt={blog.title}
-        className="w-full h-52 object-cover"
-      />
+  src={blog.coverImage}
+  alt={blog.title}
+  className="w-full h-52 object-cover"
+/>
 
       <div className="p-5">
 
         <p className="text-sm text-gray-500">
-          {blog.date}
-        </p>
+  {blog.createdAt?.seconds
+    ? new Date(blog.createdAt.seconds * 1000).toLocaleDateString()
+    : ""}
+</p>
 
         <h3 className="text-xl font-semibold mt-2">
           {blog.title}

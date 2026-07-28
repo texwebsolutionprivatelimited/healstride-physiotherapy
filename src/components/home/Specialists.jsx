@@ -43,8 +43,8 @@ const Specialists = ({ limit = 3 }) => {
 
   if (loading) {
     return (
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-slate-700">
             Loading Specialists...
           </h2>
@@ -54,28 +54,28 @@ const Specialists = ({ limit = 3 }) => {
   }
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Heading */}
+    <section className="py-20 bg-white">
+      <div className="max-w-6xl mx-auto px-6">
+
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center uppercase tracking-[3px] sm:tracking-[5px] text-teal-600 font-semibold text-xs sm:text-sm"
-        >
-          OUR SPECIALISTS
-        </motion.p>
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5 }}
+  className="text-center uppercase tracking-[5px] text-teal-600 font-semibold"
+>
+  OUR SPECIALISTS
+</motion.p>
 
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mt-4"
-        >
-          Meet Our Expert Physiotherapists
-        </motion.h2>
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="text-center text-4xl lg:text-5xl font-bold text-slate-900 mt-4"
+>
+  Meet Our Expert Physiotherapists
+</motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 40 }}
@@ -88,34 +88,25 @@ const Specialists = ({ limit = 3 }) => {
           treatments.
         </motion.p>
 
-        {/* Doctors */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 mt-10 sm:mt-16">
-          {doctors.length === 0 ? (
-            <div className="col-span-full text-center text-gray-500">
+<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-14 justify-items-center max-w-5xl mx-auto">
+            {doctors.length === 0 ? (
+            <div className="col-span-full text-center text-gray-500 py-10">
               No doctors available.
             </div>
           ) : (
             doctors.map((doctor, index) => (
               <motion.div
                 key={doctor.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                }}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                className="w-full max-w-[300px] bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition duration-300"
               >
                 <img
-                  src={doctor.image || "/default-user.png"}
+                  src={doctor.image}
                   alt={doctor.name}
-                  className="w-full h-[280px] sm:h-[340px] lg:h-[380px] object-cover"
+                  className="w-full h-44 object-cover"
                 />
 
-                <div className="p-5 sm:p-8">
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                <div className="p-5">
+                  <h3 className="text-2xl font-bold text-slate-900">
                     {doctor.name}
                   </h3>
 
@@ -123,16 +114,16 @@ const Specialists = ({ limit = 3 }) => {
                     {doctor.role}
                   </p>
 
-                  <div className="mt-5 space-y-3 text-gray-600 text-sm sm:text-base">
-                    <p className="flex gap-3 items-center">
-                      <FaAward className="text-teal-600 flex-shrink-0" />
-                      {doctor.experience}
-                    </p>
+                  <div className="mt-5 space-y-3">
+                    <div className="flex items-center gap-3 text-gray-600">
+                      <FaAward className="text-teal-600" />
+                      <span>{doctor.experience}</span>
+                    </div>
 
-                    <p className="flex gap-3 items-center">
-                      <FaAward className="text-teal-600 flex-shrink-0" />
-                      {doctor.specialization}
-                    </p>
+                    <div className="flex items-start gap-3 text-gray-600">
+                      <FaAward className="text-teal-600 mt-1" />
+                      <span>{doctor.specialization}</span>
+                    </div>
                   </div>
 
                   <Link

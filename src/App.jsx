@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
+import ScrollToHash from "./components/ScrollToHash";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -30,6 +31,8 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 
 import UserProtectedRoute from "./user/UserProtectedRoute";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+
 
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
@@ -40,7 +43,8 @@ import AdminLogin from "./components/admin/AdminLogin";
 import AdminTestimonials from "./components/admin/AdminTestimonials";
 import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
-import ProtectedRoute from "./components/admin/ProtectedRoute";
+import AdminBlogs from "./components/admin/AdminBlogs";
+
 
 function App() {
   const location = useLocation();
@@ -52,6 +56,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <ScrollToHash />
 
       {!isAdminPage && <Navbar />}
 
@@ -85,23 +90,12 @@ function App() {
 
         <Route path="/profile" element={<Profile />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        {/* Doctors */}
         <Route path="/doctors" element={<Doctors />} />
         <Route
           path="/doctors/:doctorName"
           element={<DoctorProfile />}
         />
 
-        {/* Specialists */}
-        <Route
-          path="/specialists"
-          element={<Specialists limit={0} />}
-        />
-
-        {/* Gallery */}
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/gallery/clinic" element={<ClinicGallery />} />
         <Route path="/gallery/machine" element={<MachineGallery />} />
@@ -140,12 +134,16 @@ function App() {
             element={<AdminTestimonials />}
           />
           <Route
+            path="/admin/faq"
+            element={<AdminFAQ />}
+          />
+          <Route
             path="faq"
             element={<AdminFAQ />}
           />
           <Route
-            path="doctor-profile"
-            element={<AdminDoctorProfile />}
+            path="/admin/blogs"
+            element={<AdminBlogs />}
           />
           <Route
             path="settings"

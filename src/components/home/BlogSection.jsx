@@ -1,16 +1,55 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import BlogCard from "./BlogCard";
-import { blogs } from "../../data/blogs";
+import { useEffect, useState } from "react";
+
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+
+import { db } from "../../firebase/firebase";
 
 const BlogSection = ({
-  blogsToShow = blogs,
+blogsToShow = [],
   showButton = false,
   showViewAllButton = false,
 }) => {
+
+  const [blogs, setBlogs] = useState([]);
+
+useEffect(() => {
+  fetchBlogs();
+}, []);
+
+const fetchBlogs = async () => {
+  try {
+    const q = query(
+      collection(db, "blogs"),
+      where("active", "==", true)
+    );
+
+    const snap = await getDocs(q);
+
+    const data = snap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setBlogs(data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+<section
+  id="blogs"
+  className="py-12 sm:py-16 lg:py-20 bg-gray-50 overflow-hidden"
+>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Heading */}
 
@@ -54,8 +93,8 @@ const BlogSection = ({
           transition={{ duration: 0.8 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-10 sm:mt-14"
         >
-          {blogsToShow.map((blog) => (
-            <motion.div
+{blogs.map((blog) => (
+              <motion.div
               key={blog.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
