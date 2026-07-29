@@ -14,7 +14,7 @@ const ServiceHero = () => {
       "
       style={{
         backgroundImage:
-          "url(https://mybramptonphysio.ca/wp-content/uploads/2025/12/Sports-Physiotherapy%E2%80%8B.png)",
+          "url(/physiotherapy.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

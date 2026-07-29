@@ -144,7 +144,7 @@ const Services = () => {
                   {/* Image */}
                   <div className="overflow-hidden">
                     <img
-                      src="physiotherapy.jpg"
+                      src="physiotherapy-bg.webp"
                       alt="Physiotherapy Services"
                       className="
       w-full
@@ -239,7 +239,7 @@ const Services = () => {
                   {/* Image */}
                   <div className="overflow-hidden">
                     <img
-                      src="/equipment.jpg"
+                      src="equipment-bg.jpg"
                       alt="Physiotherapy Equipment"
                       className="
       w-full
