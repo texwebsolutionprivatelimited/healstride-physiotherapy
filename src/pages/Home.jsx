@@ -11,6 +11,8 @@ import BlogSection from "../components/home/BlogSection";
 import { blogs } from "../data/blogs";
 import TreatmentSlider from "../components/home/TreatmentSlider";
 import WhatsAppFloat from "../components/common/WhatsAppFloat";
+import ReviewCTA from "./ReviewCTA";
+import FloatingIcons from "../components/FloatingIcons";
 
 
 
@@ -18,6 +20,7 @@ import WhatsAppFloat from "../components/common/WhatsAppFloat";
 const Home = () => {
   return (
     <>
+    <FloatingIcons />
       <Hero />
       <GoogleRating />
       <TreatmentSlider />
@@ -33,6 +36,8 @@ const Home = () => {
       />
       <Testimonials />
       <WhatsAppFloat />
+
+      <ReviewCTA />
 
 
     </>

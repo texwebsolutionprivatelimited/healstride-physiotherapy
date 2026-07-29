@@ -25,7 +25,7 @@ import TreatmentGallery from "./pages/TreatmentGallery";
 
 import PhysiotherapyServices from "./pages/PhysiotherapyServices";
 import ToolsEquipment from "./pages/ToolsEquipment";
-
+import ReviewForm from "./pages/ReviewForm";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
@@ -45,6 +45,7 @@ import AdminGallery from "./components/admin/AdminGallery";
 import AdminFAQ from "./components/admin/AdminFAQ";
 import AdminBlogs from "./components/admin/AdminBlogs";
 
+import AnimatedBackground from "./components/AnimatedBackground";
 
 function App() {
   const location = useLocation();
@@ -59,6 +60,7 @@ function App() {
       <ScrollToHash />
 
       {!isAdminPage && <Navbar />}
+        {!isAdminPage && <AnimatedBackground />}
 
       <Routes>
         {/* Public Routes */}
@@ -87,6 +89,8 @@ function App() {
             </UserProtectedRoute>
           }
         />
+
+        <Route path="/review" element={<ReviewForm />} />
 
         <Route path="/profile" element={<Profile />} />
 

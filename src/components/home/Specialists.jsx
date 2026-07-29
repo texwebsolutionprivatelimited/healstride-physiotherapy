@@ -55,7 +55,7 @@ const Specialists = ({ limit = 3 }) => {
 
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
 
         <motion.p
   initial={{ opacity: 0, y: 20 }}
@@ -88,8 +88,9 @@ const Specialists = ({ limit = 3 }) => {
           treatments.
         </motion.p>
 
-<div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-14 justify-items-center max-w-5xl mx-auto">
-            {doctors.length === 0 ? (
+
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-14 justify-items-center">
+          {doctors.length === 0 ? (
             <div className="col-span-full text-center text-gray-500 py-10">
               No doctors available.
             </div>
@@ -97,15 +98,37 @@ const Specialists = ({ limit = 3 }) => {
             doctors.map((doctor, index) => (
               <motion.div
                 key={doctor.id}
-                className="w-full max-w-[300px] bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition duration-300"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.15,
+                }}
+                whileHover={{ y: -8 }}
+                className="
+                  w-full
+                  max-w-[340px]
+                  bg-white
+                  rounded-3xl
+                  shadow-lg
+                  overflow-hidden
+                  border
+                  border-gray-100
+                  flex
+                  flex-col
+                  hover:shadow-2xl
+                  transition-all
+                  duration-300
+                "
               >
                 <img
                   src={doctor.image}
                   alt={doctor.name}
-                  className="w-full h-44 object-cover"
+                  className="w-full h-56 object-cover"
                 />
 
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-2xl font-bold text-slate-900">
                     {doctor.name}
                   </h3>
@@ -114,46 +137,59 @@ const Specialists = ({ limit = 3 }) => {
                     {doctor.role}
                   </p>
 
-                  <div className="mt-5 space-y-3">
+                  <div className="mt-5 space-y-3 flex-1">
+
                     <div className="flex items-center gap-3 text-gray-600">
-                      <FaAward className="text-teal-600" />
+                      <FaAward className="text-teal-600 shrink-0" />
                       <span>{doctor.experience}</span>
                     </div>
 
-                    <div className="flex items-start gap-3 text-gray-600">
-                      <FaAward className="text-teal-600 mt-1" />
-                      <span>{doctor.specialization}</span>
+                    <div className="flex items-start gap-3 text-gray-600 min-h-[72px]">
+                      <FaAward className="text-teal-600 mt-1 shrink-0" />
+                      <span className="text-sm leading-6">
+                        {doctor.specialization}
+                      </span>
                     </div>
+
                   </div>
 
                   <Link
                     to={`/doctors/${doctor.slug}`}
-                    className="mt-6 inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition"
+className="mt-6 inline-flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition"
                   >
                     View Profile
                     <FaArrowRight />
                   </Link>
+
                 </div>
               </motion.div>
             ))
           )}
         </div>
 
-        {/* Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mt-10 sm:mt-12"
-        >
-          <Link
-            to="/doctors"
-            className="inline-flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white px-6 sm:px-8 py-3 rounded-xl transition font-medium"
-          >
-            View All Doctors
-          </Link>
-        </motion.div>
+{/* Button */}
+{showViewAllButton && (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="flex justify-center mt-10 sm:mt-12"
+  >
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Link
+        to="/doctors"
+        className="inline-flex items-center justify-center bg-teal-600 hover:bg-teal-700 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg"
+      >
+        View All Doctors
+        <FaArrowRight className="ml-2" />
+      </Link>
+    </motion.div>
+  </motion.div>
+)}
       </div>
     </section>
   );

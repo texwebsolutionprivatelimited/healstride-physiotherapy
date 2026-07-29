@@ -615,98 +615,58 @@ const AdminDashboard = () => {
               {/* Statistics */}
 
 
-              <section className="
-grid 
-grid-cols-1
-sm:grid-cols-2
-md:grid-cols-3
-xl:grid-cols-6
-gap-4
-">
-
+              <section
+                className="
+  grid
+  grid-cols-1
+  sm:grid-cols-2
+  lg:grid-cols-3
+  xl:grid-cols-6
+  gap-4
+  "
+              >
 
                 <StatCard
-
                   icon={CalendarDays}
-
                   label="Appointments"
-
                   value={stats.total}
-
                   tone="blue"
-
                 />
 
-
-
                 <StatCard
-
                   icon={Activity}
-
                   label="Today"
-
                   value={stats.today}
-
                   tone="teal"
-
                 />
 
-
-
                 <StatCard
-
                   icon={Clock}
-
                   label="Pending"
-
                   value={stats.pending}
-
                   tone="amber"
-
                 />
 
-
-
                 <StatCard
-
                   icon={Users}
-
                   label="Confirmed"
-
                   value={stats.confirmed}
-
                   tone="green"
-
                 />
 
-
-
                 <StatCard
-
                   icon={MessageSquare}
-
                   label="Enquiries"
-
                   value={appointments.length}
-
                   tone="purple"
-
                 />
-
-
 
                 <StatCard
-
                   icon={Image}
-
                   label="Gallery Images"
-
                   value={gallery.length}
-
                   tone="blue"
-
                 />
-
 
               </section>
 

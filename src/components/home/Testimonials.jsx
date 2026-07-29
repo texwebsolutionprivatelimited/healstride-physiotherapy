@@ -17,7 +17,7 @@ import "swiper/css/pagination";
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 
 import defaultUser from "../../assets/images/default-user.png";
-import ReviewForm from "../../pages/ReviewForm";
+import { Link } from "react-router-dom";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -155,8 +155,6 @@ const Testimonials = () => {
         </motion.div>
 
       </div>
-
-      <ReviewForm />
     </section>
   );
 };

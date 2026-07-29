@@ -254,10 +254,26 @@ const AdminDoctors = () => {
 
         <button
           onClick={openAdd}
-          className="flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-5 py-3 rounded-xl font-medium w-full sm:w-auto"
+          className="
+    w-full
+    md:w-fit
+    flex
+    items-center
+    justify-center
+    gap-2
+    bg-teal-600
+    hover:bg-teal-700
+    text-white
+    px-5
+    py-3
+    rounded-xl
+    font-medium
+    transition
+    whitespace-nowrap
+  "
         >
-          <Plus size={18} />
-          Add Doctor
+          
+          + Add Doctor
         </button>
       </div>
 
@@ -376,11 +392,11 @@ const AdminDoctors = () => {
                       <div className="flex justify-center gap-3">
 
                         <button
-  onClick={() => setConfirmEditDoctor(doctor)}
-  className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
->
-  <Edit size={18} />
-</button>
+                          onClick={() => setConfirmEditDoctor(doctor)}
+                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100"
+                        >
+                          <Edit size={18} />
+                        </button>
 
                         <button
                           onClick={() =>
@@ -776,46 +792,46 @@ const AdminDoctors = () => {
 
       )}
 
-{/* Edit Confirmation */}
-{confirmEditDoctor && (
-  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60] p-4">
-    <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
+      {/* Edit Confirmation */}
+      {confirmEditDoctor && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[60] p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl">
 
-      <h3 className="text-xl font-bold text-slate-900">
-        Edit Doctor
-      </h3>
+            <h3 className="text-xl font-bold text-slate-900">
+              Edit Doctor
+            </h3>
 
-      <p className="text-slate-600 mt-3">
-        Do you want to edit
-        <span className="font-semibold">
-          {" "}{confirmEditDoctor.name}
-        </span>
-        ?
-      </p>
+            <p className="text-slate-600 mt-3">
+              Do you want to edit
+              <span className="font-semibold">
+                {" "}{confirmEditDoctor.name}
+              </span>
+              ?
+            </p>
 
-      <div className="flex justify-end gap-3 mt-8">
+            <div className="flex justify-end gap-3 mt-8">
 
-        <button
-          onClick={() => setConfirmEditDoctor(null)}
-          className="px-5 py-2 rounded-lg border hover:bg-gray-50"
-        >
-          Cancel
-        </button>
+              <button
+                onClick={() => setConfirmEditDoctor(null)}
+                className="px-5 py-2 rounded-lg border hover:bg-gray-50"
+              >
+                Cancel
+              </button>
 
-        <button
-          onClick={() => {
-            openEdit(confirmEditDoctor);
-            setConfirmEditDoctor(null);
-          }}
-          className="px-5 py-2 rounded-lg bg-teal-600 text-white hover:bg-teal-700"
-        >
-          Yes, Edit
-        </button>
+              <button
+                onClick={() => {
+                  openEdit(confirmEditDoctor);
+                  setConfirmEditDoctor(null);
+                }}
+                className="px-5 py-2 rounded-lg bg-teal-600 text-white hover:bg-teal-700"
+              >
+                Yes, Edit
+              </button>
 
-      </div>
-    </div>
-  </div>
-)}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

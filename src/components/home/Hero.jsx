@@ -170,7 +170,7 @@ const Hero = () => {
             </Link>
 
             <a
-              href="tel:+919569274008"
+              href="tel:+91XXXXXXXXXX"
               className="
               w-full
               sm:w-auto

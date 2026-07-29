@@ -12,10 +12,10 @@ const contactItems = [
     title: "Phone Number",
     content: (
       <a
-        href="tel:+919569274008"
+        href="tel:+91XXXXXXXXXX"
         className="text-gray-600 hover:text-teal-600 transition"
       >
-        +91 9569274008
+        +91XXXXXXXXXX
       </a>
     ),
   },
@@ -27,7 +27,7 @@ const contactItems = [
         href="mailto:info@healstride.com"
         className="text-gray-600 hover:text-teal-600 transition break-all"
       >
-        info@healstride.com
+        healstride@gmail.com
       </a>
     ),
   },

@@ -79,7 +79,7 @@ const ContactHero = () => {
           sm:text-sm
           "
         >
-          Contact HealStride
+          Get In Touch With HealStride
         </motion.span>
 
         {/* Heading */}
@@ -107,10 +107,10 @@ const ContactHero = () => {
           leading-tight
           "
         >
-          Contact
+          Connect
 
           <span className="block text-blue-400">
-            Us
+            With Us
           </span>
         </motion.h1>
 
