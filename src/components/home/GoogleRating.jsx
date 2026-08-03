@@ -50,7 +50,7 @@ const GoogleRating = () => {
 
           </p>
 
-          <h2 className="text-4xl font-bold mt-3 text-slate-900">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 sm:mt-4 text-slate-900 leading-tight">
 
             Why Patients Choose HealStride
 

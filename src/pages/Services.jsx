@@ -14,14 +14,13 @@ const Services = () => {
         overflow-hidden
       "
       style={{
-        backgroundImage: "url('service-bg.jpg')",
+        backgroundImage: "url('/service-bg.jpg')",
       }}
     >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/85 to-teal-950/70" />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/85 to-teal-50/90" />
-
-      {/* Decorative Background */}
+      {/* Decorative Blurs */}
       <motion.div
         animate={{ y: [0, -25, 0] }}
         transition={{
@@ -34,7 +33,7 @@ const Services = () => {
           left-10
           w-40
           h-40
-          bg-teal-300/20
+          bg-teal-400/20
           blur-3xl
           rounded-full
         "
@@ -52,19 +51,15 @@ const Services = () => {
           right-10
           w-48
           h-48
-          bg-cyan-300/20
+          bg-cyan-400/20
           blur-3xl
           rounded-full
         "
       />
 
-
       <div className="relative z-10">
-
         <section className="py-20 md:py-24">
-
           <div className="max-w-6xl mx-auto px-4">
-
 
             {/* Heading */}
             <motion.div
@@ -73,47 +68,73 @@ const Services = () => {
               transition={{ duration: 0.8 }}
               className="text-center mb-14"
             >
+              <span
+                className="
+                  inline-block
+                  px-5
+                  py-2
+                  rounded-full
+                  bg-teal-500/20
+                  border
+                  border-teal-400/30
+                  text-teal-300
+                  text-sm
+                  font-medium
+                  mb-5
+                  backdrop-blur-md
+                "
+              >
+                Professional Physiotherapy Care
+              </span>
 
-              <h1 className="
-                text-4xl
-                sm:text-5xl
-                md:text-6xl
-                font-bold
-                text-slate-900
-              ">
+              <h1
+                className="
+                  text-4xl
+                  sm:text-5xl
+                  md:text-6xl
+                  lg:text-7xl
+                  font-bold
+                  bg-gradient-to-r
+                  from-teal-300
+                  via-cyan-300
+                  to-teal-500
+                  bg-clip-text
+                  text-transparent
+                "
+              >
                 Our Services
               </h1>
 
-
-              <p className="
-                mt-5
-                text-gray-700
-                text-base
-                md:text-lg
-                max-w-2xl
-                mx-auto
-                leading-8
-              ">
-                Explore our physiotherapy treatments and advanced rehabilitation tools.
+              <p
+                className="
+                  mt-5
+                  text-gray-200
+                  text-base
+                  md:text-lg
+                  max-w-2xl
+                  mx-auto
+                  leading-8
+                "
+              >
+                Explore our physiotherapy treatments, rehabilitation
+                programs, and advanced therapy equipment designed to
+                help you recover faster and live pain-free.
               </p>
-
             </motion.div>
 
-
-
             {/* Cards */}
-            <div className="
-  grid
-  grid-cols-1
-  md:grid-cols-2
-  gap-6
-  max-w-6xl
-  mx-auto
-">
-
+            <div
+              className="
+                grid
+                grid-cols-1
+                md:grid-cols-2
+                gap-8
+                max-w-6xl
+                mx-auto
+              "
+            >
 
               {/* Physiotherapy Services */}
-
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -121,94 +142,83 @@ const Services = () => {
                 transition={{ duration: 0.6 }}
                 whileHover={{ y: -10 }}
               >
-
                 <Link
                   to="/services/physiotherapy"
                   className="
                     group
                     block
-                    bg-white/90
+                    bg-white/10
                     backdrop-blur-xl
                     rounded-3xl
                     overflow-hidden
                     border
-                    border-white
+                    border-white/20
                     shadow-xl
-                    hover:shadow-2xl
                     hover:border-teal-400
+                    hover:shadow-2xl
                     transition-all
                     duration-300
                   "
                 >
-
-                  {/* Image */}
                   <div className="overflow-hidden">
                     <img
-                      src="physiotherapy-bg.webp"
+                      src="/physiotherapy-bg.webp"
                       alt="Physiotherapy Services"
                       className="
-      w-full
-      h-32
-      sm:h-36
-      md:h-40
-      object-cover
-      group-hover:scale-105
-      transition
-      duration-500
-    "
+                        w-full
+                        h-48
+                        object-cover
+                        group-hover:scale-105
+                        transition
+                        duration-500
+                      "
                     />
                   </div>
 
+                  <div className="p-6">
+                    <Activity
+                      className="
+                        w-12
+                        h-12
+                        text-teal-400
+                        mb-5
+                      "
+                    />
 
-                  <div className="p-5 md:p-6">
-
-                    <Activity className="
-                      w-10
-                      h-10
-                      text-teal-600
-                      mb-5
-                    "/>
-
-
-                    <h3 className="
-                      text-xl
-                      font-bold
-                      text-slate-900
-                      mb-3
-                    ">
+                    <h3
+                      className="
+                        text-2xl
+                        font-bold
+                        text-white
+                        mb-3
+                      "
+                    >
                       Physiotherapy Services
                     </h3>
 
-
-                    <p className="text-gray-600 leading-7">
-                      Explore rehabilitation programs, pain management treatments,
-                      sports injury recovery, and specialized physiotherapy services.
+                    <p className="text-gray-300 leading-7">
+                      Explore rehabilitation programs, pain management
+                      treatments, sports injury recovery, post-surgical
+                      care, and specialized physiotherapy services.
                     </p>
 
-
-                    <span className="
-                      inline-block
-                      mt-5
-                      text-teal-600
-                      font-semibold
-                      group-hover:translate-x-2
-                      transition
-                    ">
+                    <span
+                      className="
+                        inline-block
+                        mt-5
+                        text-teal-400
+                        font-semibold
+                        group-hover:translate-x-2
+                        transition
+                      "
+                    >
                       View Services →
                     </span>
-
                   </div>
-
                 </Link>
-
               </motion.div>
 
-
-
-
-
               {/* Tools & Equipment */}
-
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -216,98 +226,86 @@ const Services = () => {
                 transition={{ duration: 0.6 }}
                 whileHover={{ y: -10 }}
               >
-
                 <Link
                   to="/services/tools-equipment"
                   className="
                     group
                     block
-                    bg-white/90
+                    bg-white/10
                     backdrop-blur-xl
                     rounded-3xl
                     overflow-hidden
                     border
-                    border-white
+                    border-white/20
                     shadow-xl
-                    hover:shadow-2xl
                     hover:border-teal-400
+                    hover:shadow-2xl
                     transition-all
                     duration-300
                   "
                 >
-
-                  {/* Image */}
                   <div className="overflow-hidden">
                     <img
-                      src="equipment-bg.jpg"
+                      src="/equipment-bg.jpg"
                       alt="Physiotherapy Equipment"
                       className="
-      w-full
-      h-32
-      sm:h-36
-      md:h-40
-      object-cover
-      group-hover:scale-105
-      transition
-      duration-500
-    "
+                        w-full
+                        h-48
+                        object-cover
+                        group-hover:scale-105
+                        transition
+                        duration-500
+                      "
                     />
                   </div>
 
+                  <div className="p-6">
+                    <Wrench
+                      className="
+                        w-12
+                        h-12
+                        text-teal-400
+                        mb-5
+                      "
+                    />
 
-                  <div className="p-5 md:p-6">
-
-                    <Wrench className="
-                      w-10
-                      h-10
-                      text-teal-600
-                      mb-5
-                    "/>
-
-
-                    <h3 className="
-                      text-xl
-                      font-bold
-                      text-slate-900
-                      mb-3
-                    ">
+                    <h3
+                      className="
+                        text-2xl
+                        font-bold
+                        text-white
+                        mb-3
+                      "
+                    >
                       Tools & Equipment
                     </h3>
 
-
-                    <p className="text-gray-600 leading-7">
-                      Discover advanced physiotherapy equipment and treatment tools
-                      used for faster recovery and effective rehabilitation.
+                    <p className="text-gray-300 leading-7">
+                      Discover advanced physiotherapy machines,
+                      rehabilitation equipment, and modern treatment
+                      tools used for faster recovery and effective care.
                     </p>
 
-
-                    <span className="
-                      inline-block
-                      mt-5
-                      text-teal-600
-                      font-semibold
-                      group-hover:translate-x-2
-                      transition
-                    ">
+                    <span
+                      className="
+                        inline-block
+                        mt-5
+                        text-teal-400
+                        font-semibold
+                        group-hover:translate-x-2
+                        transition
+                      "
+                    >
                       View Equipment →
                     </span>
-
                   </div>
-
                 </Link>
-
               </motion.div>
 
-
             </div>
-
-
           </div>
-
         </section>
-
       </div>
-
     </div>
   );
 };

@@ -54,13 +54,13 @@ const WhyChooseUs = () => {
             WHY CHOOSE US
           </p>
 
-          <h2 className="text-5xl font-bold mt-4 text-slate-900">
-  Why Patients Trust HealStride
-</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 sm:mt-4 text-slate-900 leading-tight">
+            Why Patients Trust HealStride
+          </h2>
 
-<div className="w-24 h-1 bg-teal-600 rounded-full mx-auto mt-6 mb-6"></div>
+          <div className="w-24 h-1 bg-teal-600 rounded-full mx-auto mt-6 mb-6"></div>
 
-<p className="text-gray-600 max-w-3xl mx-auto text-lg">
+          <p className="text-gray-600 max-w-3xl mx-auto text-lg">
             We combine modern rehabilitation techniques, experienced
             physiotherapists and personalized care to help every patient
             recover faster and live pain-free.

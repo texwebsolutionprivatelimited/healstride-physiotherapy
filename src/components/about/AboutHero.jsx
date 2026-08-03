@@ -5,17 +5,16 @@ const AboutHero = () => {
     <section
       className="
         relative
-        min-h-[80vh]
-        sm:min-h-[85vh]
-        lg:min-h-screen
+        min-h-[70vh]
+        sm:min-h-[75vh]
+        lg:min-h-[85vh]
         flex
         items-center
         justify-center
         overflow-hidden
       "
     >
-
-      {/* Background */}
+      {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src="/about.jpg"
@@ -25,27 +24,34 @@ const AboutHero = () => {
             h-full
             object-cover
             object-center
+            scale-105
           "
         />
       </div>
 
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/65" />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
-
-      <div className="absolute inset-0 bg-gradient-to-r from-teal-900/60 via-teal-800/30 to-transparent" />
-
+      {/* Gradient Overlay */}
+      <div
+        className="
+          absolute
+          inset-0
+          bg-gradient-to-r
+          from-teal-900/70
+          via-teal-800/30
+          to-transparent
+        "
+      />
 
       {/* Blur Effects */}
       <div
         className="
           absolute
-          top-5
-          left-5
-          w-32
-          h-32
-          sm:w-40
-          sm:h-40
+          top-10
+          left-10
+          w-40
+          h-40
           bg-blue-500/20
           blur-3xl
           rounded-full
@@ -55,32 +61,21 @@ const AboutHero = () => {
       <div
         className="
           absolute
-          bottom-5
-          right-5
-          w-32
-          h-32
-          sm:w-40
-          sm:h-40
+          bottom-10
+          right-10
+          w-40
+          h-40
           bg-cyan-500/20
           blur-3xl
           rounded-full
         "
       />
 
-
       {/* Content */}
       <motion.div
-        initial={{
-          opacity:0,
-          y:40
-        }}
-        animate={{
-          opacity:1,
-          y:0
-        }}
-        transition={{
-          duration:0.8
-        }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
         className="
           relative
           z-10
@@ -91,61 +86,42 @@ const AboutHero = () => {
           px-4
           sm:px-6
           lg:px-8
-          py-16
+          py-8
+          sm:py-10
         "
       >
-
-
         {/* Badge */}
         <motion.span
-          initial={{
-            opacity:0,
-            scale:0.8
-          }}
-          animate={{
-            opacity:1,
-            scale:1
-          }}
-          transition={{
-            delay:0.2
-          }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
           className="
-            inline-block
+            inline-flex
+            items-center
             bg-blue-600/20
             border
             border-white/20
             backdrop-blur-md
             text-white
-            px-4
-            sm:px-5
+            px-5
             py-2
             rounded-full
             text-xs
             sm:text-sm
             font-medium
+            mb-6
           "
         >
           About HealStride Physiotherapy
         </motion.span>
 
-
-
         {/* Heading */}
         <motion.h1
-          initial={{
-            opacity:0,
-            y:30
-          }}
-          animate={{
-            opacity:1,
-            y:0
-          }}
-          transition={{
-            delay:0.3
-          }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
           className="
-            mt-5
-            text-3xl
+            text-4xl
             sm:text-5xl
             md:text-6xl
             lg:text-7xl
@@ -156,35 +132,25 @@ const AboutHero = () => {
         >
           About
 
-          <span className="block text-blue-400">
+          <span className="block text-cyan-400 mt-2">
             Heal Stride
           </span>
-
         </motion.h1>
-
-
 
         {/* Description */}
         <motion.p
-          initial={{
-            opacity:0
-          }}
-          animate={{
-            opacity:1
-          }}
-          transition={{
-            delay:0.5
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
           className="
-            mt-5
-            text-sm
-            sm:text-base
-            md:text-lg
+            mt-6
+            text-base
+            sm:text-lg
             lg:text-xl
             text-gray-200
             max-w-3xl
             mx-auto
-            leading-6
+            leading-7
             sm:leading-8
           "
         >
@@ -193,23 +159,13 @@ const AboutHero = () => {
           advanced rehabilitation techniques, and compassionate care.
         </motion.p>
 
-
-
         {/* Stats */}
         <motion.div
-          initial={{
-            opacity:0,
-            y:30
-          }}
-          animate={{
-            opacity:1,
-            y:0
-          }}
-          transition={{
-            delay:0.7
-          }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
           className="
-            mt-8
+            mt-10
             grid
             grid-cols-1
             sm:grid-cols-3
@@ -219,38 +175,36 @@ const AboutHero = () => {
             mx-auto
           "
         >
-
           {[
             {
-              value:"10+",
-              title:"Years Experience",
-              color:"text-white"
+              value: "10+",
+              title: "Years Experience",
+              color: "text-white",
             },
             {
-              value:"5000+",
-              title:"Happy Patients",
-              color:"text-blue-400"
+              value: "5000+",
+              title: "Happy Patients",
+              color: "text-cyan-400",
             },
             {
-              value:"Expert",
-              title:"Physiotherapy Care",
-              color:"text-green-400"
-            }
-          ].map((item,index)=>(
+              value: "Expert",
+              title: "Physiotherapy Care",
+              color: "text-green-400",
+            },
+          ].map((item, index) => (
             <div
               key={index}
               className="
                 bg-white/10
-                backdrop-blur-md
+                backdrop-blur-xl
                 border
                 border-white/20
                 rounded-2xl
                 px-5
-                py-4
-                sm:py-5
+                py-5
+                shadow-lg
               "
             >
-
               <h3
                 className={`
                   text-2xl
@@ -262,26 +216,19 @@ const AboutHero = () => {
                 {item.value}
               </h3>
 
-
               <p
                 className="
                   text-gray-300
-                  text-xs
-                  sm:text-sm
+                  text-sm
                   mt-2
                 "
               >
                 {item.title}
               </p>
-
             </div>
           ))}
-
         </motion.div>
-
-
       </motion.div>
-
     </section>
   );
 };

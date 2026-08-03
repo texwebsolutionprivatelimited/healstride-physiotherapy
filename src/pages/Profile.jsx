@@ -19,9 +19,25 @@ import {
   CheckCircle2,
   Clock,
 } from "lucide-react";
-import { auth } from "../firebase/firebase";
 
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+
+import { db } from "../firebase/firebase";
+
+import { auth, storage } from "../firebase/firebase";
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 const Profile = () => {
+  const [uploading, setUploading] = useState(false);
   const [user, setUser] = useState(null);
   const [photoURL, setPhotoURL] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -29,20 +45,122 @@ const Profile = () => {
   const [appointments, setAppointments] = useState([]);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const unsub = onAuthStateChanged(auth, (u) => {
+  //     if (!u) return navigate("/login");
+  //     setUser(u);
+  //     setPhotoURL(u.photoURL || "");
+  //     // Agar displayName nahi hai to email ka pehla part use karo
+  //     setDisplayName(
+  //       u.displayName || (u.email ? u.email.split("@")[0] : "User")
+  //     );
+  //     // TODO: firestore se appointments fetch karo
+  //     setAppointments([]);
+  //   });
+  //   return () => unsub();
+  // }, [navigate]);
+
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      if (!u) return navigate("/login");
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      if (!u) {
+        navigate("/login");
+        return;
+      }
+
       setUser(u);
+
       setPhotoURL(u.photoURL || "");
-      // Agar displayName nahi hai to email ka pehla part use karo
+
       setDisplayName(
-        u.displayName || (u.email ? u.email.split("@")[0] : "User")
+        u.displayName ||
+        (u.email
+          ? u.email.split("@")[0]
+          : "User")
       );
-      // TODO: firestore se appointments fetch karo
-      setAppointments([]);
+
+      try {
+        const q = query(
+          collection(db, "appointments"),
+          where("userId", "==", u.uid)
+        );
+
+        const snapshot =
+          await getDocs(q);
+
+        const appointmentData =
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+        setAppointments(
+          appointmentData
+        );
+      } catch (error) {
+        console.log(
+          "Appointment Fetch Error:",
+          error
+        );
+      }
     });
+
     return () => unsub();
   }, [navigate]);
+
+  const handleImageUpload = async (e) => {
+    try {
+      const file = e.target.files[0];
+
+      if (!file) return;
+
+      setUploading(true);
+
+      const imageRef = ref(
+        storage,
+        `profile-images/${Date.now()}-${file.name}`
+      );
+
+      await uploadBytes(
+        imageRef,
+        file
+      );
+
+      const downloadURL =
+        await getDownloadURL(
+          imageRef
+        );
+
+      await updateProfile(
+        auth.currentUser,
+        {
+          photoURL: downloadURL,
+        }
+      );
+
+      await auth.currentUser.reload();
+
+      setUser({
+        ...auth.currentUser,
+      });
+
+      setPhotoURL(downloadURL);
+
+      toast.success(
+        "Photo uploaded successfully"
+      );
+    } catch (error) {
+      console.log(
+        "Upload Error:",
+        error
+      );
+
+      toast.error(
+        "Upload failed"
+      );
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSave = async () => {
     try {
@@ -102,17 +220,22 @@ const Profile = () => {
 
           <div className="relative flex flex-col sm:flex-row items-center gap-6">
             <div className="relative">
-              {photoURL ? (
+              <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white">
                 <img
-                  src={photoURL}
+                  src={
+                    photoURL ||
+                    user?.photoURL ||
+                    "/default-avatar.png"
+                  }
                   alt="profile"
-                  className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg"
+                  className="w-full h-full object-cover object-center"
+                  onError={(e) => {
+                    e.target.src =
+                      "/default-avatar.png";
+                  }}
                 />
-              ) : (
-                <div className="w-28 h-28 rounded-full bg-white text-teal-700 flex items-center justify-center text-3xl font-bold border-4 border-white shadow-lg">
-                  {initials}
-                </div>
-              )}
+              </div>
+
               <span className="absolute bottom-1 right-1 bg-green-500 w-5 h-5 rounded-full border-2 border-white" />
             </div>
 
@@ -216,12 +339,41 @@ const Profile = () => {
                   className="w-full mt-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="https://..."
                 />
-                {photoURL && (
-                  <img
-                    src={photoURL}
-                    alt="preview"
-                    className="w-20 h-20 rounded-full object-cover border mt-3"
+                <div className="mt-4">
+                  <label className="text-sm font-medium text-gray-700">
+                    Upload Photo
+                  </label>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="
+      w-full
+      mt-1
+      border
+      rounded-lg
+      p-2
+      bg-white
+    "
                   />
+                </div>
+                {photoURL && (
+                  <div className="mt-3">
+                    <img
+                      src={photoURL}
+                      alt="preview"
+                      className="
+        w-24
+        h-24
+        rounded-full
+        object-cover
+        object-center
+        border
+        border-gray-200
+      "
+                    />
+                  </div>
                 )}
               </div>
 
@@ -295,37 +447,34 @@ const Profile = () => {
                   {appointments.map((a) => (
                     <li
                       key={a.id}
-                      className="flex items-center justify-between p-4 border rounded-xl hover:shadow-sm transition"
+                      className="bg-white border rounded-2xl p-4 shadow-sm hover:shadow-md transition"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="p-3 bg-teal-50 text-teal-700 rounded-lg">
-                          <Calendar size={18} />
-                        </div>
+                      <div className="flex justify-between items-start">
                         <div>
-                          <p className="font-semibold text-slate-800">
-                            {a.service}
+                          <h4 className="font-semibold text-slate-800 text-lg">
+                            {a.condition}
+                          </h4>
+
+                          <p className="text-sm text-gray-500 mt-1">
+                            📅 {a.date}
                           </p>
-                          <p className="text-xs text-gray-500 flex items-center gap-2 mt-0.5">
-                            <Clock size={12} /> {a.date}
-                            {a.phone && (
-                              <>
-                                <Phone size={12} className="ml-2" /> {a.phone}
-                              </>
-                            )}
+
+                          <p className="text-sm text-gray-500">
+                            📞 {a.phone}
                           </p>
                         </div>
+
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${a.status === "confirmed"
+                              ? "bg-blue-100 text-blue-700"
+                              : a.status === "completed"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-yellow-100 text-yellow-700"
+                            }`}
+                        >
+                          {a.status}
+                        </span>
                       </div>
-                      <span
-                        className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                          a.status === "completed"
-                            ? "bg-green-100 text-green-700"
-                            : a.status === "upcoming"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-yellow-100 text-yellow-700"
-                        }`}
-                      >
-                        {a.status}
-                      </span>
                     </li>
                   ))}
                 </ul>

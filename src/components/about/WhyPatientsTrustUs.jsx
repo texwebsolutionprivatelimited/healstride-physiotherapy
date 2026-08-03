@@ -46,7 +46,7 @@ const WhyPatientsTrustUs = () => {
             Patient Satisfaction
           </span>
 
-          <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 sm:mt-4 text-slate-900 leading-tight">
             Why Patients Trust Us
           </h2>
 

@@ -65,99 +65,199 @@ const ReviewForm = () => {
   };
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        
+    <section
+      className="
+        relative
+        min-h-screen
+        bg-cover
+        bg-center
+        bg-no-repeat
+        overflow-hidden
+        py-16
+        md:py-24
+      "
+      style={{
+        backgroundImage: "url('/review-bg.jpg')",
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-slate-900/75" />
+
+      {/* Blur Effects */}
+      <div className="absolute top-10 left-10 w-72 h-72 bg-teal-500/20 blur-3xl rounded-full" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full" />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
+
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 sm:mb-12"
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-12"
         >
-          <p className="uppercase tracking-[3px] sm:tracking-[4px] text-teal-600 font-semibold text-xs sm:text-sm">
+          <span
+            className="
+              inline-block
+              px-5
+              py-2
+              rounded-full
+              bg-teal-500/15
+              border
+              border-teal-400/30
+              text-teal-300
+              font-semibold
+              uppercase
+              tracking-[3px]
+              text-sm
+              backdrop-blur-md
+            "
+          >
             Patient Testimonials
-          </p>
+          </span>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mt-4 leading-tight">
-            Share Your Experience With Us
+          <h2
+            className="
+              mt-5
+              text-4xl
+              sm:text-5xl
+              md:text-6xl
+              font-bold
+              text-white
+              leading-tight
+            "
+          >
+            Share Your
+
+            <span className="block text-teal-400">
+              Experience With Us
+            </span>
           </h2>
 
-          <p className="text-slate-600 mt-4 sm:mt-5 max-w-2xl mx-auto leading-7 sm:leading-8 text-sm sm:text-base">
+          <p
+            className="
+              mt-5
+              text-gray-300
+              max-w-3xl
+              mx-auto
+              text-base
+              md:text-lg
+              leading-8
+            "
+          >
             We value your feedback. Tell us about your experience at
             HealStride Physiotherapy and help others make informed
             healthcare decisions.
           </p>
         </motion.div>
 
-        {/* Success Message */}
         {success && (
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 sm:px-5 py-4 rounded-2xl text-sm sm:text-base"
+            className="
+              mb-6
+              bg-green-500/20
+              backdrop-blur-md
+              border
+              border-green-400/30
+              text-white
+              px-5
+              py-4
+              rounded-2xl
+            "
           >
-            Thank you for your valuable feedback. Your review has been
-            submitted successfully and is currently under review by our team.
+            Thank you for your valuable feedback.
+            Your review has been submitted successfully.
           </motion.div>
         )}
 
-        {/* Form */}
         <motion.form
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
           onSubmit={handleSubmit}
-          className="bg-white border border-slate-100 shadow-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10"
+          className="
+            bg-white/10
+            backdrop-blur-xl
+            border
+            border-white/20
+            rounded-3xl
+            shadow-2xl
+            p-6
+            sm:p-8
+            lg:p-10
+          "
         >
-          <div className="space-y-5 sm:space-y-6">
-            
+          <div className="space-y-6">
+
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-white mb-2 font-medium">
                 Patient Name *
               </label>
 
               <input
                 type="text"
                 name="name"
-                placeholder="Enter your name"
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                placeholder="Enter your name"
+                className="
+                  w-full
+                  bg-white/10
+                  border
+                  border-white/20
+                  rounded-xl
+                  px-4
+                  py-3
+                  text-white
+                  placeholder:text-gray-300
+                  outline-none
+                  focus:ring-2
+                  focus:ring-teal-400
+                "
               />
             </div>
 
             {/* Profession */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-white mb-2 font-medium">
                 Profession (Optional)
               </label>
 
               <input
                 type="text"
                 name="designation"
-                placeholder="e.g. Teacher, Engineer, Student"
                 value={formData.designation}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                placeholder="Teacher, Engineer, Student"
+                className="
+                  w-full
+                  bg-white/10
+                  border
+                  border-white/20
+                  rounded-xl
+                  px-4
+                  py-3
+                  text-white
+                  placeholder:text-gray-300
+                  outline-none
+                  focus:ring-2
+                  focus:ring-teal-400
+                "
               />
             </div>
-
             {/* Rating */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">
+              <label className="block text-white mb-3 font-medium">
                 Rating *
               </label>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <motion.button
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.9 }}
+                  <button
                     key={star}
                     type="button"
                     onClick={() =>
@@ -168,21 +268,21 @@ const ReviewForm = () => {
                     }
                   >
                     <FaStar
-                      size={24}
+                      size={30}
                       className={
                         star <= formData.rating
                           ? "text-yellow-400"
-                          : "text-gray-300"
+                          : "text-gray-500"
                       }
                     />
-                  </motion.button>
+                  </button>
                 ))}
               </div>
             </div>
 
             {/* Review */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-white mb-2 font-medium">
                 Your Review *
               </label>
 
@@ -190,44 +290,58 @@ const ReviewForm = () => {
                 name="review"
                 rows="6"
                 required
-                placeholder="Share your treatment experience, recovery progress, and overall satisfaction with our services..."
                 value={formData.review}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 resize-none text-sm sm:text-base"
+                placeholder="Share your treatment experience..."
+                className="
+                  w-full
+                  bg-white/10
+                  border
+                  border-white/20
+                  rounded-xl
+                  px-4
+                  py-3
+                  text-white
+                  placeholder:text-gray-300
+                  resize-none
+                  outline-none
+                  focus:ring-2
+                  focus:ring-teal-400
+                "
               />
             </div>
 
-            {/* Note */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-              <p className="text-xs sm:text-sm text-slate-600">
+            <div className="bg-white/10 border border-white/20 rounded-xl p-4">
+              <p className="text-gray-200 text-sm">
                 All testimonials are reviewed for authenticity before being
                 published on our website.
               </p>
             </div>
 
-            {/* Submit Button */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <button
               type="submit"
               disabled={loading}
               className="
                 w-full
-                bg-teal-600
-                hover:bg-teal-700
+                bg-gradient-to-r
+                from-teal-500
+                to-cyan-500
+                hover:from-teal-600
+                hover:to-cyan-600
                 text-white
-                py-3 sm:py-4
+                py-4
                 rounded-xl
                 font-semibold
-                transition
+                shadow-lg
+                shadow-teal-500/30
+                transition-all
                 duration-300
                 disabled:opacity-50
-                disabled:cursor-not-allowed
-                text-sm sm:text-base
               "
             >
-              {loading ? "Submitting..." : "Send Testimonial"}
-            </motion.button>
+              {loading ? "Submitting..." : "Send Review"}
+            </button>
+
           </div>
         </motion.form>
       </div>

@@ -78,15 +78,15 @@ const Specialists = ({ limit = 3 }) => {
 </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center text-gray-600 mt-4 sm:mt-6 max-w-3xl mx-auto text-sm sm:text-base"
-        >
-          Our experienced specialists provide personalized physiotherapy
-          treatments.
-        </motion.p>
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="text-center text-gray-600 mt-4 sm:mt-6 max-w-3xl mx-auto text-sm sm:text-base"
+>
+  Our experienced specialists provide personalized physiotherapy
+  treatments focused on helping you recover faster and live pain-free.
+</motion.p>
 
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-14 justify-items-center">

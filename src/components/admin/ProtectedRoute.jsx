@@ -5,13 +5,24 @@ import { auth } from "../../firebase/firebase";
 
 const ProtectedRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (currentUser) => {
+        if (
+          currentUser &&
+          currentUser.email === import.meta.env.VITE_ADMIN_EMAIL
+        ) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+
+        setLoading(false);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
@@ -24,8 +35,8 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/adminlogin" replace />;
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
   }
 
   return children;
