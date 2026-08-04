@@ -101,9 +101,7 @@ const Blogs = () => {
                 {blog.title}
               </h2>
 
-<p className="text-sm text-slate-500 mt-2">
-  By {blog.author} • {blog.designation}
-</p>
+
 
               <p className="text-gray-600 text-base leading-6 mt-4">
                 {blog.description}
@@ -122,6 +120,17 @@ const Blogs = () => {
                   </div>
                 ))}
               </div>
+
+              <div className="mt-10 border-t pt-6">
+  <p className="text-lg">
+    <span className="font-semibold">Author:</span> {blog.author}
+  </p>
+
+  <p className="text-lg mt-2">
+    <span className="font-semibold">Designation:</span> {blog.designation}
+  </p>
+</div>
+
             </div>
           </article>
         ))}
