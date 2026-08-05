@@ -4,7 +4,7 @@ import {
     signInWithEmailAndPassword,
     onAuthStateChanged,
 } from "firebase/auth";
-import { auth, googleProvider } from "../firebase/firebase";
+import { auth, googleProvider } from "../firebase/firebase"; 
 import { useNavigate, Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -344,4 +344,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Login; 

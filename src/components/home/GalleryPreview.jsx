@@ -7,6 +7,8 @@ import gallery2 from "../../assets/images/gallery/gallery2.jpg";
 import gallery3 from "../../assets/images/gallery/gallery3.jpg";
 import gallery4 from "../../assets/images/gallery/gallery4.jpg";
 import gallery5 from "../../assets/images/gallery/gallery5.jpg";
+import gallery6 from "../../assets/images/gallery/gallery6.jpg";
+
 
 const GalleryPreview = () => {
   return (
@@ -48,88 +50,64 @@ const GalleryPreview = () => {
         </motion.p>
 
         {/* Gallery */}
-
         <div className="grid lg:grid-cols-3 gap-6 mt-12 md:mt-16">
 
-          {/* Left Large */}
-
+          {/* Left */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="overflow-hidden rounded-3xl shadow-lg group h-[300px] sm:h-[400px] lg:h-[500px]"
+            className="overflow-hidden rounded-3xl shadow-lg group h-[520px]"
           >
             <img
-              src={gallery1}
+              src={gallery6}
               alt="Clinic"
-              className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+              className="w-full h-full object-cover object-center group-hover:scale-110 transition duration-700"
             />
           </motion.div>
 
           {/* Middle */}
-
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-rows-2 gap-6 h-[520px]">
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="overflow-hidden rounded-3xl shadow-lg group h-[220px] sm:h-[240px]"
+              className="overflow-hidden rounded-3xl shadow-lg group"
             >
               <img
                 src={gallery2}
                 alt="Treatment"
-                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                className="w-full h-full object-cover object-center group-hover:scale-110 transition duration-700"
               />
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="overflow-hidden rounded-3xl shadow-lg group h-[220px] sm:h-[240px]"
+              className="overflow-hidden rounded-3xl shadow-lg group"
             >
               <img
                 src={gallery3}
                 alt="Equipment"
-                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                className="w-full h-full object-cover object-center group-hover:scale-110 transition duration-700"
               />
             </motion.div>
 
           </div>
 
           {/* Right */}
-
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-rows-2 gap-6 h-[520px]">
 
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="overflow-hidden rounded-3xl shadow-lg group h-[220px] sm:h-[240px]"
+              className="overflow-hidden rounded-3xl shadow-lg group"
             >
               <img
                 src={gallery4}
                 alt="Reception"
-                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                className="w-full h-full object-cover object-center group-hover:scale-110 transition duration-700"
               />
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="overflow-hidden rounded-3xl shadow-lg group h-[220px] sm:h-[240px]"
+              className="overflow-hidden rounded-3xl shadow-lg group"
             >
               <img
                 src={gallery5}
                 alt="Exercise"
-                className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                className="w-full h-full object-cover object-center group-hover:scale-110 transition duration-700"
               />
             </motion.div>
 
@@ -174,4 +152,4 @@ const GalleryPreview = () => {
   );
 };
 
-export default GalleryPreview;
+export default GalleryPreview;  

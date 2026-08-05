@@ -53,7 +53,7 @@ const GalleryPage = () => {
     >
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-white/40 backdrop-blur-sm"></div>
 
 
 
