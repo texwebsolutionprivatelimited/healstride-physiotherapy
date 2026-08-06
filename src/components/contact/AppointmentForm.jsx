@@ -62,6 +62,10 @@ const AppointmentForm = () => {
         profileImage: user.photoURL || "",
         googleName: user.displayName || "",
         status: "pending",
+
+        notificationCreatedAt: serverTimestamp(),
+        notificationRead: false,
+
         createdAt: serverTimestamp(),
       });
 

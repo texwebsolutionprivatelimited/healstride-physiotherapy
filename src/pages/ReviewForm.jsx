@@ -41,6 +41,7 @@ const ReviewForm = () => {
         image: "",
         active: false,
         status: "pending",
+        notificationRead: false,
         createdAt: serverTimestamp(),
       });
 

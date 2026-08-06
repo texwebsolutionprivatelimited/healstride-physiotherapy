@@ -65,6 +65,7 @@ const FAQSection = () => {
           email: questionForm.email,
           question: questionForm.question,
           status: "pending",
+          notificationRead: false,
           createdAt: serverTimestamp(),
         }
       );

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import AdminNotifications from "./AdminNotifications";
 import {
   collection,
   onSnapshot,
@@ -522,6 +523,8 @@ const AdminDashboard = () => {
 
 
           <div className="flex flex-wrap gap-2">
+
+            <AdminNotifications />
 
             {RANGE_PRESETS.map((item) => (
 
