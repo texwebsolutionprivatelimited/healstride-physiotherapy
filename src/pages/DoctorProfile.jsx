@@ -107,14 +107,14 @@ const DoctorProfile = () => {
 
   return (
 
-    <section className="py-20 bg-gray-50 min-h-screen">
+      <section className="pt-8 pb-16 bg-gray-50 min-h-screen">
 
       <div className="max-w-6xl mx-auto px-4">
 
 
         <Link
           to="/doctors"
-          className="inline-flex items-center gap-2 text-teal-600 mb-10"
+className="inline-flex items-center gap-2 text-teal-600 mb-10"
         >
 
           <ArrowLeft size={18} />
@@ -125,44 +125,40 @@ const DoctorProfile = () => {
 
 
 
-        <div className="
-          grid 
-          lg:grid-cols-2 
-          gap-12 
-          items-center
-        ">
+        <div
+  className="
+    grid
+    lg:grid-cols-2
+    gap-10
+    items-stretch
+  "
+>
 
 
           {/* Image */}
 
           <img
-
-            src={
-              doctor.image ||
-              "/default-user.png"
-            }
-
-            alt={doctor.name}
-
-            className="
-              w-full
-              h-[450px]
-              object-cover
-              rounded-3xl
-              shadow-xl
-            "
-
-          />
+  src={doctor.image || "/default-user.png"}
+  alt={doctor.name}
+  className="
+    w-full
+    h-full
+    min-h-[450px]
+    object-cover
+    rounded-3xl
+    shadow-xl
+  "
+/>
 
 
 
           {/* Details */}
 
-          <div>
+          <div className="flex flex-col justify-center h-full">
 
 
             <h1 className="
-              text-4xl
+              text-3xl md:text-4xl
               font-bold
               text-slate-800
             ">
@@ -188,7 +184,7 @@ const DoctorProfile = () => {
             <p className="
               mt-6
               text-gray-600
-              leading-8
+              leading-7 md:leading-8
             ">
 
               {doctor.description}
@@ -198,7 +194,7 @@ const DoctorProfile = () => {
 
 
 
-            <div className="space-y-5 mt-8">
+            <div className="space-y-5 mt-6 md:mt-8">
 
 
               <Info
@@ -272,7 +268,7 @@ const DoctorProfile = () => {
 
               className="
               inline-block
-              mt-8
+              mt-6 md:mt-8
               bg-teal-600
               hover:bg-teal-700
               text-white
