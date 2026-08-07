@@ -107,8 +107,8 @@ const DoctorProfile = () => {
 
   return (
 
-      <section className="pt-8 pb-16 bg-gray-50 min-h-screen">
-
+<section className="pt-10 lg:pt-12 pb-16">
+  
       <div className="max-w-6xl mx-auto px-4">
 
 
