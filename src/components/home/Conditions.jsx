@@ -5,21 +5,22 @@ import {
   FaHeartbeat,
   FaRunning,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import ConditionSlider from "./ConditionSlider";
 
 const conditions = [
-  "Knee Pain",
-  "Back Pain",
-  "Neck Pain",
-  "Shoulder Pain",
-  "Sciatica",
-  "Tennis Elbow",
-  "Frozen Shoulder",
-  "Osteoarthritis",
-  "Stroke Rehab",
-  "Sports Injury",
-  "Post Surgery Rehab",
-  "Plantar Fasciitis",
+  "kneePain",
+  "backPain",
+  "neckPain",
+  "shoulderPain",
+  "sciatica",
+  "tennisElbow",
+  "frozenShoulder",
+  "osteoarthritis",
+  "strokeRehab",
+  "sportsInjury",
+  "postSurgeryRehab",
+  "plantarFasciitis",
 ];
 
 const icons = [
@@ -38,6 +39,8 @@ const icons = [
 ];
 
 const Conditions = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -50,7 +53,7 @@ const Conditions = () => {
           transition={{ duration: 0.5 }}
           className="text-teal-600 uppercase tracking-[3px] sm:tracking-[5px] text-center font-semibold text-xs sm:text-sm"
         >
-          CONDITIONS WE TREAT
+          {t("conditions.heading")}
         </motion.p>
 
         <motion.h2
@@ -60,7 +63,7 @@ const Conditions = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mt-4 text-slate-900 leading-tight"
         >
-          Recover Faster. Live Better.
+          {t("conditions.title")}
         </motion.h2>
 
         <motion.p
@@ -70,9 +73,7 @@ const Conditions = () => {
           transition={{ duration: 0.7 }}
           className="text-gray-600 text-center mt-4 sm:mt-5 max-w-3xl mx-auto leading-7 sm:leading-8 text-sm sm:text-base"
         >
-          From sports injuries to chronic pain, HealStride offers
-          personalized physiotherapy solutions for a wide range of
-          musculoskeletal and neurological conditions.
+          {t("conditions.description")}
         </motion.p>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 mt-10 sm:mt-16 items-start">
@@ -106,12 +107,11 @@ const Conditions = () => {
                   </div>
 
                   <h3 className="mt-4 text-base sm:text-lg font-semibold text-slate-900">
-                    {item}
+                    {t(`conditions.items.${item}.name`)}
                   </h3>
 
                   <p className="mt-2 text-xs sm:text-sm text-gray-600">
-                    Expert physiotherapy treatment for{" "}
-                    {item.toLowerCase()}.
+                    {t(`conditions.items.${item}.description`)}
                   </p>
                 </motion.div>
               );

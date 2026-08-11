@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
 import { UserCircle } from "lucide-react";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import { NAVIGATION } from "../../../constants/navigation";
 import logo from "../../../assets/images/logo.png";
@@ -15,6 +16,8 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -45,6 +48,33 @@ const Navbar = () => {
     }
   };
 
+  const handleLanguageChange = () => {
+    const newLanguage = i18n.language === "en" ? "hi" : "en";
+
+    i18n.changeLanguage(newLanguage);
+
+    localStorage.setItem("language", newLanguage);
+  };
+
+  const getNavigationLabel = (item) => {
+    switch (item.path) {
+      case "/":
+        return t("navbar.home");
+
+      case "/about":
+        return t("navbar.about");
+
+      case "/services":
+        return t("navbar.services");
+
+      case "/contact":
+        return t("navbar.contact");
+
+      default:
+        return item.title;
+    }
+  };
+
   const ProfileIcon = ({ size = 40 }) =>
     user?.photoURL ? (
       <img
@@ -61,6 +91,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full bg-white shadow-md">
       <div className="max-w-7xl mx-auto h-16 md:h-20 px-3 sm:px-5 lg:px-8">
         <div className="flex items-center justify-between h-full">
+
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -25 }}
@@ -86,14 +117,14 @@ const Navbar = () => {
               <div className="min-w-0">
                 <h1
                   className="
-                  text-base
-                  sm:text-lg
-                  md:text-xl
-                  lg:text-2xl
-                  font-bold
-                  text-teal-700
-                  truncate
-                "
+                    text-base
+                    sm:text-lg
+                    md:text-xl
+                    lg:text-2xl
+                    font-bold
+                    text-teal-700
+                    truncate
+                  "
                 >
                   HealStride
                 </h1>
@@ -115,16 +146,49 @@ const Navbar = () => {
               >
                 <Link
                   to={item.path}
-                  className="font-medium text-gray-700 hover:text-teal-700 transition"
+                  className="
+                    font-medium
+                    text-gray-700
+                    hover:text-teal-700
+                    transition
+                  "
                 >
-                  {item.title}
+                  {getNavigationLabel(item)}
                 </Link>
               </motion.li>
             ))}
           </ul>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
+
+            {/* Language Button */}
+            <button
+              onClick={handleLanguageChange}
+              className="
+                flex
+                items-center
+                gap-2
+                border
+                border-teal-700
+                text-teal-700
+                px-4
+                py-2.5
+                rounded-xl
+                hover:bg-teal-50
+                transition
+                font-medium
+              "
+              title="Change Language"
+            >
+              <FaGlobe />
+
+              <span>
+                {i18n.language === "en" ? "हिन्दी" : "English"}
+              </span>
+            </button>
+
+            {/* Appointment Button */}
             <button
               onClick={handleBookAppointment}
               className="
@@ -137,9 +201,10 @@ const Navbar = () => {
                 transition
               "
             >
-              Book Appointment
+              {t("navbar.bookAppointment")}
             </button>
 
+            {/* Login / Profile */}
             {!user ? (
               <Link
                 to="/login"
@@ -159,15 +224,48 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={() => navigate("/profile")}
-                className="rounded-full hover:ring-2 hover:ring-teal-500 transition"
+                className="
+                  rounded-full
+                  hover:ring-2
+                  hover:ring-teal-500
+                  transition
+                "
               >
                 <ProfileIcon size={42} />
               </button>
             )}
           </div>
 
-          {/* Tablet CTA */}
+          {/* Tablet Actions */}
           <div className="hidden md:flex lg:hidden items-center gap-3">
+
+            {/* Language Button */}
+            <button
+              onClick={handleLanguageChange}
+              className="
+                flex
+                items-center
+                gap-2
+                border
+                border-teal-700
+                text-teal-700
+                px-3
+                py-2
+                rounded-lg
+                text-sm
+                hover:bg-teal-50
+                transition
+              "
+              title="Change Language"
+            >
+              <FaGlobe />
+
+              <span>
+                {i18n.language === "en" ? "हिन्दी" : "English"}
+              </span>
+            </button>
+
+            {/* Tablet Appointment Button */}
             <button
               onClick={handleBookAppointment}
               className="
@@ -179,9 +277,10 @@ const Navbar = () => {
                 text-sm
               "
             >
-              Book
+              {t("navbar.bookAppointment")}
             </button>
 
+            {/* Tablet Menu Button */}
             <button
               onClick={() => setOpen(!open)}
               className="text-teal-700 text-2xl"
@@ -224,6 +323,8 @@ const Navbar = () => {
               overflow-y-auto
             "
           >
+
+            {/* Navigation Links */}
             <ul className="flex flex-col gap-1">
               {NAVIGATION.map((item) => (
                 <li key={item.id}>
@@ -242,12 +343,40 @@ const Navbar = () => {
                       transition
                     "
                   >
-                    {item.title}
+                    {getNavigationLabel(item)}
                   </Link>
                 </li>
               ))}
             </ul>
 
+            {/* Mobile Language Button */}
+            <button
+              onClick={handleLanguageChange}
+              className="
+                w-full
+                mt-4
+                flex
+                items-center
+                justify-center
+                gap-2
+                border
+                border-teal-700
+                text-teal-700
+                py-3
+                rounded-xl
+                font-medium
+                hover:bg-teal-50
+                transition
+              "
+            >
+              <FaGlobe />
+
+              <span>
+                {i18n.language === "en" ? "हिन्दी" : "English"}
+              </span>
+            </button>
+
+            {/* Appointment Button */}
             <button
               onClick={() => {
                 setOpen(false);
@@ -255,7 +384,7 @@ const Navbar = () => {
               }}
               className="
                 w-full
-                mt-5
+                mt-3
                 bg-teal-700
                 text-white
                 py-3
@@ -263,9 +392,10 @@ const Navbar = () => {
                 font-medium
               "
             >
-              Book Appointment
+              {t("navbar.bookAppointment")}
             </button>
 
+            {/* Login / Profile */}
             {!user ? (
               <Link
                 to="/login"
@@ -287,6 +417,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <>
+                {/* Profile */}
                 <button
                   onClick={() => {
                     setOpen(false);
@@ -306,11 +437,13 @@ const Navbar = () => {
                   "
                 >
                   <ProfileIcon size={40} />
+
                   <span className="font-semibold text-gray-800">
                     My Profile
                   </span>
                 </button>
 
+                {/* Logout */}
                 <button
                   onClick={() => {
                     setOpen(false);

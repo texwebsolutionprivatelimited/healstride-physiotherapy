@@ -14,6 +14,8 @@ const Specialists = ({ limit = 3 }) => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const showViewAllButton = doctors.length > limit;
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
