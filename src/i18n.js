@@ -16,7 +16,7 @@ i18n
       },
     },
 
-    lng: "en",
+    lng: localStorage.getItem("language") || "en",
 
     fallbackLng: "en",
 

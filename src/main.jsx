@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { LanguageProvider } from "./context/LanguageContext";
 
 import "./index.css";
 import "./i18n";
@@ -13,11 +14,12 @@ import { Toaster } from "react-hot-toast";
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-
-          <App />
-      </AuthProvider>
-    </BrowserRouter>
+  <LanguageProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </LanguageProvider>
+</BrowserRouter>
 
     <Toaster
       position="top-right"

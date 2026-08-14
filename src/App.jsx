@@ -8,6 +8,8 @@ import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
 import ScrollToHash from "./components/ScrollToHash";
+import AdminServices from "./components/admin/AdminServices";
+
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -17,7 +19,7 @@ import Booking from "./pages/Booking";
 
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
-
+           
 import Doctors from "./pages/Doctors";
 import DoctorProfile from "./pages/DoctorProfile";
 import Specialists from "./components/home/Specialists";
@@ -179,6 +181,10 @@ function App() {
           <Route
             path="/admin/blogs"
             element={<AdminBlogs />}
+          />
+          <Route
+            path="services"
+            element={<AdminServices />}
           />
           <Route
             path="settings"
