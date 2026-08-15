@@ -29,15 +29,15 @@ const CoreValues = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-16"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-8 md:mb-12"
         >
           <p className="uppercase tracking-[3px] md:tracking-[5px] text-teal-600 font-semibold text-sm md:text-base">
             {t("coreValues.badge")}

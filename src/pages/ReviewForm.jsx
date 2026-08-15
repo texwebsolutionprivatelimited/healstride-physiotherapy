@@ -67,7 +67,7 @@ const ReviewForm = () => {
   };
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+    <section className="py-10 sm:py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <motion.div
@@ -75,17 +75,17 @@ const ReviewForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-6 sm:mb-12"
         >
           <p className="uppercase tracking-[3px] sm:tracking-[4px] text-teal-600 font-semibold text-xs sm:text-sm">
             {t("reviewForm.badge")}
           </p>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mt-4 leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-slate-900 mt-2 sm:mt-4 leading-tight">
             {t("reviewForm.title")}
           </h2>
 
-          <p className="text-slate-600 mt-4 sm:mt-5 max-w-2xl mx-auto leading-7 sm:leading-8 text-sm sm:text-base">
+          <p className="text-slate-600 mt-2 sm:mt-5 max-w-2xl mx-auto leading-relaxed sm:leading-8 text-xs sm:text-base">
             {t("reviewForm.subtitle")}
           </p>
         </motion.div>
@@ -95,7 +95,7 @@ const ReviewForm = () => {
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 sm:px-5 py-4 rounded-2xl text-sm sm:text-base"
+            className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-base"
           >
             {t("reviewForm.successMsg")}
           </motion.div>
@@ -108,12 +108,12 @@ const ReviewForm = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
           onSubmit={handleSubmit}
-          className="bg-white border border-slate-100 shadow-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10"
+          className="bg-white border border-slate-100 shadow-md sm:shadow-xl rounded-2xl sm:rounded-3xl p-4 xs:p-6 sm:p-8 lg:p-10"
         >
-          <div className="space-y-5 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                 {t("reviewForm.fullNameLabel")}
               </label>
 
@@ -124,13 +124,13 @@ const ReviewForm = () => {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                className="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 outline-none focus:ring-2 focus:ring-teal-500 text-xs sm:text-base"
               />
             </div>
 
             {/* Occupation */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                 {t("reviewForm.occupationLabel")}
               </label>
 
@@ -140,13 +140,13 @@ const ReviewForm = () => {
                 placeholder={t("reviewForm.occupationPlaceholder")}
                 value={formData.designation}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                className="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 outline-none focus:ring-2 focus:ring-teal-500 text-xs sm:text-base"
               />
             </div>
 
             {/* Rating */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-2 sm:mb-3">
                 {t("reviewForm.ratingLabel")}
               </label>
 
@@ -166,11 +166,10 @@ const ReviewForm = () => {
                     aria-label={`Rate ${star} stars`}
                   >
                     <FaStar
-                      size={24}
                       className={
-                        star <= formData.rating
+                        (star <= formData.rating
                           ? "text-yellow-400"
-                          : "text-gray-300"
+                          : "text-gray-300") + " text-xl sm:text-2xl"
                       }
                     />
                   </motion.button>
@@ -180,23 +179,23 @@ const ReviewForm = () => {
 
             {/* Review */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                 {t("reviewForm.feedbackLabel")}
               </label>
 
               <textarea
                 name="review"
-                rows="6"
+                rows="4"
                 required
                 placeholder={t("reviewForm.feedbackPlaceholder")}
                 value={formData.review}
                 onChange={handleChange}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 resize-none text-sm sm:text-base"
+                className="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 outline-none focus:ring-2 focus:ring-teal-500 resize-none text-xs sm:text-base"
               />
             </div>
 
             {/* Note */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 sm:p-4">
               <p className="text-xs sm:text-sm text-slate-600">
                 {t("reviewForm.verificationNote")}
               </p>
@@ -220,7 +219,7 @@ const ReviewForm = () => {
                 duration-300
                 disabled:opacity-50
                 disabled:cursor-not-allowed
-                text-sm sm:text-base
+                text-xs sm:text-base
               "
             >
               {loading ? t("reviewForm.submitting") : t("reviewForm.submitBtn")}

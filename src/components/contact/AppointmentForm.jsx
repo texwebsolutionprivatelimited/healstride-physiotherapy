@@ -95,7 +95,7 @@ const AppointmentForm = () => {
 
   return (
     <section
-      className="py-16 md:py-20 bg-cover bg-center bg-no-repeat relative"
+      className="py-8 sm:py-12 lg:py-16 bg-cover bg-center bg-no-repeat relative"
       style={{
         backgroundImage: "url('/appointment-bg.jpg')",
       }}
@@ -104,12 +104,12 @@ const AppointmentForm = () => {
 
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="text-center mb-10">
+          <div className="text-center mb-6 sm:mb-8">
             <span className="text-teal-600 font-semibold uppercase tracking-[3px] text-sm">
               {t("appointmentForm.badge")}
             </span>

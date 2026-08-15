@@ -7,8 +7,8 @@ const ServicesCTA = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 bg-teal-600 text-white">
-      <div className="max-w-7xl mx-auto px-6 text-center">
+    <section className="py-8 sm:py-12 lg:py-16 bg-teal-600 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

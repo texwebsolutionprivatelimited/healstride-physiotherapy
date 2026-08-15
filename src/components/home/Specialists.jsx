@@ -36,7 +36,7 @@ const Specialists = () => {
   }, []);
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="py-8 sm:py-12 lg:py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <motion.p
@@ -54,7 +54,7 @@ const Specialists = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mt-4"
+          className="text-center text-2xl sm:text-3xl lg:text-5xl font-bold text-slate-900 mt-2 sm:mt-4 leading-tight"
         >
           {t("specialists.title")}
         </motion.h2>
@@ -64,13 +64,13 @@ const Specialists = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center text-gray-600 mt-4 sm:mt-6 max-w-3xl mx-auto text-sm sm:text-base"
+          className="text-center text-gray-600 mt-2 sm:mt-4 max-w-3xl mx-auto text-xs sm:text-base leading-relaxed sm:leading-normal"
         >
           {t("specialists.subtitle")}
         </motion.p>
 
         {/* Doctors Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 mt-10 sm:mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 mt-6 sm:mt-12">
           {doctors.map((doctor, index) => (
             <motion.div
               key={doctor.id}
@@ -81,11 +81,13 @@ const Specialists = () => {
                 duration: 0.5,
                 delay: index * 0.1,
               }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -6 }}
               className="
                 bg-white
-                rounded-3xl
-                shadow-lg
+                rounded-2xl
+                sm:rounded-3xl
+                shadow-md
+                sm:shadow-lg
                 overflow-hidden
                 border
                 border-gray-100
@@ -99,29 +101,30 @@ const Specialists = () => {
                 alt={doctor.name}
                 className="
                   w-full
-                  h-[280px]
-                  sm:h-[340px]
+                  h-[220px]
+                  xs:h-[260px]
+                  sm:h-[320px]
                   lg:h-[380px]
                   object-cover
                 "
               />
 
-              <div className="p-5 sm:p-8">
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+              <div className="p-4 xs:p-5 sm:p-8">
+                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-slate-900">
                   {doctor.name}
                 </h3>
 
-                <p className="text-teal-600 font-semibold mt-2 text-sm sm:text-base">
+                <p className="text-teal-600 font-semibold mt-1.5 sm:mt-2 text-xs xs:text-sm sm:text-base">
                   {doctor.role}
                 </p>
 
-                <div className="mt-5 space-y-3 text-gray-600 text-sm sm:text-base">
-                  <p className="flex gap-3 items-center">
+                <div className="mt-3.5 sm:mt-5 space-y-2 sm:space-y-3 text-gray-600 text-xs sm:text-base">
+                  <p className="flex gap-2.5 sm:gap-3 items-center">
                     <FaAward className="text-teal-600 flex-shrink-0" />
                     {doctor.experience}
                   </p>
 
-                  <p className="flex gap-3 items-center">
+                  <p className="flex gap-2.5 sm:gap-3 items-center">
                     <FaAward className="text-teal-600 flex-shrink-0" />
                     {doctor.specialization}
                   </p>
@@ -130,7 +133,8 @@ const Specialists = () => {
                 <Link
                   to={`/doctors/${doctor.slug}`}
                   className="
-                    mt-6
+                    mt-4
+                    sm:mt-6
                     inline-flex
                     items-center
                     gap-2
@@ -138,10 +142,12 @@ const Specialists = () => {
                     font-semibold
                     hover:text-teal-700
                     transition
+                    text-xs
+                    sm:text-base
                   "
                 >
                   {t("specialists.viewProfile")}
-                  <FaArrowRight />
+                  <FaArrowRight className="text-xs sm:text-sm" />
                 </Link>
               </div>
             </motion.div>
@@ -154,7 +160,7 @@ const Specialists = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mt-10 sm:mt-12"
+          className="text-center mt-8 sm:mt-12"
         >
           <Link
             to="/doctors"
@@ -165,11 +171,12 @@ const Specialists = () => {
               bg-teal-600
               hover:bg-teal-700
               text-white
-              px-6 sm:px-8
+              px-5 sm:px-8
               py-3
               rounded-xl
               transition
               font-medium
+              text-xs xs:text-sm sm:text-base
             "
           >
             {t("specialists.viewAllDoctors")}

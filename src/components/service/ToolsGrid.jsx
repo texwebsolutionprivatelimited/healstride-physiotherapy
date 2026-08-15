@@ -98,7 +98,7 @@ const ToolsGrid = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-slate-50 overflow-hidden">
+    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -106,7 +106,7 @@ const ToolsGrid = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-8 md:mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             {t("toolsGrid.title")}

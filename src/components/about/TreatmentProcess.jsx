@@ -35,11 +35,11 @@ const TreatmentProcess = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Heading */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8 sm:mb-12">
           <span className="text-blue-600 font-semibold uppercase tracking-wider">
             {t("treatmentProcess.badge")}
           </span>

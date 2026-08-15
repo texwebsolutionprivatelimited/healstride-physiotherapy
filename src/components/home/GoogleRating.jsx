@@ -34,29 +34,29 @@ const GoogleRating = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-white py-20">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-white py-8 sm:py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-6 sm:mb-10"
         >
-          <p className="text-teal-600 font-semibold uppercase tracking-widest">
+          <p className="text-teal-600 font-semibold uppercase tracking-wider text-xs sm:text-sm">
             {t("googleRating.badge")}
           </p>
 
-          <h2 className="text-4xl font-bold mt-3 text-slate-900">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2 sm:mt-3 text-slate-900 leading-tight">
             {t("googleRating.title")}
           </h2>
 
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-2 sm:mt-4 text-gray-600 max-w-2xl mx-auto text-xs sm:text-sm lg:text-base leading-relaxed sm:leading-normal">
             {t("googleRating.subtitle")}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
           {statsData.map((item, index) => (
             <motion.div
               key={index}
@@ -68,20 +68,20 @@ const GoogleRating = () => {
               }}
               viewport={{ once: true }}
               whileHover={{
-                y: -10,
-                scale: 1.04,
+                y: -6,
+                scale: 1.03,
               }}
-              className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 text-center"
+              className="bg-white rounded-2xl sm:rounded-3xl shadow-md sm:shadow-xl border border-gray-100 p-3.5 xs:p-5 sm:p-6 lg:p-8 text-center flex flex-col justify-center items-center"
             >
-              <div className="flex justify-center text-teal-600 mb-5">
+              <div className="flex justify-center text-teal-600 mb-2 sm:mb-5 text-2xl sm:text-3xl">
                 {item.icon}
               </div>
 
-              <h3 className="text-4xl font-bold text-slate-900">
+              <h3 className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">
                 {item.number}
               </h3>
 
-              <p className="mt-3 text-gray-600">
+              <p className="mt-1 sm:mt-3 text-xs sm:text-sm lg:text-base text-gray-600 leading-snug">
                 {t(item.titleKey)}
               </p>
             </motion.div>

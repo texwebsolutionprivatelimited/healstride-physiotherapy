@@ -127,15 +127,15 @@ const ServicesGrid = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-10 sm:py-12 md:py-16 bg-gray-50">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-12"
+          className="text-center mb-6 sm:mb-10"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">
             {t("servicesGrid.pageTitle")}

@@ -6,7 +6,7 @@ const CTA = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-r from-blue-600 to-cyan-500">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-r from-blue-600 to-cyan-500">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -8,12 +8,16 @@ const ServiceHero = () => {
     <section
       className="
         relative
-        min-h-screen
-        md:min-h-[75vh]
+        min-h-[auto]
+        sm:min-h-[60vh]
+        lg:min-h-[75vh]
         flex
         items-center
         justify-center
         overflow-hidden
+        py-8
+        sm:py-12
+        lg:py-16
       "
       style={{
         backgroundImage:
@@ -31,10 +35,10 @@ const ServiceHero = () => {
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 60 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.8,
+          duration: 0.7,
           ease: "easeOut",
         }}
         className="
@@ -46,7 +50,8 @@ const ServiceHero = () => {
           lg:px-8
           max-w-5xl
           mx-auto
-          py-16
+          py-6
+          sm:py-10
         "
       >
         {/* Badge */}

@@ -8,12 +8,16 @@ const ContactHero = () => {
     <section
       className="
       relative
-      min-h-screen
-      md:min-h-[75vh]
+      min-h-[auto]
+      sm:min-h-[60vh]
+      lg:min-h-[75vh]
       flex
       items-center
       justify-center
       overflow-hidden
+      py-8
+      sm:py-12
+      lg:py-16
       "
     >
       {/* Background Image */}
@@ -34,14 +38,14 @@ const ContactHero = () => {
       <motion.div
         initial={{
           opacity: 0,
-          y: 50,
+          y: 40,
         }}
         animate={{
           opacity: 1,
           y: 0,
         }}
         transition={{
-          duration: 0.8,
+          duration: 0.7,
         }}
         className="
         relative
@@ -52,6 +56,8 @@ const ContactHero = () => {
         lg:px-8
         max-w-5xl
         mx-auto
+        py-6
+        sm:py-10
         "
       >
         {/* Badge */}

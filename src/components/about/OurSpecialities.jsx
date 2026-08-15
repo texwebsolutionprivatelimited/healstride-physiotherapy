@@ -46,7 +46,7 @@ const OurSpecialities = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-16 md:py-20 bg-gray-50 overflow-hidden">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -54,7 +54,7 @@ const OurSpecialities = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-8 sm:mb-12"
         >
           <span className="text-blue-600 font-semibold uppercase tracking-wider">
             {t("ourSpecialities.badge")}

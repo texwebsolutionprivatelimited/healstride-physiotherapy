@@ -43,14 +43,14 @@ const Login = () => {
 
   return (
     <div
-      className="min-h-screen relative flex items-center justify-center px-4 bg-cover bg-center"
+      className="min-h-screen relative flex items-center justify-center px-4 py-8 sm:py-12 bg-cover bg-center"
       style={{
         backgroundImage: "url('/login-bg.png')",
       }}
     >
       <div className="absolute inset-0 bg-black/50"></div>
 
-      <div className="relative z-10 w-full max-w-md bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8">
+      <div className="relative z-10 w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl p-5 sm:p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-900">
             {t("auth.welcomeBack")}

@@ -43,12 +43,12 @@ const GalleryCategory = ({ category, title, titleKey, defaultTitle }) => {
   };
 
   return (
-    <section className="pt-28 pb-20 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900">
             {displayTitle}

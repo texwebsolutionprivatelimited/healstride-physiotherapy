@@ -71,11 +71,11 @@ const DoctorProfile = () => {
   }
 
   return (
-    <section className="py-20 bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <Link
           to="/doctors"
-          className="inline-flex items-center gap-2 text-teal-600 mb-10 font-medium"
+          className="inline-flex items-center gap-2 text-teal-600 mb-6 sm:mb-8 font-medium"
         >
           <ArrowLeft size={18} />
           {t("doctorProfile.back")}

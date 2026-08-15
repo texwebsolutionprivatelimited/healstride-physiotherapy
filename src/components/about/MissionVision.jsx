@@ -6,7 +6,7 @@ const MissionVision = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -14,7 +14,7 @@ const MissionVision = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-8 sm:mb-12"
         >
           <span className="text-blue-600 font-semibold uppercase tracking-wider">
             {t("missionVision.badge")}

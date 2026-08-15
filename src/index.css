@@ -4,6 +4,7 @@ html,
 body,
 #root {
   width: 100%;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
@@ -18,4 +19,8 @@ svg,
 video {
   max-width: 100%;
   height: auto;
+}
+
+.swiper-wrapper {
+  max-width: 100%;
 }

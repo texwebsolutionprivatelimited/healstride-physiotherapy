@@ -62,7 +62,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white shadow-md">
-      <div className="max-w-7xl mx-auto h-16 md:h-20 px-3 sm:px-5 lg:px-8">
+      <div className="max-w-7xl mx-auto h-14 xs:h-16 md:h-20 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
           <motion.div
@@ -72,13 +72,14 @@ const Navbar = () => {
           >
             <Link
               to="/"
-              className="flex items-center gap-2 sm:gap-3 min-w-0"
+              className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 min-w-0"
             >
               <img
                 src={logo}
                 alt="HealStride Logo"
                 className="
-                  h-10 w-10
+                  h-9 w-9
+                  xs:h-10 xs:w-10
                   sm:h-12 sm:w-12
                   md:h-14 md:w-14
                   object-contain
@@ -89,7 +90,8 @@ const Navbar = () => {
               <div className="min-w-0">
                 <h1
                   className="
-                  text-base
+                  text-sm
+                  xs:text-base
                   sm:text-lg
                   md:text-xl
                   lg:text-2xl

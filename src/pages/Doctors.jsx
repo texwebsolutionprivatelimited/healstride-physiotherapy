@@ -53,9 +53,9 @@ const Doctors = () => {
 
   return (
     <section className="
-      py-12
-      sm:py-16
-      lg:py-20
+      py-8
+      sm:py-12
+      lg:py-16
       bg-gray-50
       min-h-screen
     ">

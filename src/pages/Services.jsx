@@ -16,15 +16,15 @@ const Services = () => {
 
       {/* Content */}
       <div className="relative z-10">
-        <section className="py-20 md:py-24">
-          <div className="max-w-6xl mx-auto px-4">
+        <section className="py-8 sm:py-12 lg:py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
             {/* Heading */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-14"
+              transition={{ duration: 0.7 }}
+              className="text-center mb-8 sm:mb-10"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900">
                 Our Services

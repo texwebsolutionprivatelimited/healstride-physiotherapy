@@ -36,43 +36,86 @@ const sliderImages = [...imagesData, ...imagesData];
 const ConditionSlider = () => {
   const { t } = useTranslation();
 
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 768px)").matches;
-
   return (
-    <Swiper
-      direction="vertical"
-      slidesPerView={3}
-      spaceBetween={20}
-      loop={true}
-      speed={8000}
-      allowTouchMove={!isMobile}
-      autoplay={{
-        delay: 0,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      }}
-      modules={[Autoplay]}
-      className="h-[930px]"
-      style={{ touchAction: "pan-y" }}
-    >
-      {sliderImages.map((item, index) => (
-        <SwiperSlide key={index}>
-          <div className="relative h-[290px] rounded-3xl overflow-hidden shadow-2xl group">
-            <img
-              src={item.image}
-              alt={t(item.titleKey)}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-            <h3 className="absolute bottom-6 left-6 text-white text-3xl font-bold">
-              {t(item.titleKey)}
-            </h3>
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <>
+      {/* Mobile & Tablet View: Horizontal Slider */}
+      <div className="block lg:hidden w-full max-w-full overflow-hidden">
+        <Swiper
+          direction="horizontal"
+          slidesPerView={1}
+          spaceBetween={14}
+          loop={true}
+          speed={800}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          modules={[Autoplay]}
+          breakpoints={{
+            480: {
+              slidesPerView: 1.4,
+              spaceBetween: 16,
+            },
+            640: {
+              slidesPerView: 1.8,
+              spaceBetween: 18,
+            },
+          }}
+          className="w-full h-[220px] xs:h-[250px] sm:h-[280px]"
+        >
+          {sliderImages.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div className="relative h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg group">
+                <img
+                  src={item.image}
+                  alt={t(item.titleKey)}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+                <h3 className="absolute bottom-4 left-4 right-4 text-white text-lg xs:text-xl font-bold truncate">
+                  {t(item.titleKey)}
+                </h3>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {/* Desktop View: Vertical Slider */}
+      <div className="hidden lg:block">
+        <Swiper
+          direction="vertical"
+          slidesPerView={3}
+          spaceBetween={20}
+          loop={true}
+          speed={6000}
+          autoplay={{
+            delay: 0,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          modules={[Autoplay]}
+          className="h-[800px]"
+        >
+          {sliderImages.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div className="relative h-[245px] rounded-3xl overflow-hidden shadow-xl group">
+                <img
+                  src={item.image}
+                  alt={t(item.titleKey)}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+                <h3 className="absolute bottom-5 left-5 text-white text-2xl font-bold">
+                  {t(item.titleKey)}
+                </h3>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
   );
 };
 

@@ -72,15 +72,15 @@ const ContactInfo = () => {
   ];
 
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-6 sm:mb-10"
         >
           <span className="text-teal-600 font-semibold uppercase tracking-[3px] sm:tracking-wider text-sm">
             {t("contactInfo.badge")}
