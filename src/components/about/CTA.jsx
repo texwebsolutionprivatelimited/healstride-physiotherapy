@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { Calendar, ArrowRight, Phone } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const CTA = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-r from-blue-600 to-cyan-500">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -14,35 +16,32 @@ const CTA = () => {
           className="text-center"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Start Your Pain-Free Journey Today
+            {t("cta.title")}
           </h2>
 
           <p className="mt-4 text-white/90 text-base md:text-lg max-w-2xl mx-auto">
-            Our experienced physiotherapists are ready to help you recover, move better, and live healthier.
+            {t("cta.subtitle")}
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-
             <a
               href="/booking"
               className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:scale-105 transition"
             >
               <Calendar className="w-5 h-5" />
-              Book Appointment
+              {t("cta.bookBtn")}
               <ArrowRight className="w-5 h-5" />
             </a>
 
             <a
-              href="tel:+919876543210"
+              href="tel:+919569274008"
               className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-blue-600 transition"
             >
               <Phone className="w-5 h-5" />
-              Call Us Now
+              {t("cta.callBtn")}
             </a>
-
           </div>
         </motion.div>
-
       </div>
     </section>
   );

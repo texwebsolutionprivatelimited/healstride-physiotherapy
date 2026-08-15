@@ -7,51 +7,47 @@ import {
   HeartPulse,
   ShieldPlus,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const specialities = [
+const specialitiesData = [
   {
     icon: Bone,
-    title: "Back & Neck Pain",
-    description:
-      "Effective treatment for chronic back pain, neck stiffness, and posture-related issues.",
+    titleKey: "ourSpecialities.s1Title",
+    descKey: "ourSpecialities.s1Desc",
   },
   {
     icon: Dumbbell,
-    title: "Sports Injury Rehab",
-    description:
-      "Recovery programs designed for athletes and active individuals to regain strength and mobility.",
+    titleKey: "ourSpecialities.s2Title",
+    descKey: "ourSpecialities.s2Desc",
   },
   {
     icon: Activity,
-    title: "Post Surgery Rehabilitation",
-    description:
-      "Personalized physiotherapy plans to accelerate recovery after surgeries and injuries.",
+    titleKey: "ourSpecialities.s3Title",
+    descKey: "ourSpecialities.s3Desc",
   },
   {
     icon: HeartPulse,
-    title: "Arthritis Management",
-    description:
-      "Pain management and mobility improvement programs for arthritis and joint conditions.",
+    titleKey: "ourSpecialities.s4Title",
+    descKey: "ourSpecialities.s4Desc",
   },
   {
     icon: Brain,
-    title: "Neurological Physiotherapy",
-    description:
-      "Specialized care for stroke, Parkinson’s disease, and neurological disorders.",
+    titleKey: "ourSpecialities.s5Title",
+    descKey: "ourSpecialities.s5Desc",
   },
   {
     icon: ShieldPlus,
-    title: "Pain Relief Therapy",
-    description:
-      "Advanced techniques including manual therapy, dry needling, and electrotherapy.",
+    titleKey: "ourSpecialities.s6Title",
+    descKey: "ourSpecialities.s6Desc",
   },
 ];
 
 const OurSpecialities = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 md:py-20 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -61,23 +57,21 @@ const OurSpecialities = () => {
           className="text-center mb-14"
         >
           <span className="text-blue-600 font-semibold uppercase tracking-wider">
-            Our Expertise
+            {t("ourSpecialities.badge")}
           </span>
 
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800">
-            Our Specialities
+            {t("ourSpecialities.title")}
           </h2>
 
           <p className="mt-4 text-gray-600 max-w-3xl mx-auto text-base sm:text-lg">
-            Comprehensive physiotherapy solutions designed to relieve pain,
-            restore movement, and improve your overall quality of life.
+            {t("ourSpecialities.subtitle")}
           </p>
         </motion.div>
 
         {/* Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          {specialities.map((item, index) => (
+          {specialitiesData.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -100,17 +94,15 @@ const OurSpecialities = () => {
               </div>
 
               <h3 className="text-xl font-bold text-slate-800 mb-3">
-                {item.title}
+                {t(item.titleKey)}
               </h3>
 
               <p className="text-gray-600 leading-7">
-                {item.description}
+                {t(item.descKey)}
               </p>
             </motion.div>
           ))}
-
         </div>
-
       </div>
     </section>
   );

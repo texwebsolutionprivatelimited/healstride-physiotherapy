@@ -1,23 +1,24 @@
 import { blogs } from "../data/blogs";
+import { useTranslation } from "react-i18next";
 
 const Blogs = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="bg-gray-50 py-20">
       <div className="max-w-3xl mx-auto px-6">
         {/* Page Header */}
         <div className="text-center mb-20">
           <p className="text-teal-600 font-semibold uppercase tracking-widest">
-            Health Articles
+            {t("blogsPage.badge")}
           </p>
 
           <h1 className="text-5xl font-bold mt-3 text-gray-900">
-            HealStride Health Blog
+            {t("blogsPage.title")}
           </h1>
 
           <p className="text-gray-600 text-lg mt-5 max-w-3xl mx-auto">
-            Explore expert physiotherapy advice, rehabilitation techniques,
-            posture correction tips, injury prevention strategies, and wellness
-            articles written by HealStride specialists.
+            {t("blogsPage.subtitle")}
           </p>
         </div>
 

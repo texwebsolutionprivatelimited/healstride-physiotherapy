@@ -1,42 +1,39 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Image, Activity, Stethoscope } from "lucide-react";
-
-const categories = [
-  {
-    title: "Clinic Photos",
-    description:
-      "Explore our modern clinic environment, reception area and patient-friendly spaces.",
-    path: "/gallery/clinic",
-    icon: <Image size={28} />,
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef",
-  },
-  {
-    title: "Machine Photos",
-    description:
-      "Advanced physiotherapy equipment used for effective pain management and recovery.",
-    path: "/gallery/machine",
-    icon: <Activity size={28} />,
-    image:
-      "https://images.unsplash.com/photo-1580281657527-47f249e8f4df",
-  },
-  {
-    title: "Treatment Photos",
-    description:
-      "Professional therapy sessions focused on rehabilitation and patient care.",
-    path: "/gallery/treatment",
-    icon: <Stethoscope size={28} />,
-    image:
-      "https://images.unsplash.com/photo-1516549655169-df83a0774514",
-  },
-];
-
+import { useTranslation } from "react-i18next";
 
 const GalleryPage = () => {
+  const { t } = useTranslation();
+
+  const categories = [
+    {
+      titleKey: "galleryPage.cat1Title",
+      descKey: "galleryPage.cat1Desc",
+      path: "/gallery/clinic",
+      icon: <Image size={28} />,
+      image:
+        "https://images.unsplash.com/photo-1576091160550-2173dba999ef",
+    },
+    {
+      titleKey: "galleryPage.cat2Title",
+      descKey: "galleryPage.cat2Desc",
+      path: "/gallery/machine",
+      icon: <Activity size={28} />,
+      image:
+        "https://images.unsplash.com/photo-1580281657527-47f249e8f4df",
+    },
+    {
+      titleKey: "galleryPage.cat3Title",
+      descKey: "galleryPage.cat3Desc",
+      path: "/gallery/treatment",
+      icon: <Stethoscope size={28} />,
+      image:
+        "https://images.unsplash.com/photo-1516549655169-df83a0774514",
+    },
+  ];
 
   return (
-
     <section
       className="
         pt-28
@@ -51,41 +48,33 @@ const GalleryPage = () => {
         backgroundImage: "url('/gallery-bg.avif')",
       }}
     >
-
       {/* Overlay */}
       <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
 
-
-
       <div className="relative z-10 max-w-7xl mx-auto px-4">
-
-
         {/* Heading */}
-
         <motion.div
           initial={{
-            opacity:0,
-            y:30
+            opacity: 0,
+            y: 30
           }}
           animate={{
-            opacity:1,
-            y:0
+            opacity: 1,
+            y: 0
           }}
           transition={{
-            duration:0.6
+            duration: 0.6
           }}
           className="text-center mb-16"
         >
-
           <p className="
             uppercase
             tracking-[5px]
             text-teal-600
             font-semibold
           ">
-            Our Gallery
+            {t("galleryPage.badge")}
           </p>
-
 
           <h1 className="
             text-4xl
@@ -94,9 +83,8 @@ const GalleryPage = () => {
             mt-4
             text-slate-800
           ">
-            HealStride Gallery
+            {t("galleryPage.title")}
           </h1>
-
 
           <p className="
             text-gray-600
@@ -104,59 +92,40 @@ const GalleryPage = () => {
             max-w-2xl
             mx-auto
           ">
-            Take a look at our clinic, advanced equipment,
-            and professional physiotherapy treatments.
+            {t("galleryPage.subtitle")}
           </p>
-
-
         </motion.div>
 
-
-
-
         {/* Cards */}
-
         <div className="
           grid
           sm:grid-cols-2
           lg:grid-cols-3
           gap-8
         ">
-
-
-          {categories.map((item,index)=>(
-
-
+          {categories.map((item, index) => (
             <Link
-              key={item.title}
+              key={index}
               to={item.path}
             >
-
-
               <motion.div
-
                 initial={{
-                  opacity:0,
-                  y:40
+                  opacity: 0,
+                  y: 40
                 }}
-
                 whileInView={{
-                  opacity:1,
-                  y:0
+                  opacity: 1,
+                  y: 0
                 }}
-
                 viewport={{
-                  once:true
+                  once: true
                 }}
-
                 transition={{
-                  delay:index*0.15
+                  delay: index * 0.15
                 }}
-
                 whileHover={{
-                  y:-12
+                  y: -12
                 }}
-
                 className="
                   group
                   bg-white/90
@@ -165,23 +134,15 @@ const GalleryPage = () => {
                   overflow-hidden
                   shadow-xl
                 "
-
               >
-
-
                 {/* Image */}
-
                 <div className="
                   overflow-hidden
                   relative
                 ">
-
                   <img
-
                     src={item.image}
-
-                    alt={item.title}
-
+                    alt={t(item.titleKey)}
                     className="
                       w-full
                       h-72
@@ -190,9 +151,7 @@ const GalleryPage = () => {
                       transition
                       duration-500
                     "
-
                   />
-
 
                   <div className="
                     absolute
@@ -202,18 +161,10 @@ const GalleryPage = () => {
                     group-hover:opacity-100
                     transition
                   "></div>
-
-
                 </div>
 
-
-
-
                 {/* Content */}
-
                 <div className="p-6">
-
-
                   <div className="
                     flex
                     items-center
@@ -221,7 +172,6 @@ const GalleryPage = () => {
                     text-teal-600
                     mb-3
                   ">
-
                     {item.icon}
 
                     <h3 className="
@@ -229,53 +179,32 @@ const GalleryPage = () => {
                       font-bold
                       text-slate-800
                     ">
-                      {item.title}
+                      {t(item.titleKey)}
                     </h3>
-
-
                   </div>
-
-
 
                   <p className="
                     text-gray-600
                     leading-7
                   ">
-                    {item.description}
+                    {t(item.descKey)}
                   </p>
-
 
                   <button className="
                     mt-5
                     text-teal-600
                     font-semibold
                   ">
-                    View Gallery →
+                    {t("galleryPage.viewGallery")}
                   </button>
-
-
                 </div>
-
-
               </motion.div>
-
-
             </Link>
-
-
           ))}
-
-
         </div>
-
-
       </div>
-
-
     </section>
-
   );
 };
-
 
 export default GalleryPage;

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import BlogCard from "./BlogCard";
 import { blogs } from "../../data/blogs";
 
@@ -8,12 +9,12 @@ const BlogSection = ({
   showButton = false,
   showViewAllButton = false,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -21,7 +22,7 @@ const BlogSection = ({
           transition={{ duration: 0.5 }}
           className="text-teal-600 font-semibold uppercase tracking-[3px] sm:tracking-widest text-center text-xs sm:text-sm"
         >
-          Latest Updates
+          {t("blogSection.badge")}
         </motion.p>
 
         <motion.h2
@@ -31,7 +32,7 @@ const BlogSection = ({
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mt-3 text-slate-900"
         >
-          Health Blogs
+          {t("blogSection.title")}
         </motion.h2>
 
         <motion.p
@@ -41,12 +42,10 @@ const BlogSection = ({
           transition={{ duration: 0.7 }}
           className="text-gray-600 text-center mt-4 max-w-2xl mx-auto text-sm sm:text-base leading-7"
         >
-          Read expert advice, physiotherapy tips, rehabilitation guides and
-          wellness articles from HealStride specialists.
+          {t("blogSection.subtitle")}
         </motion.p>
 
         {/* Blog Cards */}
-
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -72,7 +71,6 @@ const BlogSection = ({
         </motion.div>
 
         {/* View All Blogs Button */}
-
         {showViewAllButton && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -95,12 +93,11 @@ const BlogSection = ({
                   text-sm sm:text-base
                 "
               >
-                Read More Blogs
+                {t("blogSection.readMoreBlogs")}
               </button>
             </Link>
           </motion.div>
         )}
-
       </div>
     </section>
   );

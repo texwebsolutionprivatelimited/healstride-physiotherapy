@@ -5,6 +5,7 @@ import {
   onSnapshot,
   query,
 } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 
 import { db } from "../../firebase/firebase";
 
@@ -21,6 +22,7 @@ import ReviewForm from "../../pages/ReviewForm";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const q = query(collection(db, "testimonials"));
@@ -46,9 +48,7 @@ const Testimonials = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-slate-50 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ const Testimonials = () => {
           transition={{ duration: 0.5 }}
           className="text-center uppercase tracking-[3px] sm:tracking-[5px] text-teal-600 font-semibold text-xs sm:text-sm"
         >
-          TESTIMONIALS
+          {t("testimonials.badge")}
         </motion.p>
 
         <motion.h2
@@ -66,7 +66,7 @@ const Testimonials = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-slate-900 mt-4"
         >
-          What Our Patients Say
+          {t("testimonials.title")}
         </motion.h2>
 
         <motion.p
@@ -76,12 +76,10 @@ const Testimonials = () => {
           transition={{ duration: 0.7 }}
           className="text-center text-gray-600 mt-4 sm:mt-5 max-w-3xl mx-auto leading-7 sm:leading-8 text-sm sm:text-base"
         >
-          Hear from our patients who have experienced better mobility,
-          pain relief, and improved quality of life.
+          {t("testimonials.subtitle")}
         </motion.p>
 
         {/* Testimonials Slider */}
-
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +101,6 @@ const Testimonials = () => {
               {testimonials.map((item) => (
                 <SwiperSlide key={item.id}>
                   <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 lg:p-10">
-
                     <FaQuoteLeft className="text-teal-500 text-3xl sm:text-4xl lg:text-5xl mb-4 sm:mb-6" />
 
                     <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-7 sm:leading-8 lg:leading-9">
@@ -111,7 +108,6 @@ const Testimonials = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center sm:items-start mt-8 text-center sm:text-left">
-
                       <img
                         src={item.image || defaultUser}
                         alt={item.name}
@@ -122,7 +118,6 @@ const Testimonials = () => {
                       />
 
                       <div className="sm:ml-5 mt-4 sm:mt-0">
-
                         <h4 className="font-bold text-lg sm:text-xl">
                           {item.name}
                         </h4>
@@ -138,22 +133,18 @@ const Testimonials = () => {
                             )
                           )}
                         </div>
-
                       </div>
-
                     </div>
-
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           ) : (
             <div className="text-center text-gray-500 py-12 sm:py-20">
-              No testimonials available.
+              {t("testimonials.noTestimonials")}
             </div>
           )}
         </motion.div>
-
       </div>
 
       <ReviewForm />

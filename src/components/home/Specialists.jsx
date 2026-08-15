@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { FaAward, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 import { db } from "../../firebase/firebase";
 
 const Specialists = () => {
   const [doctors, setDoctors] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -36,9 +38,7 @@ const Specialists = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ const Specialists = () => {
           transition={{ duration: 0.5 }}
           className="text-center uppercase tracking-[3px] sm:tracking-[5px] text-teal-600 font-semibold text-xs sm:text-sm"
         >
-          OUR SPECIALISTS
+          {t("specialists.badge")}
         </motion.p>
 
         <motion.h2
@@ -56,7 +56,7 @@ const Specialists = () => {
           transition={{ duration: 0.6 }}
           className="text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mt-4"
         >
-          Meet Our Expert Physiotherapists
+          {t("specialists.title")}
         </motion.h2>
 
         <motion.p
@@ -66,14 +66,11 @@ const Specialists = () => {
           transition={{ duration: 0.7 }}
           className="text-center text-gray-600 mt-4 sm:mt-6 max-w-3xl mx-auto text-sm sm:text-base"
         >
-          Our experienced specialists provide personalized physiotherapy
-          treatments.
+          {t("specialists.subtitle")}
         </motion.p>
 
         {/* Doctors Grid */}
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 mt-10 sm:mt-16">
-
           {doctors.map((doctor, index) => (
             <motion.div
               key={doctor.id}
@@ -97,7 +94,6 @@ const Specialists = () => {
                 duration-300
               "
             >
-
               <img
                 src={doctor.image || "/default-user.png"}
                 alt={doctor.name}
@@ -111,7 +107,6 @@ const Specialists = () => {
               />
 
               <div className="p-5 sm:p-8">
-
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
                   {doctor.name}
                 </h3>
@@ -121,7 +116,6 @@ const Specialists = () => {
                 </p>
 
                 <div className="mt-5 space-y-3 text-gray-600 text-sm sm:text-base">
-
                   <p className="flex gap-3 items-center">
                     <FaAward className="text-teal-600 flex-shrink-0" />
                     {doctor.experience}
@@ -131,7 +125,6 @@ const Specialists = () => {
                     <FaAward className="text-teal-600 flex-shrink-0" />
                     {doctor.specialization}
                   </p>
-
                 </div>
 
                 <Link
@@ -147,19 +140,15 @@ const Specialists = () => {
                     transition
                   "
                 >
-                  View Profile
+                  {t("specialists.viewProfile")}
                   <FaArrowRight />
                 </Link>
-
               </div>
-
             </motion.div>
           ))}
-
         </div>
 
         {/* Button */}
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -183,10 +172,9 @@ const Specialists = () => {
               font-medium
             "
           >
-            View All Doctors
+            {t("specialists.viewAllDoctors")}
           </Link>
         </motion.div>
-
       </div>
     </section>
   );

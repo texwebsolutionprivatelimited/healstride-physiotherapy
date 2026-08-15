@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import gallery1 from "../../assets/images/gallery/gallery1.jpg";
 import gallery2 from "../../assets/images/gallery/gallery2.jpg";
@@ -9,12 +10,12 @@ import gallery4 from "../../assets/images/gallery/gallery4.jpg";
 import gallery5 from "../../assets/images/gallery/gallery5.jpg";
 
 const GalleryPreview = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 md:py-24 bg-slate-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Heading */}
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -22,7 +23,7 @@ const GalleryPreview = () => {
           transition={{ duration: 0.5 }}
           className="text-center text-teal-600 uppercase tracking-[5px] font-semibold text-sm sm:text-base"
         >
-          Our Gallery
+          {t("galleryPreview.badge")}
         </motion.p>
 
         <motion.h2
@@ -32,7 +33,7 @@ const GalleryPreview = () => {
           transition={{ duration: 0.6 }}
           className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mt-4"
         >
-          Inside HealStride
+          {t("galleryPreview.title")}
         </motion.h2>
 
         <motion.p
@@ -42,17 +43,12 @@ const GalleryPreview = () => {
           transition={{ duration: 0.7 }}
           className="text-center text-gray-600 mt-6 max-w-3xl mx-auto leading-7 md:leading-8 text-sm sm:text-base"
         >
-          Explore our modern physiotherapy clinic, advanced equipment,
-          comfortable treatment rooms and welcoming environment designed
-          for your recovery.
+          {t("galleryPreview.subtitle")}
         </motion.p>
 
         {/* Gallery */}
-
         <div className="grid lg:grid-cols-3 gap-6 mt-12 md:mt-16">
-
           {/* Left Large */}
-
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -68,9 +64,7 @@ const GalleryPreview = () => {
           </motion.div>
 
           {/* Middle */}
-
           <div className="flex flex-col gap-6">
-
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -98,13 +92,10 @@ const GalleryPreview = () => {
                 className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
               />
             </motion.div>
-
           </div>
 
           {/* Right */}
-
           <div className="flex flex-col gap-6">
-
             <motion.div
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -132,13 +123,10 @@ const GalleryPreview = () => {
                 className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
               />
             </motion.div>
-
           </div>
-
         </div>
 
         {/* Button */}
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -164,11 +152,10 @@ const GalleryPreview = () => {
               text-sm sm:text-base
             "
           >
-            View Complete Gallery
+            {t("galleryPreview.viewCompleteGallery")}
             <FaArrowRight />
           </Link>
         </motion.div>
-
       </div>
     </section>
   );

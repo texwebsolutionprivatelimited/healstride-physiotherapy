@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { useTranslation } from "react-i18next";
 import "swiper/css";
 
 import knee from "../../assets/images/kneepain.jpg";
@@ -15,25 +16,26 @@ import sports from "../../assets/images/sportsinjury.jpg";
 import surgery from "../../assets/images/postsurgeryrehab.jpg";
 import plantar from "../../assets/images/plantarfasciitis.jpg";
 
-const images = [
-  { image: knee, title: "Knee Pain" },
-  { image: back, title: "Back Pain" },
-  { image: neck, title: "Neck Pain" },
-  { image: shoulder, title: "Shoulder Pain" },
-  { image: sciatica, title: "Sciatica" },
-  { image: tennis, title: "Tennis Elbow" },
-  { image: frozen, title: "Frozen Shoulder" },
-  { image: osteo, title: "Osteoarthritis" },
-  { image: stroke, title: "Stroke Rehab" },
-  { image: sports, title: "Sports Injury" },
-  { image: surgery, title: "Post Surgery Rehab" },
-  { image: plantar, title: "Plantar Fasciitis" },
+const imagesData = [
+  { image: knee, titleKey: "conditionsList.kneePain" },
+  { image: back, titleKey: "conditionsList.backPain" },
+  { image: neck, titleKey: "conditionsList.neckPain" },
+  { image: shoulder, titleKey: "conditionsList.shoulderPain" },
+  { image: sciatica, titleKey: "conditionsList.sciatica" },
+  { image: tennis, titleKey: "conditionsList.tennisElbow" },
+  { image: frozen, titleKey: "conditionsList.frozenShoulder" },
+  { image: osteo, titleKey: "conditionsList.osteoarthritis" },
+  { image: stroke, titleKey: "conditionsList.strokeRehab" },
+  { image: sports, titleKey: "conditionsList.sportsInjury" },
+  { image: surgery, titleKey: "conditionsList.postSurgeryRehab" },
+  { image: plantar, titleKey: "conditionsList.plantarFasciitis" },
 ];
 
-// Duplicate the array for seamless looping
-const sliderImages = [...images, ...images];
+const sliderImages = [...imagesData, ...imagesData];
 
 const ConditionSlider = () => {
+  const { t } = useTranslation();
+
   const isMobile =
     typeof window !== "undefined" &&
     window.matchMedia("(max-width: 768px)").matches;
@@ -60,12 +62,12 @@ const ConditionSlider = () => {
           <div className="relative h-[290px] rounded-3xl overflow-hidden shadow-2xl group">
             <img
               src={item.image}
-              alt={item.title}
+              alt={t(item.titleKey)}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
             <h3 className="absolute bottom-6 left-6 text-white text-3xl font-bold">
-              {item.title}
+              {t(item.titleKey)}
             </h3>
           </div>
         </SwiperSlide>

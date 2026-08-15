@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-
-
+import { useTranslation } from "react-i18next";
 
 const BlogCard = ({ blog, showButton = false }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-
       <img
         src={blog.image}
         alt={blog.title}
@@ -13,7 +13,6 @@ const BlogCard = ({ blog, showButton = false }) => {
       />
 
       <div className="p-5">
-
         <p className="text-sm text-gray-500">
           {blog.date}
         </p>
@@ -27,15 +26,13 @@ const BlogCard = ({ blog, showButton = false }) => {
         </p>
 
         {showButton && (
-  <Link to={`/blogs/${blog.id}`}>
-    <button className="mt-4 bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition">
-      Read More
-    </button>
-  </Link>
-)}
-
+          <Link to={`/blogs/${blog.id}`}>
+            <button className="mt-4 bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition font-medium">
+              {t("blogSection.readMore")}
+            </button>
+          </Link>
+        )}
       </div>
-
     </div>
   );
 };

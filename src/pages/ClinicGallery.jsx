@@ -4,7 +4,8 @@ const ClinicGallery = () => {
   return (
     <GalleryCategory
       category="clinic"
-      title="Clinic Photos"
+      titleKey="galleryPage.cat1Title"
+      defaultTitle="Clinic Photos"
     />
   );
 };

@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const AboutHero = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
@@ -85,7 +88,7 @@ const AboutHero = () => {
           font-medium
           "
         >
-          About HealStride Physiotherapy
+          {t("aboutHero.badge")}
         </motion.span>
 
         {/* Heading */}
@@ -113,11 +116,8 @@ const AboutHero = () => {
           leading-tight
           "
         >
-          About
-
-          <span className="block text-blue-400">
-            Heal Stride
-          </span>
+          {t("aboutHero.title")}
+          <span className="block text-blue-400">HealStride</span>
         </motion.h1>
 
         {/* Description */}
@@ -145,9 +145,7 @@ const AboutHero = () => {
           md:leading-8
           "
         >
-          Dedicated to helping patients recover faster, move better,
-          and live pain-free lives through personalized physiotherapy,
-          advanced rehabilitation techniques, and compassionate care.
+          {t("aboutHero.subtitle")}
         </motion.p>
 
         {/* Stats */}
@@ -192,7 +190,7 @@ const AboutHero = () => {
             </h3>
 
             <p className="text-gray-300 text-sm mt-2">
-              Years Experience
+              {t("aboutHero.yearsExp")}
             </p>
           </div>
 
@@ -214,7 +212,7 @@ const AboutHero = () => {
             </h3>
 
             <p className="text-gray-300 text-sm mt-2">
-              Happy Patients
+              {t("aboutHero.happyPatients")}
             </p>
           </div>
 
@@ -232,11 +230,11 @@ const AboutHero = () => {
             "
           >
             <h3 className="text-2xl sm:text-3xl font-bold text-green-400">
-              Expert
+              {t("aboutHero.expertTag")}
             </h3>
 
             <p className="text-gray-300 text-sm mt-2">
-              Physiotherapy Care
+              {t("aboutHero.expertCare")}
             </p>
           </div>
         </motion.div>

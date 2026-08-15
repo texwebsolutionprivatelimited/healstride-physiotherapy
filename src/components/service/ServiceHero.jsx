@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const ServiceHero = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
@@ -66,7 +69,7 @@ const ServiceHero = () => {
             sm:text-sm
           "
         >
-          HealStride Healthcare
+          {t("serviceHero.badge")}
         </motion.span>
 
         {/* Heading */}
@@ -88,9 +91,9 @@ const ServiceHero = () => {
             leading-tight
           "
         >
-          Physiotherapy Services
+          {t("serviceHero.title")}
           <span className="block text-cyan-400">
-            & Rehabilitation Equipment
+            {t("serviceHero.titleHighlight")}
           </span>
         </motion.h1>
 
@@ -115,9 +118,7 @@ const ServiceHero = () => {
             md:leading-8
           "
         >
-          Explore our physiotherapy treatments, rehabilitation
-          programs, and advanced tools & equipment designed to
-          support recovery, pain relief, and improved mobility.
+          {t("serviceHero.subtitle")}
         </motion.p>
       </motion.div>
     </section>

@@ -2,20 +2,16 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 
 const Doctors = () => {
-
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { t } = useTranslation();
 
   useEffect(() => {
-
     const fetchDoctors = async () => {
-
       try {
-
         const q = query(
           collection(db, "doctors"),
           where("active", "==", true)
@@ -29,24 +25,15 @@ const Doctors = () => {
         }));
 
         setDoctors(data);
-
       } catch (error) {
-
         console.log(error);
-
       } finally {
-
         setLoading(false);
-
       }
-
     };
 
     fetchDoctors();
-
   }, []);
-
-
 
   if (loading) {
     return (
@@ -58,16 +45,13 @@ const Doctors = () => {
       px-4
       ">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-700">
-          Loading Doctors...
+          {t("doctorsPage.loading")}
         </h2>
       </div>
     );
   }
 
-
-
   return (
-
     <section className="
       py-12
       sm:py-16
@@ -75,7 +59,6 @@ const Doctors = () => {
       bg-gray-50
       min-h-screen
     ">
-
       <div className="
         max-w-7xl
         mx-auto
@@ -83,12 +66,8 @@ const Doctors = () => {
         sm:px-6
         lg:px-8
       ">
-
-
         {/* Heading */}
-
         <div className="text-center">
-
           <h1 className="
             text-3xl
             sm:text-4xl
@@ -96,9 +75,8 @@ const Doctors = () => {
             font-bold
             text-slate-900
           ">
-            Our Doctors
+            {t("doctorsPage.title")}
           </h1>
-
 
           <p className="
             mt-3
@@ -109,15 +87,11 @@ const Doctors = () => {
             max-w-2xl
             mx-auto
           ">
-            Meet our experienced physiotherapy specialists.
+            {t("doctorsPage.subtitle")}
           </p>
-
         </div>
 
-
-
         {/* Cards */}
-
         <div className="
           grid
           grid-cols-1
@@ -128,28 +102,20 @@ const Doctors = () => {
           mt-10
           sm:mt-12
         ">
-
-
-          {
-            doctors.length === 0 ? (
-
-              <p className="
+          {doctors.length === 0 ? (
+            <p className="
               col-span-full
               text-center
               text-gray-500
               py-10
               ">
-                No doctors found.
-              </p>
-
-            ) : (
-
-              doctors.map((doctor)=>(
-
-
-                <div
-                  key={doctor.id}
-                  className="
+              {t("doctorsPage.noDoctors")}
+            </p>
+          ) : (
+            doctors.map((doctor) => (
+              <div
+                key={doctor.id}
+                className="
                   bg-white
                   rounded-2xl
                   sm:rounded-3xl
@@ -158,24 +124,17 @@ const Doctors = () => {
                   transition-all
                   duration-300
                   overflow-hidden
-                  "
-                >
-
-
-
-                  {/* Image */}
-
-                  <div className="
-                  overflow-hidden
-                  ">
-
-                    <img
-                      src={
-                        doctor.image ||
-                        "/default-user.png"
-                      }
-                      alt={doctor.name}
-                      className="
+                "
+              >
+                {/* Image */}
+                <div className="overflow-hidden">
+                  <img
+                    src={
+                      doctor.image ||
+                      "/default-user.png"
+                    }
+                    alt={doctor.name}
+                    className="
                       w-full
                       h-64
                       sm:h-72
@@ -184,61 +143,44 @@ const Doctors = () => {
                       hover:scale-105
                       transition
                       duration-500
-                      "
-                    />
+                    "
+                  />
+                </div>
 
-                  </div>
-
-
-
-
-                  {/* Content */}
-
-                  <div className="
-                  p-5
-                  sm:p-6
-                  ">
-
-
-                    <h2 className="
+                {/* Content */}
+                <div className="p-5 sm:p-6">
+                  <h2 className="
                     text-xl
                     sm:text-2xl
                     font-bold
                     text-slate-900
-                    ">
-                      {doctor.name}
-                    </h2>
+                  ">
+                    {doctor.name}
+                  </h2>
 
-
-
-                    <p className="
+                  <p className="
                     text-teal-600
                     mt-2
                     text-sm
                     sm:text-base
                     font-semibold
-                    ">
-                      {doctor.role}
-                    </p>
+                  ">
+                    {doctor.role}
+                  </p>
 
-
-
-                    <p className="
+                  <p className="
                     text-gray-600
                     mt-3
                     text-sm
                     sm:text-base
                     line-clamp-2
-                    ">
-                      {doctor.specialization}
-                    </p>
+                  ">
+                    {doctor.specialization}
+                  </p>
 
-
-
-
-                    <Link
-                      to={`/doctors/${doctor.slug}`}
-                      className="
+                  <Link
+                    to={`/doctors/${doctor.slug}`}
+                    className="
                       inline-flex
                       items-center
                       mt-5
@@ -248,35 +190,18 @@ const Doctors = () => {
                       text-sm
                       sm:text-base
                       hover:text-teal-700
-                      "
-                    >
-                      View Profile →
-                    </Link>
-
-
-                  </div>
-
-
+                    "
+                  >
+                    {t("doctorsPage.viewProfile")}
+                  </Link>
                 </div>
-
-
-              ))
-
-            )
-          }
-
-
+              </div>
+            ))
+          )}
         </div>
-
-
       </div>
-
-
     </section>
-
   );
-
 };
-
 
 export default Doctors;

@@ -1,38 +1,36 @@
 import { FaHeart, FaAward, FaShieldAlt, FaUserMd } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
-const values = [
+const valuesData = [
   {
     icon: <FaHeart />,
-    title: "Compassion",
-    description:
-      "We provide caring and supportive treatment for every patient.",
+    titleKey: "coreValues.v1Title",
+    descKey: "coreValues.v1Desc",
   },
   {
     icon: <FaAward />,
-    title: "Excellence",
-    description:
-      "Evidence-based physiotherapy focused on achieving the best outcomes.",
+    titleKey: "coreValues.v2Title",
+    descKey: "coreValues.v2Desc",
   },
   {
     icon: <FaShieldAlt />,
-    title: "Integrity",
-    description:
-      "Honest, transparent and ethical healthcare practices.",
+    titleKey: "coreValues.v3Title",
+    descKey: "coreValues.v3Desc",
   },
   {
     icon: <FaUserMd />,
-    title: "Patient First",
-    description:
-      "Every treatment plan is personalized to your unique needs.",
+    titleKey: "coreValues.v4Title",
+    descKey: "coreValues.v4Desc",
   },
 ];
 
 const CoreValues = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -42,22 +40,21 @@ const CoreValues = () => {
           className="text-center mb-12 md:mb-16"
         >
           <p className="uppercase tracking-[3px] md:tracking-[5px] text-teal-600 font-semibold text-sm md:text-base">
-            OUR VALUES
+            {t("coreValues.badge")}
           </p>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 md:mt-4 text-slate-900">
-            What Drives Us
+            {t("coreValues.title")}
           </h2>
 
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-            Our commitment to compassion, excellence, integrity, and
-            patient-centered care guides everything we do.
+            {t("coreValues.subtitle")}
           </p>
         </motion.div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {values.map((item, index) => (
+          {valuesData.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
@@ -78,16 +75,15 @@ const CoreValues = () => {
               </div>
 
               <h3 className="text-lg md:text-xl font-bold mb-3 text-slate-900">
-                {item.title}
+                {t(item.titleKey)}
               </h3>
 
               <p className="text-gray-600 text-sm md:text-base leading-7">
-                {item.description}
+                {t(item.descKey)}
               </p>
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import {
   collection,
@@ -13,10 +14,9 @@ import { db } from "../../firebase/firebase";
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
-
   const [faqs, setFaqs] = useState([]);
-
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const [questionForm, setQuestionForm] = useState({
     name: "",
@@ -50,9 +50,7 @@ const FAQSection = () => {
     }
   };
 
-  const handleQuestionSubmit = async (
-    e
-  ) => {
+  const handleQuestionSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -69,9 +67,7 @@ const FAQSection = () => {
         }
       );
 
-      alert(
-        "Your question has been submitted successfully."
-      );
+      alert(t("faqSection.successMsg"));
 
       setQuestionForm({
         name: "",
@@ -80,7 +76,6 @@ const FAQSection = () => {
       });
     } catch (error) {
       console.error("FAQ Submit Error:", error.code, error.message);
-
       alert(error.message);
     } finally {
       setLoading(false);
@@ -90,7 +85,6 @@ const FAQSection = () => {
   return (
     <section className="py-16 md:py-20 lg:py-24 bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Heading */}
         <motion.div
           initial={{
@@ -110,19 +104,18 @@ const FAQSection = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-            Frequently Asked Questions
+            {t("faqSection.title")}
           </h2>
 
           <p className="mt-4 text-gray-600">
-            Have questions? We have answers.
+            {t("faqSection.subtitle")}
           </p>
         </motion.div>
 
         {/* FAQ List */}
         <div className="space-y-4">
           {faqs.map((faq, index) => {
-            const isOpen =
-              openIndex === index;
+            const isOpen = openIndex === index;
 
             return (
               <motion.div
@@ -140,8 +133,7 @@ const FAQSection = () => {
                 }}
                 transition={{
                   duration: 0.4,
-                  delay:
-                    index * 0.05,
+                  delay: index * 0.05,
                 }}
                 className="bg-white rounded-2xl shadow-md overflow-hidden"
               >
@@ -160,10 +152,9 @@ const FAQSection = () => {
                   </span>
 
                   <ChevronDown
-                    className={`w-5 h-5 text-blue-600 transition-transform duration-300 ${isOpen
-                        ? "rotate-180"
-                        : ""
-                      }`}
+                    className={`w-5 h-5 text-blue-600 transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
 
@@ -217,34 +208,26 @@ const FAQSection = () => {
           className="mt-12 bg-white rounded-3xl shadow-md p-6 md:p-8"
         >
           <h3 className="text-2xl font-bold text-slate-800">
-            Didn't find your answer?
+            {t("faqSection.askTitle")}
           </h3>
 
           <p className="text-slate-600 mt-2 mb-6">
-            Submit your question and
-            our team will review it.
-            Once approved, it may be
-            added to the FAQ section.
+            {t("faqSection.askSubtitle")}
           </p>
 
           <form
-            onSubmit={
-              handleQuestionSubmit
-            }
+            onSubmit={handleQuestionSubmit}
             className="space-y-4"
           >
             <input
               type="text"
-              placeholder="Your Name"
+              placeholder={t("faqSection.namePlaceholder")}
               required
-              value={
-                questionForm.name
-              }
+              value={questionForm.name}
               onChange={(e) =>
                 setQuestionForm({
                   ...questionForm,
-                  name:
-                    e.target.value,
+                  name: e.target.value,
                 })
               }
               className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
@@ -252,16 +235,13 @@ const FAQSection = () => {
 
             <input
               type="email"
-              placeholder="Your Email"
+              placeholder={t("faqSection.emailPlaceholder")}
               required
-              value={
-                questionForm.email
-              }
+              value={questionForm.email}
               onChange={(e) =>
                 setQuestionForm({
                   ...questionForm,
-                  email:
-                    e.target.value,
+                  email: e.target.value,
                 })
               }
               className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
@@ -269,16 +249,13 @@ const FAQSection = () => {
 
             <textarea
               rows="5"
-              placeholder="Enter your question..."
+              placeholder={t("faqSection.questionPlaceholder")}
               required
-              value={
-                questionForm.question
-              }
+              value={questionForm.question}
               onChange={(e) =>
                 setQuestionForm({
                   ...questionForm,
-                  question:
-                    e.target.value,
+                  question: e.target.value,
                 })
               }
               className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
@@ -290,12 +267,11 @@ const FAQSection = () => {
               className="bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-medium transition"
             >
               {loading
-                ? "Submitting..."
-                : "Submit Question"}
+                ? t("faqSection.submitting")
+                : t("faqSection.submitBtn")}
             </button>
           </form>
         </motion.div>
-
       </div>
     </section>
   );

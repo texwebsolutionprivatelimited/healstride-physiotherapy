@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const ContactHero = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
@@ -79,7 +82,7 @@ const ContactHero = () => {
           sm:text-sm
           "
         >
-          Contact HealStride
+          {t("contactHero.badge")}
         </motion.span>
 
         {/* Heading */}
@@ -107,10 +110,9 @@ const ContactHero = () => {
           leading-tight
           "
         >
-          Contact
-
+          {t("contactHero.title")}
           <span className="block text-blue-400">
-            Us
+            {t("contactHero.titleHighlight")}
           </span>
         </motion.h1>
 
@@ -122,7 +124,6 @@ const ContactHero = () => {
           }}
           animate={{
             opacity: 1,
-            y: 0,
           }}
           transition={{
             duration: 0.8,
@@ -141,7 +142,7 @@ const ContactHero = () => {
           md:leading-8
           "
         >
-          Start your recovery journey today with expert physiotherapy care and personalized treatment plans. Schedule your consultation with our experienced specialists and take the first step toward a healthier, pain-free life.
+          {t("contactHero.subtitle")}
         </motion.p>
       </motion.div>
     </section>

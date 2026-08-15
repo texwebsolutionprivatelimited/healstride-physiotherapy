@@ -1,13 +1,7 @@
 import { motion } from "framer-motion";
-import {
-  Swiper,
-  SwiperSlide,
-} from "swiper/react";
-
-import {
-  Autoplay,
-} from "swiper/modules";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import { useTranslation } from "react-i18next";
 import "swiper/css";
 
 import treatment1 from "../../assets/images/treatment1.jpg";
@@ -17,47 +11,46 @@ import treatment4 from "../../assets/images/treatment4.jpg";
 import treatment5 from "../../assets/images/treatment5.jpg";
 import treatment7 from "../../assets/images/treatment7.jpg";
 
-const treatments = [
+const treatmentsData = [
   {
     image: treatment2,
-    title: "Dry Needling",
-    description: "Relieves muscle tension and trigger points.",
+    titleKey: "servicesList.dryNeedlingTitle",
+    descKey: "servicesList.dryNeedlingDesc",
   },
   {
     image: treatment3,
-    title: "Cupping Therapy",
-    description: "Improves circulation and reduces pain.",
+    titleKey: "servicesList.cuppingTherapyTitle",
+    descKey: "servicesList.cuppingTherapyDesc",
   },
   {
     image: treatment4,
-    title: "Sports Rehabilitation",
-    description: "Helping athletes recover faster.",
+    titleKey: "servicesList.sportsRehabTitle",
+    descKey: "servicesList.sportsRehabDesc",
   },
   {
     image: treatment5,
-    title: "Exercise Therapy",
-    description: "Improve mobility and strength.",
+    titleKey: "servicesList.exerciseTherapyTitle",
+    descKey: "servicesList.exerciseTherapyDesc",
   },
   {
     image: treatment1,
-    title: "Manual Therapy",
-    description: "Hands-on treatment for better movement.",
+    titleKey: "servicesList.manualTherapyTitle",
+    descKey: "servicesList.manualTherapyDesc",
   },
   {
     image: treatment7,
-    title: "IASTM Therapy",
-    description: "Modern soft tissue rehabilitation.",
+    titleKey: "servicesList.iastmTherapyTitle",
+    descKey: "servicesList.iastmTherapyDesc",
   },
 ];
 
 const TreatmentSlider = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="bg-slate-50 py-12 sm:py-16 lg:py-20 overflow-hidden">
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,21 +59,19 @@ const TreatmentSlider = () => {
           className="text-center mb-10 sm:mb-12"
         >
           <p className="text-teal-600 uppercase tracking-[3px] sm:tracking-widest font-semibold text-xs sm:text-sm">
-            Specialized Care
+            {t("treatmentSlider.badge")}
           </p>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 text-slate-900">
-            Treatments We Offer
+            {t("treatmentSlider.title")}
           </h2>
 
           <p className="text-gray-600 mt-4 max-w-3xl mx-auto text-sm sm:text-base leading-7">
-            Advanced physiotherapy treatments designed to relieve pain,
-            restore movement and improve your quality of life.
+            {t("treatmentSlider.subtitle")}
           </p>
         </motion.div>
 
         {/* Slider */}
-
         <Swiper
           modules={[Autoplay]}
           spaceBetween={20}
@@ -106,7 +97,7 @@ const TreatmentSlider = () => {
             },
           }}
         >
-          {treatments.map((item, index) => (
+          {treatmentsData.map((item, index) => (
             <SwiperSlide key={index}>
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -119,12 +110,10 @@ const TreatmentSlider = () => {
                 whileHover={{ y: -10 }}
                 className="group bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
               >
-
                 <div className="relative overflow-hidden">
-
                   <img
                     src={item.image}
-                    alt={item.title}
+                    alt={t(item.titleKey)}
                     className="
                       h-56
                       sm:h-64
@@ -140,15 +129,13 @@ const TreatmentSlider = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
 
                   <h3 className="absolute bottom-4 sm:bottom-5 left-4 sm:left-5 text-white text-xl sm:text-2xl font-bold">
-                    {item.title}
+                    {t(item.titleKey)}
                   </h3>
-
                 </div>
 
                 <div className="p-5 sm:p-6">
-
                   <p className="text-gray-600 leading-7 text-sm sm:text-base">
-                    {item.description}
+                    {t(item.descKey)}
                   </p>
 
                   <a
@@ -164,18 +151,14 @@ const TreatmentSlider = () => {
                       sm:text-base
                     "
                   >
-                    Learn More →
+                    {t("treatmentSlider.learnMore")}
                   </a>
-
                 </div>
-
               </motion.div>
             </SwiperSlide>
           ))}
         </Swiper>
-
       </div>
-
     </section>
   );
 };

@@ -5,35 +5,37 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const trustCards = [
+const trustCardsData = [
   {
     icon: Award,
-    title: "Certified Physiotherapist",
-    desc: "Qualified and certified professionals providing expert physiotherapy care.",
+    titleKey: "whyPatientsTrustUs.c1Title",
+    descKey: "whyPatientsTrustUs.c1Desc",
   },
   {
     icon: Users,
-    title: "5000+ Happy Patients",
-    desc: "Trusted by thousands of patients for effective treatment and recovery.",
+    titleKey: "whyPatientsTrustUs.c2Title",
+    descKey: "whyPatientsTrustUs.c2Desc",
   },
   {
     icon: HeartHandshake,
-    title: "Personalized Care",
-    desc: "Customized treatment plans tailored to every patient's needs.",
+    titleKey: "whyPatientsTrustUs.c3Title",
+    descKey: "whyPatientsTrustUs.c3Desc",
   },
   {
     icon: ShieldCheck,
-    title: "Trusted & Ethical Practice",
-    desc: "Patient-focused care with transparency, safety, and professionalism.",
+    titleKey: "whyPatientsTrustUs.c4Title",
+    descKey: "whyPatientsTrustUs.c4Desc",
   },
 ];
 
 const WhyPatientsTrustUs = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -43,25 +45,23 @@ const WhyPatientsTrustUs = () => {
           className="text-center mb-14"
         >
           <span className="text-blue-600 font-semibold uppercase tracking-wider">
-            Patient Satisfaction
+            {t("whyPatientsTrustUs.badge")}
           </span>
 
           <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800">
-            Why Patients Trust Us
+            {t("whyPatientsTrustUs.title")}
           </h2>
 
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            We focus on quality treatment, patient comfort, and
-            long-term recovery through evidence-based physiotherapy.
+            {t("whyPatientsTrustUs.subtitle")}
           </p>
         </motion.div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-          {trustCards.map((card, index) => (
+          {trustCardsData.map((card, index) => (
             <motion.div
-              key={card.title}
+              key={index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -82,17 +82,15 @@ const WhyPatientsTrustUs = () => {
               </div>
 
               <h3 className="text-xl font-semibold text-slate-800">
-                {card.title}
+                {t(card.titleKey)}
               </h3>
 
               <p className="mt-3 text-gray-600 leading-7">
-                {card.desc}
+                {t(card.descKey)}
               </p>
             </motion.div>
           ))}
-
         </div>
-
       </div>
     </section>
   );

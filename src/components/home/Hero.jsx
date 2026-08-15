@@ -1,10 +1,13 @@
 import { FaPhoneAlt, FaCalendarCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import heroBg from "../../assets/images/hero-bg.jpg";
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
@@ -86,7 +89,7 @@ const Hero = () => {
             leading-tight
             "
           >
-            Pain-Free Life Starts Here.
+            {t("hero.titleLine1")} {t("hero.titleLine2")}
           </h1>
 
           {/* Description */}
@@ -113,8 +116,7 @@ const Hero = () => {
             sm:px-4
             "
           >
-            Personalized physiotherapy treatments designed to help you
-            recover, move better, and live pain-free with expert care.
+            {t("hero.subtitle")}
           </p>
 
           {/* Buttons */}
@@ -166,7 +168,7 @@ const Hero = () => {
               "
             >
               <FaCalendarCheck />
-              Book Appointment
+              {t("hero.bookAppointment")}
             </Link>
 
             <a
@@ -201,7 +203,7 @@ const Hero = () => {
               "
             >
               <FaPhoneAlt />
-              Call Now
+              {t("contactInfo.phone")}
             </a>
           </motion.div>
         </motion.div>

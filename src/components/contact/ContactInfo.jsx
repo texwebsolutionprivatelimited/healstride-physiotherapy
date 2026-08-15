@@ -5,73 +5,75 @@ import {
   FaClock,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-
-const contactItems = [
-  {
-    icon: <FaPhoneAlt />,
-    title: "Phone Number",
-    content: (
-      <a
-        href="tel:+919569274008"
-        className="text-gray-600 hover:text-teal-600 transition"
-      >
-        +91 9569274008
-      </a>
-    ),
-  },
-  {
-    icon: <FaEnvelope />,
-    title: "Email Address",
-    content: (
-      <a
-        href="mailto:info@healstride.com"
-        className="text-gray-600 hover:text-teal-600 transition break-all"
-      >
-        info@healstride.com
-      </a>
-    ),
-  },
-  {
-    icon: <FaMapMarkerAlt />,
-    title: "Clinic Address",
-    content: (
-      <p className="text-gray-600 text-sm sm:text-base leading-7">
-        Heal Stride Physiotherapy & Wellness Centre
-        <br />
-        Bhopal, Madhya Pradesh, India
-      </p>
-    ),
-  },
-  {
-    icon: <FaClock />,
-    title: "Working Hours",
-    content: (
-      <>
-        <p className="text-gray-600 text-sm sm:text-base">
-          Monday - Saturday
-        </p>
-
-        <p className="font-medium text-slate-800 mt-1">
-          9:00 AM - 8:00 PM
-        </p>
-
-        <p className="mt-3 text-gray-600 text-sm sm:text-base">
-          Sunday
-        </p>
-
-        <p className="font-medium text-red-500">
-          Closed
-        </p>
-      </>
-    ),
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const ContactInfo = () => {
+  const { t } = useTranslation();
+
+  const contactItems = [
+    {
+      icon: <FaPhoneAlt />,
+      titleKey: "contactInfo.phone",
+      content: (
+        <a
+          href="tel:+919569274008"
+          className="text-gray-600 hover:text-teal-600 transition"
+        >
+          +91 9569274008
+        </a>
+      ),
+    },
+    {
+      icon: <FaEnvelope />,
+      titleKey: "contactInfo.email",
+      content: (
+        <a
+          href="mailto:info@healstride.com"
+          className="text-gray-600 hover:text-teal-600 transition break-all"
+        >
+          info@healstride.com
+        </a>
+      ),
+    },
+    {
+      icon: <FaMapMarkerAlt />,
+      titleKey: "contactInfo.address",
+      content: (
+        <p className="text-gray-600 text-sm sm:text-base leading-7">
+          HealStride Physiotherapy & Wellness Centre
+          <br />
+          Bhopal, Madhya Pradesh, India
+        </p>
+      ),
+    },
+    {
+      icon: <FaClock />,
+      titleKey: "contactInfo.hours",
+      content: (
+        <>
+          <p className="text-gray-600 text-sm sm:text-base">
+            {t("contactInfo.monSat")}
+          </p>
+
+          <p className="font-medium text-slate-800 mt-1">
+            9:00 AM - 8:00 PM
+          </p>
+
+          <p className="mt-3 text-gray-600 text-sm sm:text-base">
+            {t("contactInfo.sun")}
+          </p>
+
+          <p className="font-medium text-red-500">
+            {t("contactInfo.closed")}
+          </p>
+        </>
+      ),
+    },
+  ];
+
   return (
     <section className="py-16 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -81,16 +83,15 @@ const ContactInfo = () => {
           className="text-center mb-8 md:mb-12"
         >
           <span className="text-teal-600 font-semibold uppercase tracking-[3px] sm:tracking-wider text-sm">
-            Get In Touch
+            {t("contactInfo.badge")}
           </span>
 
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mt-2">
-            Contact Information
+            {t("contactInfo.title")}
           </h3>
 
           <p className="text-gray-600 mt-3 max-w-2xl mx-auto text-sm sm:text-base">
-            Reach out to us for appointments, consultations, or any
-            questions regarding physiotherapy treatments.
+            {t("contactInfo.subtitle")}
           </p>
         </motion.div>
 
@@ -121,14 +122,13 @@ const ContactInfo = () => {
               </motion.div>
 
               <h4 className="font-semibold text-slate-800 mb-2 text-base sm:text-lg">
-                {item.title}
+                {t(item.titleKey)}
               </h4>
 
               {item.content}
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );

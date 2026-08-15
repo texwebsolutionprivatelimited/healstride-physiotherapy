@@ -7,9 +7,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { FaStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ReviewForm = () => {
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,7 +60,7 @@ const ReviewForm = () => {
       }, 5000);
     } catch (error) {
       console.error(error);
-      alert("Failed to submit review");
+      alert(t("common.error"));
     } finally {
       setLoading(false);
     }
@@ -67,9 +69,7 @@ const ReviewForm = () => {
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -78,34 +78,30 @@ const ReviewForm = () => {
           className="text-center mb-8 sm:mb-12"
         >
           <p className="uppercase tracking-[3px] sm:tracking-[4px] text-teal-600 font-semibold text-xs sm:text-sm">
-            Patient Feedback
+            {t("reviewForm.badge")}
           </p>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mt-4 leading-tight">
-            Share Your Recovery Journey
+            {t("reviewForm.title")}
           </h2>
 
           <p className="text-slate-600 mt-4 sm:mt-5 max-w-2xl mx-auto leading-7 sm:leading-8 text-sm sm:text-base">
-            Your feedback helps us improve our services and inspires others
-            seeking physiotherapy care.
+            {t("reviewForm.subtitle")}
           </p>
         </motion.div>
 
         {/* Success Message */}
-
         {success && (
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 sm:px-5 py-4 rounded-2xl text-sm sm:text-base"
           >
-            Thank you for sharing your experience. Your review has been
-            submitted successfully and will be published after admin approval.
+            {t("reviewForm.successMsg")}
           </motion.div>
         )}
 
         {/* Form */}
-
         <motion.form
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -115,18 +111,16 @@ const ReviewForm = () => {
           className="bg-white border border-slate-100 shadow-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10"
         >
           <div className="space-y-5 sm:space-y-6">
-
             {/* Name */}
-
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Full Name *
+                {t("reviewForm.fullNameLabel")}
               </label>
 
               <input
                 type="text"
                 name="name"
-                placeholder="Enter your full name"
+                placeholder={t("reviewForm.fullNamePlaceholder")}
                 required
                 value={formData.name}
                 onChange={handleChange}
@@ -135,16 +129,15 @@ const ReviewForm = () => {
             </div>
 
             {/* Occupation */}
-
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Occupation (Optional)
+                {t("reviewForm.occupationLabel")}
               </label>
 
               <input
                 type="text"
                 name="designation"
-                placeholder="Student, Engineer, Teacher, etc."
+                placeholder={t("reviewForm.occupationPlaceholder")}
                 value={formData.designation}
                 onChange={handleChange}
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
@@ -152,10 +145,9 @@ const ReviewForm = () => {
             </div>
 
             {/* Rating */}
-
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-3">
-                Rating *
+                {t("reviewForm.ratingLabel")}
               </label>
 
               <div className="flex flex-wrap gap-2">
@@ -171,6 +163,7 @@ const ReviewForm = () => {
                         rating: star,
                       })
                     }
+                    aria-label={`Rate ${star} stars`}
                   >
                     <FaStar
                       size={24}
@@ -186,17 +179,16 @@ const ReviewForm = () => {
             </div>
 
             {/* Review */}
-
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Your Feedback *
+                {t("reviewForm.feedbackLabel")}
               </label>
 
               <textarea
                 name="review"
                 rows="6"
                 required
-                placeholder="Tell us about your experience with HealStride..."
+                placeholder={t("reviewForm.feedbackPlaceholder")}
                 value={formData.review}
                 onChange={handleChange}
                 className="w-full border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500 resize-none text-sm sm:text-base"
@@ -204,16 +196,13 @@ const ReviewForm = () => {
             </div>
 
             {/* Note */}
-
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
               <p className="text-xs sm:text-sm text-slate-600">
-                Reviews are verified by our team and published after admin
-                approval.
+                {t("reviewForm.verificationNote")}
               </p>
             </div>
 
             {/* Button */}
-
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -234,12 +223,10 @@ const ReviewForm = () => {
                 text-sm sm:text-base
               "
             >
-              {loading ? "Submitting..." : "Submit Review"}
+              {loading ? t("reviewForm.submitting") : t("reviewForm.submitBtn")}
             </motion.button>
-
           </div>
         </motion.form>
-
       </div>
     </section>
   );
