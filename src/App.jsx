@@ -9,6 +9,8 @@ import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
 import ScrollToHash from "./components/ScrollToHash";
 import AdminServices from "./components/admin/AdminServices";
+import AdminStaff from "./components/admin/AdminStaff";
+import Staff from "./pages/Staff";
 
 
 import Home from "./pages/Home";
@@ -17,17 +19,21 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Booking from "./pages/Booking";
 
+
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
            
+
 import Doctors from "./pages/Doctors";
 import DoctorProfile from "./pages/DoctorProfile";
 import Specialists from "./components/home/Specialists";
+
 
 import GalleryPage from "./pages/GalleryPage";
 import ClinicGallery from "./pages/ClinicGallery";
 import MachineGallery from "./pages/MachineGallery";
 import TreatmentGallery from "./pages/TreatmentGallery";
+
 
 import PhysiotherapyServices from "./pages/PhysiotherapyServices";
 import ToolsEquipment from "./pages/ToolsEquipment";
@@ -35,6 +41,7 @@ import ReviewForm from "./pages/ReviewForm";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+
 
 import UserProtectedRoute from "./user/UserProtectedRoute";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
@@ -100,6 +107,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/about" element={<About />} />
+
+        <Route path="/staff" element={<Staff />} />
 
         <Route path="/services" element={<Services />} />
         <Route
@@ -178,6 +187,7 @@ function App() {
             path="faq"
             element={<AdminFAQ />}
           />
+          <Route path="staff" element={<AdminStaff />} />
           <Route
             path="/admin/blogs"
             element={<AdminBlogs />}

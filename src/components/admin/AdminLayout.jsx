@@ -19,6 +19,7 @@ import {
   CircleHelp,
   UserRound,
   FileText,
+  UsersRound,
   BriefcaseBusiness,
 } from "lucide-react";
 
@@ -59,6 +60,9 @@ const AdminLayout = () => {
       icon: <UserRound size={18} />,
       path: "/admin/doctor-profile",
     },
+    { name: "Staff", 
+      icon: <UsersRound size={18} />, 
+      path: "/admin/staff" },
     {
       name: "Blogs",
       icon: <FileText size={18} />,
