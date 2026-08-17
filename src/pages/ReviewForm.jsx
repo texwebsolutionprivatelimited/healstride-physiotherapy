@@ -7,9 +7,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { FaStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const ReviewForm = () => {
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -59,7 +61,7 @@ const ReviewForm = () => {
       }, 5000);
     } catch (error) {
       console.error(error);
-      alert("Failed to submit testimonial");
+      alert(t("common.error"));
     } finally {
       setLoading(false);
     }
@@ -74,8 +76,9 @@ const ReviewForm = () => {
         bg-center
         bg-no-repeat
         overflow-hidden
-        py-16
-        md:py-24
+        py-10
+        sm:py-16
+        lg:py-24
       "
       style={{
         backgroundImage: "url('/review-bg.jpg')",
@@ -89,18 +92,18 @@ const ReviewForm = () => {
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full" />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
-
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
           <span
             className="
               inline-block
-              px-5
+              px-4
+              sm:px-5
               py-2
               rounded-full
               bg-teal-500/15
@@ -110,17 +113,19 @@ const ReviewForm = () => {
               font-semibold
               uppercase
               tracking-[3px]
-              text-sm
+              text-xs
+              sm:text-sm
               backdrop-blur-md
             "
           >
-            Patient Testimonials
+            {t("reviewForm.badge")}
           </span>
 
           <h2
             className="
-              mt-5
-              text-4xl
+              mt-4
+              sm:mt-5
+              text-3xl
               sm:text-5xl
               md:text-6xl
               font-bold
@@ -128,30 +133,28 @@ const ReviewForm = () => {
               leading-tight
             "
           >
-            Share Your
-
-            <span className="block text-teal-400">
-              Experience With Us
-            </span>
+            {t("reviewForm.title")}
           </h2>
 
           <p
             className="
-              mt-5
+              mt-4
+              sm:mt-5
               text-gray-300
               max-w-3xl
               mx-auto
-              text-base
+              text-sm
+              sm:text-base
               md:text-lg
-              leading-8
+              leading-7
+              sm:leading-8
             "
           >
-            We value your feedback. Tell us about your experience at
-            HealStride Physiotherapy and help others make informed
-            healthcare decisions.
+            {t("reviewForm.subtitle")}
           </p>
         </motion.div>
 
+        {/* Success Message */}
         {success && (
           <motion.div
             initial={{ opacity: 0, y: -15 }}
@@ -163,16 +166,21 @@ const ReviewForm = () => {
               border
               border-green-400/30
               text-white
-              px-5
-              py-4
-              rounded-2xl
+              px-4
+              sm:px-5
+              py-3.5
+              sm:py-4
+              rounded-xl
+              sm:rounded-2xl
+              text-sm
+              sm:text-base
             "
           >
-            Thank you for your valuable feedback.
-            Your review has been submitted successfully.
+            {t("reviewForm.successMsg")}
           </motion.div>
         )}
 
+        {/* Form */}
         <motion.form
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -183,77 +191,90 @@ const ReviewForm = () => {
             backdrop-blur-xl
             border
             border-white/20
-            rounded-3xl
+            rounded-2xl
+            sm:rounded-3xl
             shadow-2xl
-            p-6
+            p-5
             sm:p-8
             lg:p-10
           "
         >
-          <div className="space-y-6">
-
+          <div className="space-y-4 sm:space-y-6">
             {/* Name */}
             <div>
-              <label className="block text-white mb-2 font-medium">
-                Patient Name *
+              <label className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
+                {t("reviewForm.fullNameLabel")}
               </label>
 
               <input
                 type="text"
                 name="name"
+                placeholder={t(
+                  "reviewForm.fullNamePlaceholder"
+                )}
                 required
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Enter your name"
                 className="
                   w-full
                   bg-white/10
                   border
                   border-white/20
                   rounded-xl
-                  px-4
-                  py-3
+                  px-3.5
+                  py-2.5
+                  sm:px-4
+                  sm:py-3
                   text-white
                   placeholder:text-gray-300
                   outline-none
                   focus:ring-2
                   focus:ring-teal-400
+                  text-sm
+                  sm:text-base
                 "
               />
             </div>
 
-            {/* Profession */}
+            {/* Occupation */}
             <div>
-              <label className="block text-white mb-2 font-medium">
-                Profession (Optional)
+              <label className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
+                {t("reviewForm.occupationLabel")}
               </label>
 
               <input
                 type="text"
                 name="designation"
+                placeholder={t(
+                  "reviewForm.occupationPlaceholder"
+                )}
                 value={formData.designation}
                 onChange={handleChange}
-                placeholder="Teacher, Engineer, Student"
                 className="
                   w-full
                   bg-white/10
                   border
                   border-white/20
                   rounded-xl
-                  px-4
-                  py-3
+                  px-3.5
+                  py-2.5
+                  sm:px-4
+                  sm:py-3
                   text-white
                   placeholder:text-gray-300
                   outline-none
                   focus:ring-2
                   focus:ring-teal-400
+                  text-sm
+                  sm:text-base
                 "
               />
             </div>
+
             {/* Rating */}
             <div>
-              <label className="block text-white mb-3 font-medium">
-                Rating *
+              <label className="block text-white mb-2 sm:mb-3 font-medium text-sm sm:text-base">
+                {t("reviewForm.ratingLabel")}
               </label>
 
               <div className="flex gap-2">
@@ -267,13 +288,14 @@ const ReviewForm = () => {
                         rating: star,
                       })
                     }
+                    aria-label={`Rate ${star} stars`}
                   >
                     <FaStar
-                      size={30}
                       className={
-                        star <= formData.rating
+                        (star <= formData.rating
                           ? "text-yellow-400"
-                          : "text-gray-500"
+                          : "text-gray-300") +
+                        " text-xl sm:text-2xl"
                       }
                     />
                   </button>
@@ -283,43 +305,52 @@ const ReviewForm = () => {
 
             {/* Review */}
             <div>
-              <label className="block text-white mb-2 font-medium">
-                Your Review *
+              <label className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
+                {t("reviewForm.feedbackLabel")}
               </label>
 
               <textarea
                 name="review"
-                rows="6"
+                rows="4"
                 required
+                placeholder={t(
+                  "reviewForm.feedbackPlaceholder"
+                )}
                 value={formData.review}
                 onChange={handleChange}
-                placeholder="Share your treatment experience..."
                 className="
                   w-full
                   bg-white/10
                   border
                   border-white/20
                   rounded-xl
-                  px-4
-                  py-3
+                  px-3.5
+                  py-2.5
+                  sm:px-4
+                  sm:py-3
                   text-white
                   placeholder:text-gray-300
                   resize-none
                   outline-none
                   focus:ring-2
                   focus:ring-teal-400
+                  text-sm
+                  sm:text-base
                 "
               />
             </div>
 
-            <div className="bg-white/10 border border-white/20 rounded-xl p-4">
-              <p className="text-gray-200 text-sm">
-                All testimonials are reviewed for authenticity before being
-                published on our website.
+            {/* Note */}
+            <div className="bg-white/10 border border-white/20 rounded-xl p-3 sm:p-4">
+              <p className="text-gray-200 text-xs sm:text-sm">
+                {t("reviewForm.verificationNote")}
               </p>
             </div>
 
-            <button
+            {/* Button */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
               className="
@@ -330,7 +361,8 @@ const ReviewForm = () => {
                 hover:from-teal-600
                 hover:to-cyan-600
                 text-white
-                py-4
+                py-3.5
+                sm:py-4
                 rounded-xl
                 font-semibold
                 shadow-lg
@@ -338,11 +370,15 @@ const ReviewForm = () => {
                 transition-all
                 duration-300
                 disabled:opacity-50
+                disabled:cursor-not-allowed
+                text-sm
+                sm:text-base
               "
             >
-              {loading ? "Submitting..." : "Send Review"}
-            </button>
-
+              {loading
+                ? t("reviewForm.submitting")
+                : t("reviewForm.submitBtn")}
+            </motion.button>
           </div>
         </motion.form>
       </div>

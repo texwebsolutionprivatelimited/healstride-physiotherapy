@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const GoogleMap = () => {
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-white">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -13,7 +13,7 @@ const GoogleMap = () => {
 
           initial={{
             opacity: 0,
-            y: 40
+            y: 30
           }}
 
           whileInView={{
@@ -22,7 +22,7 @@ const GoogleMap = () => {
           }}
 
           transition={{
-            duration: 0.8
+            duration: 0.7
           }}
 
           viewport={{
@@ -31,9 +31,8 @@ const GoogleMap = () => {
 
           className="
           text-center
-          mb-8
-          sm:mb-10
-          md:mb-12
+          mb-6
+          sm:mb-8
           "
 
         >

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
-const tools = [
+const toolsData = [
   {
     title: "Ultrasound Therapy Machine",
     image: "/tool1.jpg",
@@ -94,32 +95,31 @@ const tools = [
 ];
 
 const ToolsGrid = () => {
-  return (
-    <section className="py-12 sm:py-16 md:py-20 bg-slate-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  const { t } = useTranslation();
 
+  return (
+    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-8 md:mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
-            Tools & Equipment
+            {t("toolsGrid.title")}
           </h2>
 
           <p className="mt-4 text-gray-600 text-sm sm:text-base md:text-lg max-w-3xl mx-auto">
-            Advanced physiotherapy tools and equipment used for effective
-            treatment and faster recovery.
+            {t("toolsGrid.subtitle")}
           </p>
         </motion.div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-
-          {tools.map((tool, index) => (
+          {toolsData.map((tool, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
@@ -146,10 +146,8 @@ const ToolsGrid = () => {
                 group
               "
             >
-
               {/* Image */}
               <div className="h-64 sm:h-72 overflow-hidden bg-white">
-
                 <img
                   src={tool.image}
                   alt={tool.title}
@@ -163,12 +161,10 @@ const ToolsGrid = () => {
                     group-hover:scale-110
                   "
                 />
-
               </div>
 
               {/* Content */}
               <div className="p-5 sm:p-6 flex flex-col flex-grow">
-
                 <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 min-h-[56px]">
                   {tool.title}
                 </h3>
@@ -176,14 +172,10 @@ const ToolsGrid = () => {
                 <p className="text-gray-600 leading-7 text-sm sm:text-base flex-grow">
                   {tool.description}
                 </p>
-
               </div>
-
             </motion.div>
           ))}
-
         </div>
-
       </div>
     </section>
   );

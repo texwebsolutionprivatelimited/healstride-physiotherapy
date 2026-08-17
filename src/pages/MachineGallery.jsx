@@ -4,7 +4,8 @@ const MachineGallery = () => {
   return (
     <GalleryCategory
       category="machine"
-      title="Machine Photos"
+      titleKey="galleryPage.cat2Title"
+      defaultTitle="Machine Photos"
     />
   );
 };

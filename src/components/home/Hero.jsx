@@ -12,9 +12,9 @@ const Hero = () => {
     <section
       className="
         relative
-        min-h-[80vh]
-        sm:min-h-[85vh]
-        lg:min-h-screen
+        min-h-0
+        sm:min-h-[70vh]
+        lg:min-h-[85vh]
         overflow-hidden
       "
       style={{
@@ -24,8 +24,8 @@ const Hero = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="absolute inset-0 bg-gradient-to-r from-teal-900/70 via-teal-800/40 to-transparent" />
+      <div className="absolute inset-0 bg-black/55" />
+      <div className="absolute inset-0 bg-gradient-to-r from-teal-950/80 via-teal-900/50 to-transparent" />
       <div className="absolute inset-0 backdrop-blur-[1px]" />
 
       {/* Content */}
@@ -33,13 +33,16 @@ const Hero = () => {
         className="
           relative z-10
           flex items-center justify-center
-          min-h-[80vh]
-          sm:min-h-[85vh]
-          lg:min-h-screen
+          min-h-0
+          sm:min-h-[70vh]
+          lg:min-h-[85vh]
           px-4
           sm:px-6
           lg:px-8
-          py-16
+          py-8
+          xs:py-10
+          sm:py-14
+          lg:py-16
         "
       >
         <motion.div
@@ -49,23 +52,23 @@ const Hero = () => {
             mx-auto
             text-center
           "
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
           {/* Clinic Name */}
           <p
             className="
               text-teal-200
               font-extrabold
-              text-3xl
-              xs:text-4xl
-              sm:text-5xl
-              md:text-6xl
-              lg:text-7xl
+              text-xl
+              xs:text-2xl
+              sm:text-4xl
+              md:text-5xl
+              lg:text-6xl
               leading-tight
-              mb-4
-              sm:mb-6
+              mb-2
+              sm:mb-4
             "
           >
             {t("hero.clinicName")}
@@ -76,11 +79,13 @@ const Hero = () => {
             className="
               text-white
               font-bold
-              text-xl
-              sm:text-2xl
-              md:text-4xl
-              lg:text-5xl
-              leading-tight
+              text-sm
+              xs:text-base
+              sm:text-xl
+              md:text-3xl
+              lg:text-4xl
+              leading-snug
+              sm:leading-tight
             "
           >
             {t("hero.tagline")}
@@ -89,19 +94,18 @@ const Hero = () => {
           {/* Description */}
           <p
             className="
-              mt-4
-              sm:mt-6
+              mt-2.5
+              sm:mt-4
               text-gray-200
-              text-sm
+              text-xs
+              xs:text-sm
               sm:text-base
               md:text-lg
-              lg:text-xl
-              leading-6
+              leading-relaxed
               sm:leading-7
-              md:leading-8
               max-w-3xl
               mx-auto
-              px-2
+              px-1
               sm:px-4
             "
           >
@@ -111,19 +115,21 @@ const Hero = () => {
           {/* Buttons */}
           <motion.div
             className="
-              mt-8
-              md:mt-10
+              mt-5
+              sm:mt-7
               flex
               flex-col
               sm:flex-row
-              gap-4
+              gap-2.5
+              sm:gap-4
               justify-center
               items-center
               w-full
+              mx-auto
             "
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
           >
             {/* Book Appointment */}
             <Link
@@ -131,23 +137,29 @@ const Hero = () => {
               className="
                 w-full
                 sm:w-auto
-                min-w-[220px]
+                sm:min-w-[190px]
                 bg-teal-600
                 hover:bg-teal-700
                 text-white
                 font-medium
-                px-6
-                py-3.5
+                text-xs
+                xs:text-sm
+                sm:text-base
+                px-4
+                py-2.5
+                sm:px-6
+                sm:py-3.5
                 rounded-xl
                 flex
                 items-center
                 justify-center
-                gap-3
+                gap-2
+                sm:gap-3
                 shadow-lg
                 transition-all
               "
             >
-              <FaCalendarCheck />
+              <FaCalendarCheck className="text-xs sm:text-base" />
               {t("hero.bookAppointment")}
             </Link>
 
@@ -157,25 +169,31 @@ const Hero = () => {
               className="
                 w-full
                 sm:w-auto
-                min-w-[220px]
+                sm:min-w-[190px]
                 border
-                border-white
+                border-white/80
                 bg-white/10
                 backdrop-blur-md
                 text-white
                 font-medium
-                px-6
-                py-3.5
+                text-xs
+                xs:text-sm
+                sm:text-base
+                px-4
+                py-2.5
+                sm:px-6
+                sm:py-3.5
                 rounded-xl
                 flex
                 items-center
                 justify-center
-                gap-3
+                gap-2
+                sm:gap-3
                 hover:bg-white/20
                 transition-all
               "
             >
-              <FaPhoneAlt />
+              <FaPhoneAlt className="text-xs sm:text-base" />
               {t("hero.callNow")}
             </a>
           </motion.div>

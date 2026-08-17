@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes, FaGlobe } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { UserCircle } from "lucide-react";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-hot-toast";
@@ -10,14 +10,14 @@ import { useTranslation } from "react-i18next";
 import { NAVIGATION } from "../../../constants/navigation";
 import logo from "../../../assets/images/logo.png";
 import { auth } from "../../../firebase/firebase";
+import LanguageSwitcher from "../../LanguageSwitcher";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
 
+  const { t } = useTranslation();
   const navigate = useNavigate();
-
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -48,15 +48,11 @@ const Navbar = () => {
     }
   };
 
-  const handleLanguageChange = () => {
-    const newLanguage = i18n.language === "en" ? "hi" : "en";
-
-    i18n.changeLanguage(newLanguage);
-
-    localStorage.setItem("language", newLanguage);
-  };
-
   const getNavigationLabel = (item) => {
+    if (item.key) {
+      return t(item.key);
+    }
+
     switch (item.path) {
       case "/":
         return t("navbar.home");
@@ -89,7 +85,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white shadow-md">
-      <div className="max-w-7xl mx-auto h-16 md:h-20 px-3 sm:px-5 lg:px-8">
+      <div className="max-w-7xl mx-auto h-14 xs:h-16 md:h-20 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-full">
 
           {/* Logo */}
@@ -100,13 +96,14 @@ const Navbar = () => {
           >
             <Link
               to="/"
-              className="flex items-center gap-2 sm:gap-3 min-w-0"
+              className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 min-w-0"
             >
               <img
                 src={logo}
                 alt="HealStride Logo"
                 className="
-                  h-10 w-10
+                  h-9 w-9
+                  xs:h-10 xs:w-10
                   sm:h-12 sm:w-12
                   md:h-14 md:w-14
                   object-contain
@@ -130,7 +127,7 @@ const Navbar = () => {
                 </h1>
 
                 <p className="hidden lg:block text-xs text-gray-500">
-                  Physiotherapy & Wellness
+                  {t("navbar.tagline")}
                 </p>
               </div>
             </Link>
@@ -160,33 +157,10 @@ const Navbar = () => {
           </ul>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-4">
 
-            {/* Language Button */}
-            <button
-              onClick={handleLanguageChange}
-              className="
-                flex
-                items-center
-                gap-2
-                border
-                border-teal-700
-                text-teal-700
-                px-4
-                py-2.5
-                rounded-xl
-                hover:bg-teal-50
-                transition
-                font-medium
-              "
-              title="Change Language"
-            >
-              <FaGlobe />
-
-              <span>
-                {i18n.language === "en" ? "हिन्दी" : "English"}
-              </span>
-            </button>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
 
             {/* Appointment Button */}
             <button
@@ -199,6 +173,7 @@ const Navbar = () => {
                 rounded-xl
                 hover:bg-teal-800
                 transition
+                font-medium
               "
             >
               {t("navbar.bookAppointment")}
@@ -217,9 +192,10 @@ const Navbar = () => {
                   rounded-xl
                   hover:bg-teal-50
                   transition
+                  font-medium
                 "
               >
-                Login
+                {t("navbar.login")}
               </Link>
             ) : (
               <button
@@ -239,31 +215,8 @@ const Navbar = () => {
           {/* Tablet Actions */}
           <div className="hidden md:flex lg:hidden items-center gap-3">
 
-            {/* Language Button */}
-            <button
-              onClick={handleLanguageChange}
-              className="
-                flex
-                items-center
-                gap-2
-                border
-                border-teal-700
-                text-teal-700
-                px-3
-                py-2
-                rounded-lg
-                text-sm
-                hover:bg-teal-50
-                transition
-              "
-              title="Change Language"
-            >
-              <FaGlobe />
-
-              <span>
-                {i18n.language === "en" ? "हिन्दी" : "English"}
-              </span>
-            </button>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
 
             {/* Tablet Appointment Button */}
             <button
@@ -275,6 +228,7 @@ const Navbar = () => {
                 py-2
                 rounded-lg
                 text-sm
+                font-medium
               "
             >
               {t("navbar.bookAppointment")}
@@ -284,23 +238,26 @@ const Navbar = () => {
             <button
               onClick={() => setOpen(!open)}
               className="text-teal-700 text-2xl"
+              aria-label="Toggle Navigation"
             >
               {open ? <FaTimes /> : <FaBars />}
             </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="
-              md:hidden
-              text-teal-700
-              text-xl
-              p-2
-            "
-          >
-            {open ? <FaTimes /> : <FaBars />}
-          </button>
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={() => setOpen(!open)}
+              className="
+                text-teal-700
+                text-xl
+                p-2
+              "
+              aria-label="Toggle Navigation"
+            >
+              {open ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -349,32 +306,8 @@ const Navbar = () => {
               ))}
             </ul>
 
-            {/* Mobile Language Button */}
-            <button
-              onClick={handleLanguageChange}
-              className="
-                w-full
-                mt-4
-                flex
-                items-center
-                justify-center
-                gap-2
-                border
-                border-teal-700
-                text-teal-700
-                py-3
-                rounded-xl
-                font-medium
-                hover:bg-teal-50
-                transition
-              "
-            >
-              <FaGlobe />
-
-              <span>
-                {i18n.language === "en" ? "हिन्दी" : "English"}
-              </span>
-            </button>
+            {/* Mobile Language Switcher */}
+            <LanguageSwitcher variant="mobile" />
 
             {/* Appointment Button */}
             <button
@@ -384,7 +317,7 @@ const Navbar = () => {
               }}
               className="
                 w-full
-                mt-3
+                mt-4
                 bg-teal-700
                 text-white
                 py-3
@@ -413,7 +346,7 @@ const Navbar = () => {
                   font-medium
                 "
               >
-                Login
+                {t("navbar.login")}
               </Link>
             ) : (
               <>
@@ -439,7 +372,7 @@ const Navbar = () => {
                   <ProfileIcon size={40} />
 
                   <span className="font-semibold text-gray-800">
-                    My Profile
+                    {t("navbar.myProfile")}
                   </span>
                 </button>
 
@@ -460,7 +393,7 @@ const Navbar = () => {
                     font-medium
                   "
                 >
-                  Logout
+                  {t("navbar.logout")}
                 </button>
               </>
             )}

@@ -1,20 +1,21 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const features = [
-  "Advanced Physiotherapy Equipment",
-  "Personalized Treatment Plans",
-  "Experienced Physiotherapists",
-  "Patient-Centered Care",
+const featureKeys = [
+  "clinicIntro.f1",
+  "clinicIntro.f2",
+  "clinicIntro.f3",
+  "clinicIntro.f4",
 ];
 
 const ClinicIntro = () => {
+  const { t } = useTranslation();
+
   return (
-    <section className="py-16 md:py-20 bg-white overflow-hidden">
+    <section className="py-8 sm:py-12 lg:py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-
           {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
@@ -38,26 +39,20 @@ const ClinicIntro = () => {
             className="text-center lg:text-left"
           >
             <span className="text-blue-600 font-semibold uppercase tracking-wider">
-              Clinic Introduction
+              {t("clinicIntro.badge")}
             </span>
 
             <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
-              Welcome to Heal Stride
+              {t("clinicIntro.title")}
             </h2>
 
             <p className="mt-6 text-gray-600 leading-7 sm:leading-8 text-base sm:text-lg">
-              Heal Stride Physiotherapy & Wellness Centre is dedicated
-              to helping patients overcome pain, recover mobility,
-              and improve quality of life through evidence-based
-              physiotherapy treatments. We combine modern technology,
-              expert care, and personalized treatment plans to ensure
-              faster recovery and long-term wellness.
+              {t("clinicIntro.desc")}
             </p>
 
             {/* Features */}
             <div className="grid sm:grid-cols-2 gap-4 mt-10">
-
-              {features.map((feature, index) => (
+              {featureKeys.map((key, index) => (
                 <motion.div
                   key={index}
                   whileHover={{ x: 5 }}
@@ -69,17 +64,13 @@ const ClinicIntro = () => {
                   />
 
                   <span className="text-slate-700 font-medium text-sm sm:text-base">
-                    {feature}
+                    {t(key)}
                   </span>
                 </motion.div>
               ))}
-
             </div>
-
           </motion.div>
-
         </div>
-
       </div>
     </section>
   );

@@ -6,57 +6,58 @@ import {
   Smile,
   ArrowRight,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const steps = [
+const stepsData = [
   {
     icon: ClipboardList,
-    title: "Assessment",
-    desc: "Detailed evaluation of your condition and medical history.",
+    titleKey: "treatmentProcess.step1Title",
+    descKey: "treatmentProcess.step1Desc",
   },
   {
     icon: Stethoscope,
-    title: "Diagnosis",
-    desc: "Accurate identification of the root cause.",
+    titleKey: "treatmentProcess.step2Title",
+    descKey: "treatmentProcess.step2Desc",
   },
   {
     icon: HeartPulse,
-    title: "Therapy Plan",
-    desc: "Customized treatment plan for recovery.",
+    titleKey: "treatmentProcess.step3Title",
+    descKey: "treatmentProcess.step3Desc",
   },
   {
     icon: Smile,
-    title: "Recovery",
-    desc: "Guided rehabilitation and long-term wellness.",
+    titleKey: "treatmentProcess.step4Title",
+    descKey: "treatmentProcess.step4Desc",
   },
 ];
 
 const TreatmentProcess = () => {
+  const { t } = useTranslation();
+
   return (
-    <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
+    <section className="py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-blue-50 to-white">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Heading */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8 sm:mb-12">
           <span className="text-blue-600 font-semibold uppercase tracking-wider">
-            Recovery Journey
+            {t("treatmentProcess.badge")}
           </span>
 
           <h2 className="mt-3 text-4xl md:text-5xl font-bold text-slate-800">
-            Treatment Process
+            {t("treatmentProcess.title")}
           </h2>
 
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            Our step-by-step approach ensures effective treatment,
-            faster recovery, and long-term wellness.
+            {t("treatmentProcess.subtitle")}
           </p>
         </div>
 
         {/* Timeline */}
         <div className="grid md:grid-cols-4 gap-8 relative">
-
-          {steps.map((step, index) => (
+          {stepsData.map((step, index) => (
             <motion.div
-              key={step.title}
+              key={index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -82,16 +83,16 @@ const TreatmentProcess = () => {
                 </div>
 
                 <h3 className="text-xl font-semibold text-slate-800">
-                  {step.title}
+                  {t(step.titleKey)}
                 </h3>
 
                 <p className="mt-3 text-gray-600">
-                  {step.desc}
+                  {t(step.descKey)}
                 </p>
               </div>
 
               {/* Connector */}
-              {index !== steps.length - 1 && (
+              {index !== stepsData.length - 1 && (
                 <div className="hidden md:flex absolute top-24 -right-8 z-10">
                   <ArrowRight
                     size={32}

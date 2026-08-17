@@ -10,14 +10,7 @@ const WhatsAppFloat = () => {
         duration: 0.5,
         delay: 1,
       }}
-      className="
-fixed
-bottom-4
-right-4
-sm:bottom-5
-sm:right-5
-z-50
-"
+      className="fixed bottom-4 right-4 z-50 max-w-[calc(100vw-32px)]"
     >
       <a
         href="https://wa.me/91XXXXXXXXXX"
@@ -71,7 +64,7 @@ z-50
           <span
             className="
             absolute
-            -inset-2
+            -inset-1.5
             rounded-full
             border-2
             border-green-400
@@ -94,8 +87,10 @@ z-50
             flex
             items-center
             justify-center
-            w-14
-            h-14
+            w-12
+            h-12
+            xs:w-14
+            xs:h-14
             md:w-16
             md:h-16
             rounded-full
@@ -106,7 +101,7 @@ z-50
             shadow-2xl
             "
           >
-            <FaWhatsapp className="text-3xl md:text-4xl" />
+            <FaWhatsapp className="text-2xl xs:text-3xl md:text-4xl" />
           </motion.div>
 
         </div>

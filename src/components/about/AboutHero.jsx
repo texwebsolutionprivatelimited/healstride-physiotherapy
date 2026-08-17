@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const AboutHero = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
@@ -12,6 +15,9 @@ const AboutHero = () => {
         items-center
         justify-center
         overflow-hidden
+        py-8
+        sm:py-12
+        lg:py-16
       "
     >
       {/* Background Image */}
@@ -73,9 +79,18 @@ const AboutHero = () => {
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial={{
+          opacity: 0,
+          y: 40,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
         className="
           relative
           z-10
@@ -112,7 +127,7 @@ const AboutHero = () => {
             mb-6
           "
         >
-          About HealStride Physiotherapy
+          {t("aboutHero.badge")}
         </motion.span>
 
         {/* Heading */}
@@ -130,7 +145,7 @@ const AboutHero = () => {
             leading-tight
           "
         >
-          About
+          {t("aboutHero.title")}
 
           <span className="block text-cyan-400 mt-2">
             Heal Stride
@@ -154,9 +169,7 @@ const AboutHero = () => {
             sm:leading-8
           "
         >
-          Dedicated to helping patients recover faster, move better,
-          and live pain-free lives through personalized physiotherapy,
-          advanced rehabilitation techniques, and compassionate care.
+          {t("aboutHero.subtitle")}
         </motion.p>
 
         {/* Stats */}
@@ -175,58 +188,71 @@ const AboutHero = () => {
             mx-auto
           "
         >
-          {[
-            {
-              value: "10+",
-              title: "Years Experience",
-              color: "text-white",
-            },
-            {
-              value: "5000+",
-              title: "Happy Patients",
-              color: "text-cyan-400",
-            },
-            {
-              value: "Expert",
-              title: "Physiotherapy Care",
-              color: "text-green-400",
-            },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="
-                bg-white/10
-                backdrop-blur-xl
-                border
-                border-white/20
-                rounded-2xl
-                px-5
-                py-5
-                shadow-lg
-              "
-            >
-              <h3
-                className={`
-                  text-2xl
-                  sm:text-3xl
-                  font-bold
-                  ${item.color}
-                `}
-              >
-                {item.value}
-              </h3>
+          {/* Card 1 */}
+          <div
+            className="
+              bg-white/10
+              backdrop-blur-xl
+              border
+              border-white/20
+              rounded-2xl
+              px-5
+              py-5
+              shadow-lg
+            "
+          >
+            <h3 className="text-2xl sm:text-3xl font-bold text-white">
+              10+
+            </h3>
 
-              <p
-                className="
-                  text-gray-300
-                  text-sm
-                  mt-2
-                "
-              >
-                {item.title}
-              </p>
-            </div>
-          ))}
+            <p className="text-gray-300 text-sm mt-2">
+              {t("aboutHero.yearsExp")}
+            </p>
+          </div>
+
+          {/* Card 2 */}
+          <div
+            className="
+              bg-white/10
+              backdrop-blur-xl
+              border
+              border-white/20
+              rounded-2xl
+              px-5
+              py-5
+              shadow-lg
+            "
+          >
+            <h3 className="text-2xl sm:text-3xl font-bold text-cyan-400">
+              5000+
+            </h3>
+
+            <p className="text-gray-300 text-sm mt-2">
+              {t("aboutHero.happyPatients")}
+            </p>
+          </div>
+
+          {/* Card 3 */}
+          <div
+            className="
+              bg-white/10
+              backdrop-blur-xl
+              border
+              border-white/20
+              rounded-2xl
+              px-5
+              py-5
+              shadow-lg
+            "
+          >
+            <h3 className="text-2xl sm:text-3xl font-bold text-green-400">
+              {t("aboutHero.expertTag")}
+            </h3>
+
+            <p className="text-gray-300 text-sm mt-2">
+              {t("aboutHero.expertCare")}
+            </p>
+          </div>
         </motion.div>
       </motion.div>
     </section>

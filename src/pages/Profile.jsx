@@ -1,5 +1,4 @@
-// src/pages/Profile.jsx
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   onAuthStateChanged,
@@ -9,7 +8,6 @@ import {
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import {
-  UserCircle,
   Mail,
   Calendar,
   LogOut,
@@ -19,6 +17,7 @@ import {
   CheckCircle2,
   Clock,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import {
   collection,
@@ -27,15 +26,18 @@ import {
   getDocs,
 } from "firebase/firestore";
 
-import { db } from "../firebase/firebase";
-
-import { auth, storage } from "../firebase/firebase";
+import {
+  auth,
+  db,
+  storage,
+} from "../firebase/firebase";
 
 import {
   ref,
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+
 const Profile = () => {
   const [uploading, setUploading] = useState(false);
   const [user, setUser] = useState(null);
@@ -43,22 +45,9 @@ const Profile = () => {
   const [displayName, setDisplayName] = useState("");
   const [saving, setSaving] = useState(false);
   const [appointments, setAppointments] = useState([]);
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const unsub = onAuthStateChanged(auth, (u) => {
-  //     if (!u) return navigate("/login");
-  //     setUser(u);
-  //     setPhotoURL(u.photoURL || "");
-  //     // Agar displayName nahi hai to email ka pehla part use karo
-  //     setDisplayName(
-  //       u.displayName || (u.email ? u.email.split("@")[0] : "User")
-  //     );
-  //     // TODO: firestore se appointments fetch karo
-  //     setAppointments([]);
-  //   });
-  //   return () => unsub();
-  // }, [navigate]);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
@@ -73,9 +62,9 @@ const Profile = () => {
 
       setDisplayName(
         u.displayName ||
-        (u.email
-          ? u.email.split("@")[0]
-          : "User")
+          (u.email
+            ? u.email.split("@")[0]
+            : "User")
       );
 
       try {
@@ -84,18 +73,16 @@ const Profile = () => {
           where("userId", "==", u.uid)
         );
 
-        const snapshot =
-          await getDocs(q);
+        const snapshot = await getDocs(q);
 
-        const appointmentData =
-          snapshot.docs.map((doc) => ({
+        const appointmentData = snapshot.docs.map(
+          (doc) => ({
             id: doc.id,
             ...doc.data(),
-          }));
-
-        setAppointments(
-          appointmentData
+          })
         );
+
+        setAppointments(appointmentData);
       } catch (error) {
         console.log(
           "Appointment Fetch Error:",
@@ -120,15 +107,10 @@ const Profile = () => {
         `profile-images/${Date.now()}-${file.name}`
       );
 
-      await uploadBytes(
-        imageRef,
-        file
-      );
+      await uploadBytes(imageRef, file);
 
       const downloadURL =
-        await getDownloadURL(
-          imageRef
-        );
+        await getDownloadURL(imageRef);
 
       await updateProfile(
         auth.currentUser,
@@ -165,14 +147,17 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       setSaving(true);
+
       await updateProfile(auth.currentUser, {
-        displayName: displayName.trim() || "User",
+        displayName:
+          displayName.trim() || "User",
         photoURL: photoURL.trim(),
       });
-      toast.success("Profile updated");
+
+      toast.success(t("common.success"));
     } catch (e) {
       console.log(e);
-      toast.error("Update failed");
+      toast.error(t("common.error"));
     } finally {
       setSaving(false);
     }
@@ -180,8 +165,11 @@ const Profile = () => {
 
   const handleLogout = async () => {
     await signOut(auth);
+
     localStorage.removeItem("role");
-    toast.success("Logged out");
+
+    toast.success(t("profile.logout"));
+
     navigate("/");
   };
 
@@ -195,7 +183,7 @@ const Profile = () => {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-slate-50 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-slate-50 py-6 sm:py-10 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -203,9 +191,12 @@ const Profile = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-slate-800">My Dashboard</h1>
+          <h1 className="text-3xl font-bold text-slate-800">
+            {t("profile.dashboardTitle")}
+          </h1>
+
           <p className="text-gray-500 mt-1">
-            Manage your profile and appointments
+            {t("profile.dashboardSubtitle")}
           </p>
         </motion.div>
 
@@ -240,18 +231,27 @@ const Profile = () => {
             </div>
 
             <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-2xl sm:text-3xl font-bold">{displayName}</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                {displayName}
+              </h2>
+
               <p className="opacity-90 flex items-center justify-center sm:justify-start gap-2 mt-1">
-                <Mail size={16} /> {user.email}
+                <Mail size={16} />
+                {user.email}
               </p>
+
               <div className="flex flex-wrap gap-2 mt-3 justify-center sm:justify-start">
                 <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs">
-                  <Shield size={12} /> Verified Patient
+                  <Shield size={12} />
+                  {t("profile.verifiedPatient")}
                 </span>
+
                 <span className="inline-flex items-center gap-1 bg-white/20 backdrop-blur px-3 py-1 rounded-full text-xs">
-                  <Calendar size={12} /> Joined{" "}
+                  <Calendar size={12} />
+                  {t("profile.joined")}{" "}
                   {new Date(
-                    user.metadata?.creationTime || Date.now()
+                    user.metadata?.creationTime ||
+                      Date.now()
                   ).toLocaleDateString()}
                 </span>
               </div>
@@ -261,7 +261,8 @@ const Profile = () => {
               onClick={handleLogout}
               className="inline-flex items-center gap-2 bg-white text-red-600 hover:bg-red-50 font-semibold px-5 py-2.5 rounded-xl transition shadow"
             >
-              <LogOut size={18} /> Logout
+              <LogOut size={18} />
+              {t("profile.logout")}
             </button>
           </div>
         </motion.div>
@@ -269,31 +270,53 @@ const Profile = () => {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           {[
-            { label: "Total", value: appointments.length, icon: Calendar, color: "teal" },
             {
-              label: "Upcoming",
-              value: appointments.filter((a) => a.status === "upcoming").length,
+              label: t("profile.total"),
+              value: appointments.length,
+              icon: Calendar,
+              color: "teal",
+            },
+            {
+              label: t("profile.upcoming"),
+              value: appointments.filter(
+                (a) => a.status === "upcoming"
+              ).length,
               icon: Clock,
               color: "blue",
             },
             {
-              label: "Completed",
-              value: appointments.filter((a) => a.status === "completed").length,
+              label: t("profile.completed"),
+              value: appointments.filter(
+                (a) => a.status === "completed"
+              ).length,
               icon: CheckCircle2,
               color: "green",
             },
-            { label: "Sessions", value: 0, icon: Shield, color: "purple" },
+            {
+              label: t("profile.sessions"),
+              value: 0,
+              icon: Shield,
+              color: "purple",
+            },
           ].map((s) => (
             <div
               key={s.label}
               className="bg-white rounded-2xl p-4 shadow-sm border flex items-center gap-3"
             >
-              <div className={`p-3 rounded-xl bg-${s.color}-100 text-${s.color}-700`}>
+              <div
+                className={`p-3 rounded-xl bg-${s.color}-100 text-${s.color}-700`}
+              >
                 <s.icon size={20} />
               </div>
+
               <div>
-                <p className="text-2xl font-bold text-slate-800">{s.value}</p>
-                <p className="text-xs text-gray-500">{s.label}</p>
+                <p className="text-2xl font-bold text-slate-800">
+                  {s.value}
+                </p>
+
+                <p className="text-xs text-gray-500">
+                  {s.label}
+                </p>
               </div>
             </div>
           ))}
@@ -308,21 +331,31 @@ const Profile = () => {
             className="lg:col-span-1 bg-white rounded-2xl shadow-sm border p-6"
           >
             <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-              <Camera size={18} className="text-teal-700" /> Edit Profile
+              <Camera
+                size={18}
+                className="text-teal-700"
+              />
+              {t("profile.editProfile")}
             </h3>
+
             <p className="text-xs text-gray-500 mt-1">
-              Update your personal details
+              {t("profile.updateDetails")}
             </p>
 
             <div className="mt-5 space-y-4">
               <div>
                 <label className="text-sm font-medium text-gray-700">
-                  Full Name
+                  {t("profile.fullName")}
                 </label>
+
                 <input
                   type="text"
                   value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
+                  onChange={(e) =>
+                    setDisplayName(
+                      e.target.value
+                    )
+                  }
                   className="w-full mt-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="Your name"
                 />
@@ -330,15 +363,21 @@ const Profile = () => {
 
               <div>
                 <label className="text-sm font-medium text-gray-700">
-                  Photo URL
+                  {t("profile.photoURL")}
                 </label>
+
                 <input
                   type="text"
                   value={photoURL}
-                  onChange={(e) => setPhotoURL(e.target.value)}
+                  onChange={(e) =>
+                    setPhotoURL(
+                      e.target.value
+                    )
+                  }
                   className="w-full mt-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
                   placeholder="https://..."
                 />
+
                 <div className="mt-4">
                   <label className="text-sm font-medium text-gray-700">
                     Upload Photo
@@ -348,30 +387,38 @@ const Profile = () => {
                     type="file"
                     accept="image/*"
                     onChange={handleImageUpload}
+                    disabled={uploading}
                     className="
-      w-full
-      mt-1
-      border
-      rounded-lg
-      p-2
-      bg-white
-    "
+                      w-full
+                      mt-1
+                      border
+                      rounded-lg
+                      p-2
+                      bg-white
+                    "
                   />
+
+                  {uploading && (
+                    <p className="text-sm text-teal-600 mt-2">
+                      Uploading...
+                    </p>
+                  )}
                 </div>
+
                 {photoURL && (
                   <div className="mt-3">
                     <img
                       src={photoURL}
                       alt="preview"
                       className="
-        w-24
-        h-24
-        rounded-full
-        object-cover
-        object-center
-        border
-        border-gray-200
-      "
+                        w-24
+                        h-24
+                        rounded-full
+                        object-cover
+                        object-center
+                        border
+                        border-gray-200
+                      "
                     />
                   </div>
                 )}
@@ -379,8 +426,9 @@ const Profile = () => {
 
               <div>
                 <label className="text-sm font-medium text-gray-700">
-                  Email
+                  {t("profile.email")}
                 </label>
+
                 <input
                   type="email"
                   value={user.email}
@@ -394,7 +442,9 @@ const Profile = () => {
                 disabled={saving}
                 className="w-full bg-teal-700 hover:bg-teal-800 text-white font-semibold py-2.5 rounded-lg transition disabled:opacity-60"
               >
-                {saving ? "Saving..." : "Save Changes"}
+                {saving
+                  ? t("profile.saving")
+                  : t("profile.saveChanges")}
               </button>
             </div>
           </motion.div>
@@ -408,17 +458,25 @@ const Profile = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                  <Calendar size={18} className="text-teal-700" /> My Appointments
+                  <Calendar
+                    size={18}
+                    className="text-teal-700"
+                  />
+                  {t("profile.myAppointments")}
                 </h3>
+
                 <p className="text-xs text-gray-500 mt-1">
-                  Your booked physiotherapy sessions
+                  {t("profile.bookedSessions")}
                 </p>
               </div>
+
               <button
-                onClick={() => navigate("/booking")}
+                onClick={() =>
+                  navigate("/booking")
+                }
                 className="text-sm bg-teal-50 text-teal-700 hover:bg-teal-100 px-4 py-2 rounded-lg font-medium transition"
               >
-                + Book New
+                {t("profile.bookNew")}
               </button>
             </div>
 
@@ -429,17 +487,22 @@ const Profile = () => {
                     size={40}
                     className="mx-auto text-gray-300 mb-3"
                   />
+
                   <p className="font-medium text-slate-700">
-                    No appointments yet
+                    {t("profile.noAppointments")}
                   </p>
+
                   <p className="text-sm text-gray-500 mt-1">
-                    Book your first session to get started
+                    {t("profile.bookFirst")}
                   </p>
+
                   <button
-                    onClick={() => navigate("/booking")}
+                    onClick={() =>
+                      navigate("/booking")
+                    }
                     className="mt-4 bg-teal-700 text-white px-5 py-2 rounded-lg hover:bg-teal-800 transition"
                   >
-                    Book Appointment
+                    {t("profile.bookBtn")}
                   </button>
                 </div>
               ) : (
@@ -465,12 +528,13 @@ const Profile = () => {
                         </div>
 
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${a.status === "confirmed"
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            a.status === "confirmed"
                               ? "bg-blue-100 text-blue-700"
                               : a.status === "completed"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
-                            }`}
+                              ? "bg-green-100 text-green-700"
+                              : "bg-yellow-100 text-yellow-700"
+                          }`}
                         >
                           {a.status}
                         </span>

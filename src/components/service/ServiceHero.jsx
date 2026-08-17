@@ -1,16 +1,23 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const ServiceHero = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="
         relative
-        min-h-screen
-        md:min-h-[75vh]
+        min-h-[auto]
+        sm:min-h-[60vh]
+        lg:min-h-[75vh]
         flex
         items-center
         justify-center
         overflow-hidden
+        py-8
+        sm:py-12
+        lg:py-16
       "
       style={{
         backgroundImage:
@@ -28,10 +35,10 @@ const ServiceHero = () => {
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 60 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.8,
+          duration: 0.7,
           ease: "easeOut",
         }}
         className="
@@ -43,7 +50,8 @@ const ServiceHero = () => {
           lg:px-8
           max-w-5xl
           mx-auto
-          py-16
+          py-6
+          sm:py-10
         "
       >
         {/* Badge */}
@@ -66,7 +74,7 @@ const ServiceHero = () => {
             sm:text-sm
           "
         >
-          HealStride Healthcare
+          {t("serviceHero.badge")}
         </motion.span>
 
         {/* Heading */}
@@ -88,9 +96,9 @@ const ServiceHero = () => {
             leading-tight
           "
         >
-          Physiotherapy Services
+          {t("serviceHero.title")}
           <span className="block text-cyan-400">
-            & Rehabilitation Equipment
+            {t("serviceHero.titleHighlight")}
           </span>
         </motion.h1>
 
@@ -115,9 +123,7 @@ const ServiceHero = () => {
             md:leading-8
           "
         >
-          Explore our physiotherapy treatments, rehabilitation
-          programs, and advanced tools & equipment designed to
-          support recovery, pain relief, and improved mobility.
+          {t("serviceHero.subtitle")}
         </motion.p>
       </motion.div>
     </section>

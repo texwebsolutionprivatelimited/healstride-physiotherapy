@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { db } from "../firebase/firebase";
 
-const GalleryCategory = ({ category, title }) => {
+const GalleryCategory = ({ category, title, titleKey, defaultTitle }) => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
+
+  const displayTitle = titleKey ? t(titleKey) : (title || defaultTitle);
 
   useEffect(() => {
     fetchImages();
@@ -39,38 +43,32 @@ const GalleryCategory = ({ category, title }) => {
   };
 
   return (
-    <section className="pt-28 pb-20 bg-slate-50 min-h-screen"
-
-    >
-
-
-      <div className=" max-w-7xl mx-auto px-4">
-
+    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900">
-            {title}
+            {displayTitle}
           </h1>
 
           <p className="text-slate-600 mt-4">
-            Explore our {title.toLowerCase()}
+            {t("galleryCategory.explore", { title: displayTitle.toLowerCase() })}
           </p>
         </motion.div>
 
         {loading ? (
-          <div className="text-center py-20">
-            Loading...
+          <div className="text-center py-20 font-medium text-gray-500">
+            {t("galleryCategory.loading")}
           </div>
         ) : images.length === 0 ? (
-          <div className="bg-white rounded-3xl p-10 text-center shadow">
-            No Images Found
+          <div className="bg-white rounded-3xl p-10 text-center shadow font-semibold text-gray-600">
+            {t("galleryCategory.noImages")}
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
             {images.map((image) => (
               <motion.div
                 key={image.id}
@@ -101,12 +99,9 @@ const GalleryCategory = ({ category, title }) => {
                   <p className="text-sm text-gray-500 mt-2 line-clamp-4">
                     {image.description}
                   </p>
-
-
                 </div>
               </motion.div>
             ))}
-
           </div>
         )}
       </div>
@@ -127,6 +122,7 @@ const GalleryCategory = ({ category, title }) => {
               onClick={() =>
                 setSelectedImage(null)
               }
+              aria-label="Close modal"
             >
               <FaTimes />
             </button>
