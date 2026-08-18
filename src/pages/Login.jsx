@@ -176,53 +176,29 @@ const Login = () => {
         </div>
 
         {/* Email Login */}
-        <form
-          onSubmit={handleEmailLogin}
-          className="space-y-4"
-        >
-          <input
-            type="email"
-            placeholder={t(
-              "auth.emailPlaceholder"
-            )}
-            required
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                email: e.target.value,
-              })
-            }
-            className="
-              w-full
-              border
-              border-gray-300
-              rounded-xl
-              px-4
-              py-3
-              outline-none
-              focus:ring-2
-              focus:ring-teal-500
-            "
-          />
+<form
+  onSubmit={handleEmailLogin}
+  className="space-y-4"
+>
+  {/* Email Field */}
+  <div>
+    <label
+      htmlFor="email"
+      className="block text-sm font-medium text-slate-700 mb-2"
+    >
+      Email Address
+    </label>
 
-          <div>
-  <div className="relative">
     <input
-      type={
-        showPassword
-          ? "text"
-          : "password"
-      }
-      placeholder={t(
-        "auth.passwordPlaceholder"
-      )}
+      id="email"
+      type="email"
+      placeholder={t("auth.emailPlaceholder")}
       required
-      value={formData.password}
+      value={formData.email}
       onChange={(e) =>
         setFormData({
           ...formData,
-          password: e.target.value,
+          email: e.target.value,
         })
       }
       className="
@@ -232,83 +208,119 @@ const Login = () => {
         rounded-xl
         px-4
         py-3
-        pr-12
         outline-none
         focus:ring-2
         focus:ring-teal-500
       "
     />
-
-    <button
-      type="button"
-      onClick={() =>
-        setShowPassword(!showPassword)
-      }
-      className="
-        absolute
-        right-4
-        top-1/2
-        -translate-y-1/2
-        text-gray-500
-      "
-      aria-label="Toggle password visibility"
-    >
-      {showPassword ? (
-        <EyeOff size={20} />
-      ) : (
-        <Eye size={20} />
-      )}
-    </button>
   </div>
 
-  <div className="text-right mt-2">
-    <button
-      type="button"
-      onClick={handleForgotPassword}
-      className="
-        text-sm
-        text-teal-600
-        font-medium
-        hover:underline
-      "
+  {/* Password Field */}
+  <div>
+    <label
+      htmlFor="password"
+      className="block text-sm font-medium text-slate-700 mb-2"
     >
-      Forgot Password?
-    </button>
-  </div>
-</div>
+      Password
+    </label>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="
-              w-full
-              bg-teal-600
-              hover:bg-teal-700
-              text-white
-              py-3
-              rounded-xl
-              transition
-              disabled:opacity-60
-              flex
-              items-center
-              justify-center
-              gap-2
-              font-medium
-            "
-          >
-            {loading ? (
-              <>
-                <Loader2
-                  size={18}
-                  className="animate-spin"
-                />
-                {t("auth.loggingIn")}
-              </>
-            ) : (
-              t("auth.loginBtn")
-            )}
-          </button>
-        </form>
+    <div className="relative">
+      <input
+        id="password"
+        type={showPassword ? "text" : "password"}
+        placeholder={t("auth.passwordPlaceholder")}
+        required
+        value={formData.password}
+        onChange={(e) =>
+          setFormData({
+            ...formData,
+            password: e.target.value,
+          })
+        }
+        className="
+          w-full
+          border
+          border-gray-300
+          rounded-xl
+          px-4
+          py-3
+          pr-12
+          outline-none
+          focus:ring-2
+          focus:ring-teal-500
+        "
+      />
+
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="
+          absolute
+          right-4
+          top-1/2
+          -translate-y-1/2
+          text-gray-500
+        "
+        aria-label="Toggle password visibility"
+      >
+        {showPassword ? (
+          <EyeOff size={20} />
+        ) : (
+          <Eye size={20} />
+        )}
+      </button>
+    </div>
+
+    {/* Forgot Password */}
+    <div className="text-right mt-2">
+      <button
+        type="button"
+        onClick={handleForgotPassword}
+        className="
+          text-sm
+          text-teal-600
+          font-medium
+          hover:underline
+        "
+      >
+        Forgot Password?
+      </button>
+    </div>
+  </div>
+
+  {/* Login Button */}
+  <button
+    type="submit"
+    disabled={loading}
+    className="
+      w-full
+      bg-teal-600
+      hover:bg-teal-700
+      text-white
+      py-3
+      rounded-xl
+      transition
+      disabled:opacity-60
+      flex
+      items-center
+      justify-center
+      gap-2
+      font-medium
+    "
+  >
+    {loading ? (
+      <>
+        <Loader2
+          size={18}
+          className="animate-spin"
+        />
+        {t("auth.loggingIn")}
+      </>
+    ) : (
+      t("auth.loginBtn")
+    )}
+  </button>
+</form>
 
         {/* Divider */}
         <div className="flex items-center gap-3 my-6">
