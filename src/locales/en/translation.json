@@ -28,12 +28,17 @@
     "rights": "All Rights Reserved."
   },
   "hero": {
-    "badge": "Advanced Physiotherapy & Rehabilitation Clinic",
-    "titleLine1": "Restore Your Mobility &",
-    "titleLine2": "Live Pain-Free",
-    "subtitle": "Get expert, personalized physiotherapy care to overcome pain, recover from injuries, and rebuild your strength.",
-    "bookAppointment": "Book Appointment",
-    "viewServices": "View Services",
+  "clinicName": "HealStride Physiotherapy & Wellness Centre",
+  "tagline": "Pain-Free Life Starts Here.",
+  "description": "Personalized physiotherapy treatments designed to help you recover, move better, and live pain-free with expert care.",
+  "callNow": "Call Now",
+
+  "badge": "Advanced Physiotherapy & Rehabilitation Clinic",
+  "titleLine1": "Restore Your Mobility &",
+  "titleLine2": "Live Pain-Free",
+  "subtitle": "Get expert, personalized physiotherapy care to overcome pain, recover from injuries, and rebuild your strength.",
+  "bookAppointment": "Book Appointment",
+  "viewServices": "View Services",
     "statHappyPatients": "Happy Patients",
     "statSuccessRate": "Success Rate",
     "statExperience": "Years Experience"

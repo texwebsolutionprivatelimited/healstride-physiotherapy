@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import drRashidImage from "../../assets/images/Dr.MD.Rashid.png";
 
 const featureKeys = [
   "clinicIntro.f1",
@@ -24,8 +25,7 @@ const ClinicIntro = () => {
             transition={{ duration: 0.8 }}
           >
             <img
-              src="https://blog.acceptedtogether.com/wp-content/uploads/2023/05/doctors-nurses-and-team-portrait-in-hospital-clinic-or-medical-office-diversity-health-and-heal.jpg"
-              alt="Heal Stride Clinic"
+              src={drRashidImage}
               className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl"
             />
           </motion.div>
