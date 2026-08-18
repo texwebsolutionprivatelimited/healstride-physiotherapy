@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import {
+import  {
   signInWithPopup,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebase/firebase";
@@ -68,6 +69,34 @@ const Login = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+  if (!formData.email) {
+    alert("Please enter your email address first.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    await sendPasswordResetEmail(
+      auth,
+      formData.email
+    );
+
+    alert(
+      "Password reset email sent. Please check your inbox."
+    );
+  } catch (error) {
+    console.error("Password Reset Error:", error);
+
+    alert(
+      error.message ||
+        "Unable to send password reset email."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   const handleEmailLogin = async (e) => {
     e.preventDefault();
 
@@ -177,62 +206,76 @@ const Login = () => {
             "
           />
 
-          <div className="relative">
-            <input
-              type={
-                showPassword
-                  ? "text"
-                  : "password"
-              }
-              placeholder={t(
-                "auth.passwordPlaceholder"
-              )}
-              required
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  password:
-                    e.target.value,
-                })
-              }
-              className="
-                w-full
-                border
-                border-gray-300
-                rounded-xl
-                px-4
-                py-3
-                pr-12
-                outline-none
-                focus:ring-2
-                focus:ring-teal-500
-              "
-            />
+          <div>
+  <div className="relative">
+    <input
+      type={
+        showPassword
+          ? "text"
+          : "password"
+      }
+      placeholder={t(
+        "auth.passwordPlaceholder"
+      )}
+      required
+      value={formData.password}
+      onChange={(e) =>
+        setFormData({
+          ...formData,
+          password: e.target.value,
+        })
+      }
+      className="
+        w-full
+        border
+        border-gray-300
+        rounded-xl
+        px-4
+        py-3
+        pr-12
+        outline-none
+        focus:ring-2
+        focus:ring-teal-500
+      "
+    />
 
-            <button
-              type="button"
-              onClick={() =>
-                setShowPassword(
-                  !showPassword
-                )
-              }
-              className="
-                absolute
-                right-4
-                top-1/2
-                -translate-y-1/2
-                text-gray-500
-              "
-              aria-label="Toggle password visibility"
-            >
-              {showPassword ? (
-                <EyeOff size={20} />
-              ) : (
-                <Eye size={20} />
-              )}
-            </button>
-          </div>
+    <button
+      type="button"
+      onClick={() =>
+        setShowPassword(!showPassword)
+      }
+      className="
+        absolute
+        right-4
+        top-1/2
+        -translate-y-1/2
+        text-gray-500
+      "
+      aria-label="Toggle password visibility"
+    >
+      {showPassword ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+  </div>
+
+  <div className="text-right mt-2">
+    <button
+      type="button"
+      onClick={handleForgotPassword}
+      className="
+        text-sm
+        text-teal-600
+        font-medium
+        hover:underline
+      "
+    >
+      Forgot Password?
+    </button>
+  </div>
+</div>
 
           <button
             type="submit"

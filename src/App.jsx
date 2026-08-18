@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "./assets/images/logo.png";
+
 import LoadingScreen from "./components/common/LoadingScreen";
 import Navbar from "./components/common/Navbar/Navbar";
 import Footer from "./components/common/Navbar/Footer/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
 import ScrollToHash from "./components/ScrollToHash";
+
 import AdminServices from "./components/admin/AdminServices";
 import AdminStaff from "./components/admin/AdminStaff";
 import Staff from "./pages/Staff";
@@ -33,6 +35,7 @@ import TreatmentGallery from "./pages/TreatmentGallery";
 import PhysiotherapyServices from "./pages/PhysiotherapyServices";
 import ToolsEquipment from "./pages/ToolsEquipment";
 import ReviewForm from "./pages/ReviewForm";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
@@ -43,7 +46,6 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import Appointments from "./components/admin/Appointments";
-import AdminDoctorProfile from "./components/admin/AdminDoctorProfile";
 import AdminSettings from "./components/admin/AdminSettings";
 import AdminLogin from "./components/admin/AdminLogin";
 import AdminTestimonials from "./components/admin/AdminTestimonials";
@@ -55,6 +57,7 @@ import AnimatedBackground from "./components/AnimatedBackground";
 
 function App() {
   const location = useLocation();
+
   const [loading, setLoading] = useState(true);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
 
@@ -131,6 +134,9 @@ function App() {
         {/* User Login */}
         <Route path="/login" element={<Login />} />
 
+        {/* User Signup */}
+        <Route path="/signup" element={<Signup />} />
+
         <Route path="/profile" element={<Profile />} />
 
         <Route path="/doctors" element={<Doctors />} />
@@ -183,7 +189,10 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<AdminDashboard />} />
+          <Route
+            index
+            element={<AdminDashboard />}
+          />
 
           <Route
             path="appointments"
@@ -254,7 +263,9 @@ function App() {
               {/* Close Button */}
 
               <button
-                onClick={() => setShowAppointmentPopup(false)}
+                onClick={() =>
+                  setShowAppointmentPopup(false)
+                }
                 className="absolute top-5 right-5 text-gray-500 hover:text-black text-2xl"
               >
                 ×
@@ -301,7 +312,9 @@ function App() {
 
               <div className="flex gap-4 mt-8">
                 <button
-                  onClick={() => setShowAppointmentPopup(false)}
+                  onClick={() =>
+                    setShowAppointmentPopup(false)
+                  }
                   className="flex-1 border border-slate-300 py-3 rounded-xl font-medium hover:bg-slate-100 transition"
                 >
                   Later
@@ -309,7 +322,9 @@ function App() {
 
                 <Link
                   to="/booking"
-                  onClick={() => setShowAppointmentPopup(false)}
+                  onClick={() =>
+                    setShowAppointmentPopup(false)
+                  }
                   className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-semibold shadow-lg transition flex items-center justify-center"
                 >
                   Book Now
