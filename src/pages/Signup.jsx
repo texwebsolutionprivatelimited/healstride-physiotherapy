@@ -42,7 +42,7 @@ const Signup = () => {
 
   return (
     <div
-      className="min-h-screen relative flex items-center justify-center px-4 py-8 sm:py-12 bg-cover bg-center"
+      className="min-h-[600px] py-10 sm:py-16 lg:py-20 relative flex items-center justify-center px-4 bg-cover bg-center"
       style={{
         backgroundImage: "url('/login-bg.png')",
       }}

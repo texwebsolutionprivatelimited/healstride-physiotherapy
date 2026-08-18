@@ -8,39 +8,33 @@ const ServiceHero = () => {
     <section
       className="
         relative
-        min-h-[auto]
-        sm:min-h-[60vh]
-        lg:min-h-[75vh]
+        w-full
+        min-h-[380px]
+        sm:min-h-[460px]
+        lg:min-h-[500px]
         flex
         items-center
         justify-center
         overflow-hidden
-        py-8
-        sm:py-12
-        lg:py-16
+        py-12
+        sm:py-16
+        lg:py-20
       "
       style={{
-        backgroundImage:
-          "url(/physiotherapy.jpg)",
+        backgroundImage: "url(/physiotherapy.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-slate-900/75"></div>
-
-      {/* Decorative Blur Effects */}
-      <div className="absolute top-10 left-10 w-40 h-40 bg-blue-500/20 blur-3xl rounded-full" />
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full" />
+      <div className="absolute inset-0 bg-slate-950/45"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/40 to-teal-950/30" />
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.7,
-          ease: "easeOut",
-        }}
+        transition={{ duration: 0.7 }}
         className="
           relative
           z-10
@@ -48,30 +42,30 @@ const ServiceHero = () => {
           px-4
           sm:px-6
           lg:px-8
-          max-w-5xl
+          max-w-7xl
           mx-auto
-          py-6
-          sm:py-10
         "
       >
         {/* Badge */}
         <motion.span
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
           className="
             inline-block
-            bg-white/10
+            bg-teal-600/30
             backdrop-blur-md
             border
-            border-white/20
-            text-white
+            border-teal-400/30
+            text-teal-200
             px-4
-            sm:px-5
-            py-2
+            py-1.5
             rounded-full
             text-xs
             sm:text-sm
+            font-medium
+            mb-4
+            sm:mb-6
           "
         >
           {t("serviceHero.badge")}
@@ -79,48 +73,45 @@ const ServiceHero = () => {
 
         {/* Heading */}
         <motion.h1
-          initial={{ opacity: 0, y: -40 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.3,
-          }}
+          transition={{ delay: 0.3 }}
           className="
-            mt-6
             text-3xl
-            sm:text-4xl
-            md:text-5xl
+            sm:text-5xl
             lg:text-6xl
             font-bold
             text-white
             leading-tight
+            drop-shadow-md
+            max-w-4xl
+            mx-auto
           "
         >
           {t("serviceHero.title")}
-          <span className="block text-cyan-400">
+          <span className="block text-teal-300 mt-1 sm:mt-2">
             {t("serviceHero.titleHighlight")}
           </span>
         </motion.h1>
 
         {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.8,
-            delay: 0.5,
+            duration: 0.7,
+            delay: 0.4,
           }}
           className="
-            mt-5
-            text-sm
+            mt-3
+            sm:mt-5
+            text-xs
             sm:text-base
-            md:text-lg
-            lg:text-xl
-            text-gray-200
-            max-w-3xl
+            lg:text-lg
+            text-slate-100
+            max-w-2xl
             mx-auto
-            leading-7
-            md:leading-8
+            leading-relaxed
           "
         >
           {t("serviceHero.subtitle")}

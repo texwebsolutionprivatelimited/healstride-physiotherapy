@@ -71,50 +71,48 @@ const ReviewForm = () => {
     <section
       className="
         relative
-        min-h-screen
+        min-h-[600px]
         bg-cover
         bg-center
         bg-no-repeat
         overflow-hidden
         py-10
         sm:py-16
-        lg:py-24
+        lg:py-20
       "
       style={{
         backgroundImage: "url('/review-bg.jpg')",
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-slate-900/75" />
+      <div className="absolute inset-0 bg-slate-950/75" />
 
       {/* Blur Effects */}
-      <div className="absolute top-10 left-10 w-72 h-72 bg-teal-500/20 blur-3xl rounded-full" />
-      <div className="absolute bottom-10 right-10 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full" />
+      <div className="absolute top-10 left-10 w-72 h-72 bg-teal-500/20 blur-3xl rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-8 sm:mb-12"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto"
         >
           <span
             className="
               inline-block
               px-4
-              sm:px-5
-              py-2
+              py-1.5
               rounded-full
-              bg-teal-500/15
+              bg-teal-500/20
               border
               border-teal-400/30
               text-teal-300
               font-semibold
               uppercase
-              tracking-[3px]
+              tracking-wider
               text-xs
-              sm:text-sm
               backdrop-blur-md
             "
           >
@@ -123,11 +121,10 @@ const ReviewForm = () => {
 
           <h2
             className="
-              mt-4
-              sm:mt-5
-              text-3xl
-              sm:text-5xl
-              md:text-6xl
+              mt-2
+              text-2xl
+              sm:text-3xl
+              lg:text-4xl
               font-bold
               text-white
               leading-tight
@@ -138,16 +135,14 @@ const ReviewForm = () => {
 
           <p
             className="
-              mt-4
-              sm:mt-5
-              text-gray-300
-              max-w-3xl
+              mt-2.5
+              sm:mt-3
+              text-slate-200
+              max-w-2xl
               mx-auto
-              text-sm
+              text-xs
               sm:text-base
-              md:text-lg
-              leading-7
-              sm:leading-8
+              leading-relaxed
             "
           >
             {t("reviewForm.subtitle")}
@@ -180,20 +175,20 @@ const ReviewForm = () => {
           </motion.div>
         )}
 
-        {/* Form */}
         <motion.form
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           onSubmit={handleSubmit}
           className="
+            max-w-3xl
+            mx-auto
             bg-white/10
             backdrop-blur-xl
             border
             border-white/20
             rounded-2xl
-            sm:rounded-3xl
-            shadow-2xl
+            shadow-xl
             p-5
             sm:p-8
             lg:p-10

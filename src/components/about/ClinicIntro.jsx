@@ -14,56 +14,58 @@ const ClinicIntro = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-white overflow-hidden">
+    <section className="py-10 sm:py-16 lg:py-20 bg-white border-b border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           {/* Image */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
+            className="w-full"
           >
             <img
               src={drRashidImage}
-              className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-3xl shadow-2xl"
+              alt="Dr. MD Rashid - Lead Physiotherapist"
+              className="w-full h-[280px] sm:h-[380px] lg:h-[460px] object-cover rounded-2xl shadow-sm border border-slate-100"
             />
           </motion.div>
 
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
             className="text-center lg:text-left"
           >
-            <span className="text-blue-600 font-semibold uppercase tracking-wider">
+            <span className="text-teal-600 font-semibold uppercase tracking-wider text-xs sm:text-sm">
               {t("clinicIntro.badge")}
             </span>
 
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
+            <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
               {t("clinicIntro.title")}
             </h2>
 
-            <p className="mt-6 text-gray-600 leading-7 sm:leading-8 text-base sm:text-lg">
+            <p className="mt-3 sm:mt-4 text-slate-600 leading-relaxed text-xs sm:text-base">
               {t("clinicIntro.desc")}
             </p>
 
             {/* Features */}
-            <div className="grid sm:grid-cols-2 gap-4 mt-10">
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
               {featureKeys.map((key, index) => (
                 <motion.div
                   key={index}
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-3 bg-gray-50 rounded-2xl p-4 shadow-sm"
+                  whileHover={{ x: 4 }}
+                  className="flex items-center gap-3 bg-slate-50 rounded-xl p-3.5 border border-slate-100"
                 >
                   <CheckCircle
-                    size={22}
-                    className="text-green-500 flex-shrink-0"
+                    size={20}
+                    className="text-emerald-600 flex-shrink-0"
                   />
 
-                  <span className="text-slate-700 font-medium text-sm sm:text-base">
+                  <span className="text-slate-800 font-medium text-xs sm:text-sm">
                     {t(key)}
                   </span>
                 </motion.div>

@@ -2,192 +2,60 @@ import { motion } from "framer-motion";
 
 const GoogleMap = () => {
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-white">
-
+    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-
         {/* Section Header */}
-
         <motion.div
-
-          initial={{
-            opacity: 0,
-            y: 30
-          }}
-
-          whileInView={{
-            opacity: 1,
-            y: 0
-          }}
-
-          transition={{
-            duration: 0.7
-          }}
-
-          viewport={{
-            once: true
-          }}
-
-          className="
-          text-center
-          mb-6
-          sm:mb-8
-          "
-
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-8 sm:mb-12"
         >
+          <p className="uppercase tracking-wider text-teal-600 font-semibold text-xs sm:text-sm">
+            OUR LOCATION
+          </p>
 
-
-          <motion.p
-
-            initial={{
-              opacity:0
-            }}
-
-            whileInView={{
-              opacity:1
-            }}
-
-            transition={{
-              delay:0.2
-            }}
-
-            className="
-            uppercase
-            tracking-[4px]
-            sm:tracking-[5px]
-            text-teal-600
-            font-semibold
-            text-sm
-            sm:text-base
-            "
-
-          >
-
-            Our Location
-
-          </motion.p>
-
-
-
-
-          <h2
-
-            className="
-            text-2xl
-            sm:text-3xl
-            md:text-4xl
-            lg:text-5xl
-            font-bold
-            text-slate-900
-            mt-4
-            "
-
-          >
-
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-2 leading-tight">
             Visit HealStride Clinic
-
           </h2>
 
-
-
-
-          <p
-
-            className="
-            text-gray-600
-            mt-4
-            sm:mt-5
-            max-w-3xl
-            mx-auto
-            text-sm
-            sm:text-base
-            md:text-lg
-            leading-7
-            md:leading-8
-            "
-
-          >
-
+          <p className="text-slate-600 mt-2.5 sm:mt-3 max-w-2xl mx-auto text-xs sm:text-base leading-relaxed">
             Find HealStride Physiotherapy & Wellness Centre in Bhopal and
             experience expert physiotherapy care in a comfortable,
             modern, and patient-friendly environment.
-
           </p>
-
-
         </motion.div>
-
-
-
-
 
         {/* Google Map */}
-
-
         <motion.div
-
-          initial={{
-            opacity:0,
-            scale:0.95
-          }}
-
-          whileInView={{
-            opacity:1,
-            scale:1
-          }}
-
-          transition={{
-            duration:0.8
-          }}
-
-          viewport={{
-            once:true
-          }}
-
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
           className="
-          rounded-2xl
-          sm:rounded-3xl
-          overflow-hidden
-          shadow-xl
-          md:shadow-2xl
-          border
-          border-gray-100
+            rounded-2xl
+            overflow-hidden
+            shadow-sm
+            border
+            border-slate-100
           "
-
         >
-
-
           <iframe
-
             title="HealStride Location"
-
             src="https://maps.google.com/maps?q=Bhopal&t=&z=13&ie=UTF8&iwloc=&output=embed"
-
             className="
-            w-full
-            h-[250px]
-            sm:h-[350px]
-            md:h-[450px]
-            lg:h-[500px]
+              w-full
+              h-[280px]
+              sm:h-[380px]
+              lg:h-[450px]
             "
-
             loading="lazy"
-
             allowFullScreen
-
             referrerPolicy="no-referrer-when-downgrade"
-
           />
-
-
         </motion.div>
-
-
-
       </div>
-
-
     </section>
   );
 };

@@ -8,16 +8,17 @@ const ContactHero = () => {
     <section
       className="
         relative
-        min-h-[65vh]
-        sm:min-h-[70vh]
-        lg:min-h-[80vh]
+        w-full
+        min-h-[380px]
+        sm:min-h-[460px]
+        lg:min-h-[500px]
         flex
         items-center
         justify-center
         overflow-hidden
-        py-8
-        sm:py-12
-        lg:py-16
+        py-12
+        sm:py-16
+        lg:py-20
       "
     >
       {/* Background */}
@@ -35,87 +36,44 @@ const ContactHero = () => {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
-
-      <div
-        className="
-          absolute
-          inset-0
-          bg-gradient-to-r
-          from-teal-900/60
-          via-teal-800/30
-          to-transparent
-        "
-      />
-
-      {/* Blur */}
-      <div
-        className="
-          absolute
-          top-5
-          left-5
-          w-32
-          h-32
-          sm:w-40
-          sm:h-40
-          bg-blue-500/20
-          blur-3xl
-          rounded-full
-        "
-      />
-
-      <div
-        className="
-          absolute
-          bottom-5
-          right-5
-          w-32
-          h-32
-          sm:w-40
-          sm:h-40
-          bg-cyan-500/20
-          blur-3xl
-          rounded-full
-        "
-      />
+      <div className="absolute inset-0 bg-slate-950/45" />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/40 to-teal-950/30" />
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.7 }}
         className="
           relative
           z-10
           w-full
-          max-w-6xl
+          max-w-7xl
           mx-auto
           text-center
           px-4
           sm:px-6
           lg:px-8
-          py-8
-          sm:py-10
         "
       >
         {/* Badge */}
         <motion.span
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
           className="
             inline-flex
             items-center
-            bg-blue-600/20
+            bg-teal-600/30
             backdrop-blur-md
             border
-            border-white/20
-            text-white
-            px-5
-            py-2
+            border-teal-400/30
+            text-teal-200
+            px-4
+            py-1.5
             rounded-full
-            mb-6
-            sm:mb-8
+            mb-4
+            sm:mb-6
             text-xs
             sm:text-sm
             font-medium
@@ -126,22 +84,24 @@ const ContactHero = () => {
 
         {/* Heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="
-            text-4xl
+            text-3xl
             sm:text-5xl
-            md:text-6xl
-            lg:text-7xl
+            lg:text-6xl
             font-bold
             text-white
             leading-tight
+            drop-shadow-md
+            max-w-4xl
+            mx-auto
           "
         >
           {t("contactHero.title")}
 
-          <span className="block text-cyan-400 mt-2">
+          <span className="block text-teal-300 mt-1 sm:mt-2">
             {t("contactHero.titleHighlight")}
           </span>
         </motion.h1>
@@ -151,19 +111,19 @@ const ContactHero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.8,
-            delay: 0.5,
+            duration: 0.7,
+            delay: 0.4,
           }}
           className="
-            mt-6
-            text-base
-            sm:text-lg
-            lg:text-xl
-            text-gray-200
-            max-w-3xl
+            mt-3
+            sm:mt-5
+            text-xs
+            sm:text-base
+            lg:text-lg
+            text-slate-100
+            max-w-2xl
             mx-auto
-            leading-7
-            sm:leading-8
+            leading-relaxed
           "
         >
           {t("contactHero.subtitle")}

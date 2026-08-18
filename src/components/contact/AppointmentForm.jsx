@@ -92,33 +92,33 @@ const AppointmentForm = () => {
 
   return (
     <section
-      className="relative py-8 sm:py-12 lg:py-16 overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="relative py-10 sm:py-16 lg:py-20 overflow-hidden bg-cover bg-center bg-no-repeat min-h-[70vh]"
       style={{
         backgroundImage: "url('/appointment.jpg')",
       }}
     >
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-slate-900/70"></div>
+      <div className="absolute inset-0 bg-slate-950/75"></div>
 
       {/* Decorative Blur Effects */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-teal-500/20 blur-3xl rounded-full"></div>
+      <div className="absolute top-0 left-0 w-72 h-72 bg-teal-500/20 blur-3xl rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full pointer-events-none"></div>
 
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full"></div>
-
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto"
         >
           {/* Heading */}
           <div className="text-center mb-6 sm:mb-8">
             <span
               className="
                 inline-block
-                px-4
-                py-2
+                px-3.5
+                py-1.5
                 rounded-full
                 bg-teal-500/20
                 border
@@ -126,7 +126,7 @@ const AppointmentForm = () => {
                 text-teal-300
                 font-semibold
                 uppercase
-                tracking-[3px]
+                tracking-wider
                 text-xs
                 backdrop-blur-md
               "
@@ -134,40 +134,40 @@ const AppointmentForm = () => {
               {t("appointmentForm.badge")}
             </span>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mt-2 leading-tight">
               {t("appointmentForm.title")}
             </h2>
 
-            <p className="text-gray-200 mt-4 max-w-2xl mx-auto leading-7 sm:leading-8">
+            <p className="text-slate-200 mt-2.5 sm:mt-3 max-w-xl mx-auto text-xs sm:text-base leading-relaxed">
               {t("appointmentForm.subtitle")}
             </p>
           </div>
 
           {/* Login Notice */}
           {!user && (
-            <div className="mb-6 bg-yellow-500/15 backdrop-blur-md border border-yellow-400/20 text-yellow-200 rounded-2xl p-4">
+            <div className="mb-6 bg-amber-500/20 backdrop-blur-md border border-amber-400/30 text-amber-200 rounded-xl p-4 text-xs sm:text-sm text-center">
               {t("appointmentForm.loginNotice")}
             </div>
           )}
 
           {/* Success Message */}
           {submitted && (
-            <div className="mb-6 bg-green-500/15 backdrop-blur-md border border-green-400/20 rounded-2xl p-4">
-              <h4 className="font-semibold text-green-300">
+            <div className="mb-6 bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 rounded-xl p-4 text-center">
+              <h4 className="font-semibold text-emerald-300 text-sm sm:text-base">
                 {t("appointmentForm.submittedTitle")}
               </h4>
 
-              <p className="text-green-200 mt-1">
+              <p className="text-emerald-200 mt-1 text-xs sm:text-sm">
                 {t("appointmentForm.submittedDesc")}
               </p>
             </div>
           )}
 
           {/* Form Container */}
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-10">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl p-5 sm:p-8 lg:p-10">
             <form
               onSubmit={handleSubmit}
-              className="space-y-5 max-w-4xl mx-auto"
+              className="space-y-4 sm:space-y-5"
             >
               {/* Full Name */}
               <input
@@ -186,10 +186,12 @@ const AppointmentForm = () => {
                   px-4
                   py-3
                   text-white
-                  placeholder:text-gray-300
+                  placeholder:text-slate-300
                   focus:ring-2
                   focus:ring-teal-400
                   outline-none
+                  text-xs
+                  sm:text-sm
                 "
               />
 
@@ -210,10 +212,12 @@ const AppointmentForm = () => {
                   px-4
                   py-3
                   text-white
-                  placeholder:text-gray-300
+                  placeholder:text-slate-300
                   focus:ring-2
                   focus:ring-teal-400
                   outline-none
+                  text-xs
+                  sm:text-sm
                 "
               />
 
@@ -235,49 +239,51 @@ const AppointmentForm = () => {
                   focus:ring-2
                   focus:ring-teal-400
                   outline-none
+                  text-xs
+                  sm:text-sm
                 "
               >
-                <option value="" className="text-black">
+                <option value="" className="text-slate-900 bg-white">
                   {t("appointmentForm.selectCondition")}
                 </option>
 
-                <option value="Knee Pain" className="text-black">
+                <option value="Knee Pain" className="text-slate-900 bg-white">
                   {t("conditionsList.kneePain")}
                 </option>
 
-                <option value="Back Pain" className="text-black">
+                <option value="Back Pain" className="text-slate-900 bg-white">
                   {t("conditionsList.backPain")}
                 </option>
 
-                <option value="Neck Pain" className="text-black">
+                <option value="Neck Pain" className="text-slate-900 bg-white">
                   {t("conditionsList.neckPain")}
                 </option>
 
-                <option value="Shoulder Pain" className="text-black">
+                <option value="Shoulder Pain" className="text-slate-900 bg-white">
                   {t("conditionsList.shoulderPain")}
                 </option>
 
-                <option value="Sciatica" className="text-black">
+                <option value="Sciatica" className="text-slate-900 bg-white">
                   {t("conditionsList.sciatica")}
                 </option>
 
-                <option value="Sports Injury" className="text-black">
+                <option value="Sports Injury" className="text-slate-900 bg-white">
                   {t("conditionsList.sportsInjury")}
                 </option>
 
-                <option value="Stroke Rehab" className="text-black">
+                <option value="Stroke Rehab" className="text-slate-900 bg-white">
                   {t("conditionsList.strokeRehab")}
                 </option>
 
-                <option value="Frozen Shoulder" className="text-black">
+                <option value="Frozen Shoulder" className="text-slate-900 bg-white">
                   {t("conditionsList.frozenShoulder")}
                 </option>
 
-                <option value="Post Surgery Rehab" className="text-black">
+                <option value="Post Surgery Rehab" className="text-slate-900 bg-white">
                   {t("conditionsList.postSurgeryRehab")}
                 </option>
 
-                <option value="Plantar Fasciitis" className="text-black">
+                <option value="Plantar Fasciitis" className="text-slate-900 bg-white">
                   {t("conditionsList.plantarFasciitis")}
                 </option>
               </select>
@@ -302,6 +308,8 @@ const AppointmentForm = () => {
                     outline-none
                     focus:ring-2
                     focus:ring-teal-400
+                    text-xs
+                    sm:text-sm
                   "
                 />
 
@@ -323,13 +331,15 @@ const AppointmentForm = () => {
                     outline-none
                     focus:ring-2
                     focus:ring-teal-400
+                    text-xs
+                    sm:text-sm
                   "
                 />
               </div>
 
               {/* Additional Message */}
               <textarea
-                rows="5"
+                rows="4"
                 name="message"
                 placeholder={t("appointmentForm.msgPlaceholder")}
                 value={formData.message}
@@ -343,35 +353,39 @@ const AppointmentForm = () => {
                   px-4
                   py-3
                   text-white
-                  placeholder:text-gray-300
+                  placeholder:text-slate-300
                   resize-none
                   outline-none
                   focus:ring-2
                   focus:ring-teal-400
+                  text-xs
+                  sm:text-sm
                 "
               />
 
               {/* Submit Button */}
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading}
                 className="
                   w-full
-                  bg-gradient-to-r
-                  from-teal-500
-                  to-cyan-500
-                  hover:from-teal-600
-                  hover:to-cyan-600
+                  bg-teal-600
+                  hover:bg-teal-700
+                  active:bg-teal-800
                   text-white
-                  py-4
+                  py-3.5
                   rounded-xl
                   font-semibold
-                  shadow-lg
-                  shadow-teal-500/30
+                  shadow-md
+                  hover:shadow-lg
                   disabled:opacity-50
-                  transition
+                  transition-all
+                  duration-200
+                  text-xs
+                  xs:text-sm
+                  sm:text-base
                 "
               >
                 {loading

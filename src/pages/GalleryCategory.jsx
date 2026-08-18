@@ -43,60 +43,58 @@ const GalleryCategory = ({ category, title, titleKey, defaultTitle }) => {
   };
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 min-h-screen">
+    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100 min-h-[60vh]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
             {displayTitle}
           </h1>
 
-          <p className="text-slate-600 mt-4">
+          <p className="text-slate-600 mt-2.5 sm:mt-3 text-xs sm:text-base leading-relaxed">
             {t("galleryCategory.explore", { title: displayTitle.toLowerCase() })}
           </p>
         </motion.div>
 
         {loading ? (
-          <div className="text-center py-20 font-medium text-gray-500">
+          <div className="text-center py-20 font-medium text-slate-500 text-sm">
             {t("galleryCategory.loading")}
           </div>
         ) : images.length === 0 ? (
-          <div className="bg-white rounded-3xl p-10 text-center shadow font-semibold text-gray-600">
+          <div className="bg-white rounded-2xl p-8 sm:p-12 text-center border border-slate-100 shadow-sm font-semibold text-slate-600 text-xs sm:text-sm">
             {t("galleryCategory.noImages")}
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {images.map((image) => (
               <motion.div
                 key={image.id}
-                whileHover={{
-                  y: -10,
-                }}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer"
+                whileHover={{ y: -4 }}
+                className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl hover:border-teal-200 transition-all duration-300 cursor-pointer flex flex-col h-full group"
                 onClick={() =>
                   setSelectedImage(image.imageUrl)
                 }
               >
-                <div className="overflow-hidden relative">
+                <div className="overflow-hidden relative h-48 sm:h-56 w-full flex-shrink-0">
                   <img
                     src={image.imageUrl}
                     alt={image.title}
-                    className="w-full h-72 object-cover hover:scale-110 transition duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
 
-                  <span className="absolute top-3 left-3 bg-teal-500 text-white text-xs px-3 py-1 rounded-full">
+                  <span className="absolute top-3 left-3 bg-teal-600/90 text-white text-xs px-3 py-1 rounded-full font-medium shadow-sm">
                     {image.category}
                   </span>
                 </div>
 
-                <div className="p-5">
-                  <h3 className="font-semibold text-lg">
+                <div className="p-5 sm:p-6 flex flex-col flex-1">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900">
                     {image.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-2 line-clamp-4">
+                  <p className="text-xs sm:text-sm text-slate-600 mt-2 line-clamp-3 leading-relaxed">
                     {image.description}
                   </p>
                 </div>

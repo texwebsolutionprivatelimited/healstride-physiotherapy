@@ -42,27 +42,26 @@ const Staff = () => {
 
   if (loading) {
     return (
-      <section className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Loading staff...</p>
+      <section className="py-20 flex items-center justify-center">
+        <p className="text-slate-500 font-medium text-sm sm:text-base">Loading staff...</p>
       </section>
     );
   }
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-
+    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100 min-h-[60vh]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-14">
-          <p className="text-teal-600 uppercase tracking-[0.25em] text-sm font-semibold mb-3">
+        <div className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto">
+          <p className="text-teal-600 uppercase tracking-wider text-xs sm:text-sm font-semibold mb-2">
             Meet Our Team
           </p>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
             Our Staff
           </h1>
 
-          <p className="max-w-2xl mx-auto text-gray-600 text-lg">
+          <p className="mt-2.5 sm:mt-3 text-slate-600 text-xs sm:text-base leading-relaxed">
             Meet the dedicated professionals who manage our clinic and
             provide quality care to every patient.
           </p>
@@ -70,79 +69,74 @@ const Staff = () => {
 
         {/* Staff Grid */}
         {staff.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-gray-500">
+          <div className="text-center py-12">
+            <p className="text-slate-500 text-sm">
               No staff members available.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {staff.map((member) => (
               <div
                 key={member.id}
-                className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden"
+                className="bg-white rounded-2xl shadow-sm hover:shadow-md border border-slate-100 overflow-hidden flex flex-col h-full transition-all duration-300"
               >
                 {/* Image */}
-                <div className="w-full bg-gray-100 overflow-hidden">
+                <div className="w-full h-64 sm:h-72 bg-slate-100 overflow-hidden flex-shrink-0">
                   {member.imageUrl ? (
                     <img
                       src={member.imageUrl}
                       alt={member.name}
-                      className="w-full h-auto object-contain block"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="h-72 flex items-center justify-center">
-                      <UserRound
-                        size={70}
-                        className="text-gray-400"
-                      />
+                    <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
+                      <UserRound size={60} />
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-
-                  <h2 className="text-2xl font-bold text-gray-900">
+                <div className="p-5 sm:p-6 flex flex-col flex-1">
+                  <h2 className="text-lg sm:text-xl font-bold text-slate-900">
                     {member.name}
                   </h2>
 
                   {member.role && (
-                    <p className="text-teal-600 font-semibold mt-2">
+                    <p className="text-teal-600 font-semibold text-xs sm:text-sm mt-1">
                       {member.role}
                     </p>
                   )}
 
                   {member.bio && (
-                    <p className="text-gray-600 mt-4 leading-relaxed">
+                    <p className="text-slate-600 mt-3 text-xs sm:text-sm leading-relaxed">
                       {member.bio}
                     </p>
                   )}
 
                   {member.certifications && (
-                    <div className="mt-6">
-                      <h3 className="font-semibold text-gray-900 mb-3">
+                    <div className="mt-4 pt-4 border-t border-slate-100">
+                      <h3 className="font-bold text-xs sm:text-sm text-slate-900 mb-2">
                         Qualifications / Certifications
                       </h3>
 
-                      <ul className="space-y-2">
+                      <ul className="space-y-1 text-xs sm:text-sm text-slate-600">
                         {member.certifications
                           .split("\n")
                           .filter((item) => item.trim())
                           .map((item, index) => (
                             <li
                               key={index}
-                              className="text-gray-600 flex gap-2"
+                              className="flex items-start gap-1.5"
                             >
-                              <span className="text-teal-600">•</span>
+                              <span className="text-teal-600 font-bold">•</span>
                               <span>{item}</span>
                             </li>
                           ))}
                       </ul>
                     </div>
                   )}
-
                 </div>
               </div>
             ))}

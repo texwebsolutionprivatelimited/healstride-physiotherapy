@@ -9,119 +9,92 @@ import {
 const AnimatedBackground = () => {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-
       {/* Floating Heart Icon */}
       <motion.div
         animate={{
-          y: [0, -30, 0],
-          rotate: [0, 10, 0],
+          y: [0, -20, 0],
+          rotate: [0, 8, 0],
         }}
         transition={{
           duration: 6,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-24 left-10 text-teal-400 opacity-30"
+        className="hidden md:block absolute top-28 left-6 lg:left-12 text-teal-500/15"
       >
-        <HeartPulse size={55} />
+        <HeartPulse size={44} />
       </motion.div>
-
 
       {/* Floating Activity Icon */}
       <motion.div
         animate={{
-          y: [0, 25, 0],
-          x: [0, 15, 0],
+          y: [0, 20, 0],
+          x: [0, 10, 0],
         }}
         transition={{
           duration: 7,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-40 right-16 text-teal-400 opacity-30"
+        className="hidden md:block absolute top-44 right-8 lg:right-16 text-teal-500/15"
       >
-        <Activity size={50} />
+        <Activity size={40} />
       </motion.div>
-
 
       {/* Floating Stethoscope */}
       <motion.div
         animate={{
-          y: [0, -25, 0],
-          rotate: [0, -15, 0],
+          y: [0, -18, 0],
+          rotate: [0, -10, 0],
         }}
         transition={{
           duration: 8,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-32 left-20 text-teal-300 opacity-30"
+        className="hidden lg:block absolute bottom-36 left-12 text-teal-400/15"
       >
-        <Stethoscope size={65} />
+        <Stethoscope size={50} />
       </motion.div>
-
 
       {/* Medical Cross */}
       <motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.15, 1],
+          opacity: [0.1, 0.2, 0.1],
         }}
         transition={{
           duration: 5,
           repeat: Infinity,
         }}
-        className="absolute bottom-20 right-24 text-teal-400 opacity-30"
+        className="hidden lg:block absolute bottom-24 right-16 text-teal-500/15"
       >
-        <Cross size={45} />
+        <Cross size={36} />
       </motion.div>
 
-
-      {/* Glow Circle 1 */}
+      {/* Subtle Soft Glow Circles */}
       <motion.div
         animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.15, 0.3, 0.15],
+          scale: [1, 1.2, 1],
+          opacity: [0.08, 0.15, 0.08],
         }}
         transition={{
-          duration: 6,
+          duration: 7,
           repeat: Infinity,
         }}
         className="
           absolute
           top-1/3
           left-1/2
-          w-40
-          h-40
+          w-72
+          h-72
+          -translate-x-1/2
           rounded-full
-          bg-teal-300
+          bg-teal-200
           blur-3xl
+          pointer-events-none
         "
       />
-
-
-      {/* Glow Circle 2 */}
-      <motion.div
-        animate={{
-          scale: [1, 1.4, 1],
-          opacity: [0.1, 0.25, 0.1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-        }}
-        className="
-          absolute
-          bottom-10
-          right-1/3
-          w-52
-          h-52
-          rounded-full
-          bg-cyan-300
-          blur-3xl
-        "
-      />
-
     </div>
   );
 };

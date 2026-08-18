@@ -27,25 +27,25 @@ const Conditions = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="py-10 sm:py-16 lg:py-20 bg-white border-b border-slate-100 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-teal-600 uppercase tracking-[3px] sm:tracking-[5px] text-center font-semibold text-xs sm:text-sm"
+          className="text-teal-600 uppercase tracking-wider text-center font-semibold text-xs sm:text-sm"
         >
           {t("conditions.badge")}
         </motion.p>
 
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-2xl sm:text-3xl lg:text-5xl font-bold text-center mt-2 sm:mt-4 text-slate-900 leading-tight"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mt-2 text-slate-900 leading-tight"
         >
           {t("conditions.title")}
         </motion.h2>
@@ -55,7 +55,7 @@ const Conditions = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-gray-600 text-center mt-2 sm:mt-5 max-w-3xl mx-auto leading-relaxed sm:leading-8 text-xs sm:text-base"
+          className="text-slate-600 text-center mt-2.5 sm:mt-3 max-w-2xl mx-auto leading-relaxed text-xs sm:text-base"
         >
           {t("conditions.subtitle")}
         </motion.p>

@@ -72,60 +72,57 @@ const ContactInfo = () => {
   ];
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="py-10 sm:py-16 lg:py-20 bg-white border-b border-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-6 sm:mb-10"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8 sm:mb-12"
         >
-          <span className="text-teal-600 font-semibold uppercase tracking-[3px] sm:tracking-wider text-sm">
+          <span className="text-teal-600 font-semibold uppercase tracking-wider text-xs sm:text-sm">
             {t("contactInfo.badge")}
           </span>
 
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mt-2">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mt-2 leading-tight">
             {t("contactInfo.title")}
-          </h3>
+          </h2>
 
-          <p className="text-gray-600 mt-3 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-slate-600 mt-2.5 sm:mt-3 max-w-2xl mx-auto text-xs sm:text-base leading-relaxed">
             {t("contactInfo.subtitle")}
           </p>
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {contactItems.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{
-                duration: 0.6,
-                delay: index * 0.15,
+                duration: 0.5,
+                delay: index * 0.1,
               }}
               whileHover={{
-                y: -8,
-                scale: 1.02,
+                y: -4,
               }}
-              className="p-5 sm:p-6 rounded-2xl bg-gray-50 hover:bg-teal-50 hover:shadow-xl transition-all duration-300 text-center"
+              className="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-teal-200 transition-all duration-300 text-center flex flex-col items-center justify-start h-full"
             >
-              <motion.div
-                whileHover={{ rotate: 8, scale: 1.1 }}
-                transition={{ duration: 0.3 }}
-                className="bg-teal-600 text-white w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mx-auto mb-4 text-lg sm:text-xl"
-              >
+              <div className="bg-teal-50 text-teal-600 w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-lg shrink-0">
                 {item.icon}
-              </motion.div>
+              </div>
 
-              <h4 className="font-semibold text-slate-800 mb-2 text-base sm:text-lg">
+              <h3 className="font-bold text-slate-900 mb-2 text-base sm:text-lg">
                 {t(item.titleKey)}
-              </h4>
+              </h3>
 
-              {item.content}
+              <div className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                {item.content}
+              </div>
             </motion.div>
           ))}
         </div>

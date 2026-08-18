@@ -107,11 +107,11 @@ const OurServices = () => {
         {/* Cards */}
         {!loading && services.length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
           >
             {services.map((service) => {
               const Icon =
@@ -120,22 +120,26 @@ const OurServices = () => {
               return (
                 <motion.div
                   key={service.id}
-                  whileHover={{ y: -8 }}
+                  whileHover={{ y: -4 }}
                   transition={{ duration: 0.3 }}
                   className="
+                    group
+                    h-full
+                    flex
+                    flex-col
                     bg-white
                     rounded-2xl
-                    sm:rounded-3xl
                     overflow-hidden
-                    shadow-md
-                    sm:shadow-lg
-                    hover:shadow-2xl
+                    border
+                    border-slate-100
+                    shadow-sm
+                    hover:shadow-xl
                     transition-all
                     duration-300
                   "
                 >
                   {/* Image */}
-                  <div className="relative overflow-hidden h-44 xs:h-52 sm:h-60">
+                  <div className="relative overflow-hidden h-48 sm:h-52 w-full flex-shrink-0">
                     <img
                       src={service.imageUrl}
                       alt={service.title}
@@ -143,36 +147,33 @@ const OurServices = () => {
                         w-full
                         h-full
                         object-cover
-                        hover:scale-110
+                        group-hover:scale-105
                         transition-transform
-                        duration-500
+                        duration-300
                       "
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
 
-                    {/* Icon */}
+                    {/* Icon Badge */}
                     <div
                       className="
                         absolute
-                        top-3
-                        left-3
+                        top-3.5
+                        left-3.5
                         bg-teal-600
                         text-white
-                        w-9
-                        h-9
-                        xs:w-11
-                        xs:h-11
-                        sm:w-14
-                        sm:h-14
-                        rounded-full
+                        w-10
+                        h-10
+                        sm:w-12
+                        sm:h-12
+                        rounded-xl
                         flex
                         items-center
                         justify-center
-                        text-sm
-                        xs:text-base
-                        sm:text-2xl
-                        shadow-lg
+                        text-lg
+                        sm:text-xl
+                        shadow-md
                       "
                     >
                       <Icon />
@@ -182,54 +183,56 @@ const OurServices = () => {
                     <h3
                       className="
                         absolute
-                        bottom-3
-                        left-3
-                        right-3
+                        bottom-3.5
+                        left-4
+                        right-4
                         text-white
-                        text-base
-                        xs:text-lg
+                        text-lg
                         sm:text-xl
-                        lg:text-2xl
                         font-bold
                         truncate
+                        drop-shadow-sm
                       "
                     >
                       {service.title}
                     </h3>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-4 sm:p-6">
+                  {/* Content Container */}
+                  <div className="p-5 sm:p-6 flex flex-col flex-1">
                     <p
                       className="
-                        text-gray-600
+                        text-slate-600
                         text-xs
-                        sm:text-base
+                        sm:text-sm
                         leading-relaxed
-                        sm:leading-7
                         line-clamp-3
-                        sm:line-clamp-none
                       "
                     >
                       {service.description}
                     </p>
 
-                    <Link
-                      to={`/services/${service.slug}`}
-                      className="
-                        mt-3
-                        sm:mt-5
-                        inline-block
-                        text-teal-600
-                        font-semibold
-                        hover:text-teal-800
-                        transition
-                        text-xs
-                        sm:text-base
-                      "
-                    >
-                      {t("ourServices.learnMore")}
-                    </Link>
+                    <div className="mt-auto pt-4">
+                      <Link
+                        to={`/services/${service.slug}`}
+                        className="
+                          inline-flex
+                          items-center
+                          gap-1.5
+                          text-teal-600
+                          font-semibold
+                          hover:text-teal-700
+                          transition-colors
+                          text-xs
+                          sm:text-sm
+                          group/link
+                        "
+                      >
+                        <span className="group-hover/link:translate-x-1 transition-transform duration-200 inline-block">
+                          {t("ourServices.learnMore")}
+                        </span>
+                      </Link>
+                    </div>
                   </div>
                 </motion.div>
               );

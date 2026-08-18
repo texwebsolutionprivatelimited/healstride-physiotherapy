@@ -56,7 +56,7 @@ const DoctorProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="py-20 flex items-center justify-center">
         <Loader2 className="animate-spin text-teal-600" size={40} />
       </div>
     );
@@ -64,20 +64,20 @@ const DoctorProfile = () => {
 
   if (!doctor) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-2xl font-bold">
+      <div className="py-20 text-center text-xl font-bold text-slate-800">
         {t("doctorProfile.notFound")}
       </div>
     );
   }
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100 min-h-[60vh]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           to="/doctors"
-          className="inline-flex items-center gap-2 text-teal-600 mb-6 sm:mb-8 font-medium"
+          className="inline-flex items-center gap-2 text-teal-600 mb-6 font-semibold text-xs sm:text-sm hover:text-teal-700 transition-colors"
         >
-          <ArrowLeft size={18} />
+          <ArrowLeft size={16} />
           {t("doctorProfile.back")}
         </Link>
 
@@ -85,35 +85,40 @@ const DoctorProfile = () => {
           className="
             grid
             lg:grid-cols-2
-            gap-10
+            gap-8
             lg:gap-12
-            items-stretch
+            items-start
           "
         >
           {/* Image */}
-          <img
-            src={doctor.image || "/default-user.png"}
-            alt={doctor.name}
-            className="
-              w-full
-              h-[350px]
-              sm:h-[450px]
-              lg:h-full
-              lg:min-h-[450px]
-              object-cover
-              rounded-3xl
-              shadow-xl
-            "
-          />
+          <div className="w-full">
+            <img
+              src={doctor.image || "/default-user.png"}
+              alt={doctor.name}
+              className="
+                w-full
+                h-[320px]
+                sm:h-[420px]
+                lg:h-[500px]
+                object-cover
+                rounded-2xl
+                shadow-sm
+                border
+                border-slate-100
+              "
+            />
+          </div>
 
           {/* Details */}
-          <div className="flex flex-col justify-center h-full">
+          <div className="flex flex-col justify-center">
             <h1
               className="
-                text-3xl
-                sm:text-4xl
+                text-2xl
+                sm:text-3xl
+                lg:text-4xl
                 font-bold
-                text-slate-800
+                text-slate-900
+                leading-tight
               "
             >
               {doctor.name}
@@ -122,8 +127,10 @@ const DoctorProfile = () => {
             <p
               className="
                 text-teal-600
-                text-xl
-                mt-2
+                text-sm
+                sm:text-base
+                font-semibold
+                mt-1
               "
             >
               {doctor.role}
@@ -131,41 +138,42 @@ const DoctorProfile = () => {
 
             <p
               className="
-                mt-6
-                text-gray-600
-                leading-7
-                md:leading-8
+                mt-4
+                text-slate-600
+                text-xs
+                sm:text-base
+                leading-relaxed
               "
             >
               {doctor.description}
             </p>
 
-            <div className="space-y-5 mt-6 md:mt-8">
+            <div className="space-y-4 mt-6">
               <Info
-                icon={<GraduationCap />}
+                icon={<GraduationCap size={20} />}
                 title={t("doctorProfile.education")}
                 value={doctor.education}
               />
 
               <Info
-                icon={<BriefcaseMedical />}
+                icon={<BriefcaseMedical size={20} />}
                 title={t("doctorProfile.experience")}
                 value={doctor.experience}
               />
 
               <Info
-                icon={<BadgeCheck />}
+                icon={<BadgeCheck size={20} />}
                 title={t("doctorProfile.registration")}
                 value={doctor.registration}
               />
             </div>
 
-            <div className="mt-8">
-              <h3 className="font-bold text-lg mb-3">
+            <div className="mt-6">
+              <h3 className="font-bold text-sm sm:text-base text-slate-900 mb-2.5">
                 {t("doctorProfile.specialization")}
               </h3>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {doctor.specialization
                   ?.split(",")
                   .map((item, index) => (
@@ -176,10 +184,11 @@ const DoctorProfile = () => {
                         text-teal-700
                         border
                         border-teal-200
-                        px-4
-                        py-2
-                        rounded-full
-                        text-sm
+                        px-3
+                        py-1.5
+                        rounded-xl
+                        text-xs
+                        sm:text-sm
                         font-medium
                       "
                     >
@@ -189,24 +198,35 @@ const DoctorProfile = () => {
               </div>
             </div>
 
-            <Link
-              to="/booking"
-              className="
-                inline-block
-                mt-6
-                md:mt-8
-                bg-teal-600
-                hover:bg-teal-700
-                text-white
-                px-8
-                py-3
-                rounded-xl
-                font-medium
-                transition
-              "
-            >
-              {t("doctorProfile.bookAppointment")}
-            </Link>
+            <div className="mt-8">
+              <Link
+                to="/booking"
+                className="
+                  inline-flex
+                  items-center
+                  justify-center
+                  bg-teal-600
+                  hover:bg-teal-700
+                  active:bg-teal-800
+                  text-white
+                  px-6
+                  py-3.5
+                  rounded-xl
+                  font-semibold
+                  shadow-md
+                  hover:shadow-lg
+                  transition-all
+                  duration-200
+                  text-xs
+                  xs:text-sm
+                  sm:text-base
+                  w-full
+                  sm:w-auto
+                "
+              >
+                {t("doctorProfile.bookAppointment")}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

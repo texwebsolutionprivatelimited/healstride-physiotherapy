@@ -46,46 +46,46 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center uppercase tracking-[3px] sm:tracking-[5px] text-teal-600 font-semibold text-xs sm:text-sm"
+          className="text-center uppercase tracking-wider text-teal-600 font-semibold text-xs sm:text-sm"
         >
           {t("testimonials.badge")}
         </motion.p>
 
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-2xl sm:text-3xl lg:text-5xl font-bold text-center text-slate-900 mt-2 sm:mt-4 leading-tight"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-slate-900 mt-2 leading-tight"
         >
           {t("testimonials.title")}
         </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center text-gray-600 mt-2 sm:mt-5 max-w-3xl mx-auto leading-relaxed sm:leading-8 text-xs sm:text-base"
+          className="text-center text-slate-600 mt-2.5 sm:mt-3 max-w-2xl mx-auto text-xs sm:text-base leading-relaxed"
         >
           {t("testimonials.subtitle")}
         </motion.p>
 
         {/* Testimonials Slider */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mt-6 sm:mt-10"
+          className="mt-8 sm:mt-12 max-w-4xl mx-auto"
         >
           {testimonials.length > 0 ? (
             <Swiper
@@ -97,36 +97,37 @@ const Testimonials = () => {
                 disableOnInteraction: false,
               }}
               loop={testimonials.length > 1}
+              className="pb-12"
             >
               {testimonials.map((item) => (
                 <SwiperSlide key={item.id}>
-                  <div className="bg-white rounded-2xl sm:rounded-3xl shadow-md sm:shadow-xl p-4 xs:p-6 sm:p-8 lg:p-10 mb-8 sm:mb-0">
-                    <FaQuoteLeft className="text-teal-500 text-2xl xs:text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-6" />
+                  <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8 lg:p-10 text-center sm:text-left">
+                    <FaQuoteLeft className="text-teal-600 text-3xl sm:text-4xl mb-4 mx-auto sm:mx-0 opacity-80" />
 
-                    <p className="text-gray-600 text-xs xs:text-sm sm:text-lg lg:text-xl leading-relaxed sm:leading-8 lg:leading-9 italic">
+                    <p className="text-slate-700 text-sm sm:text-base lg:text-lg leading-relaxed italic">
                       "{item.review}"
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center sm:items-start mt-5 sm:mt-8 text-center sm:text-left">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start mt-6 text-center sm:text-left">
                       <img
                         src={item.image || defaultUser}
                         alt={item.name}
-                        className="w-12 h-12 xs:w-14 xs:h-14 sm:w-20 sm:h-20 rounded-full object-cover shadow-sm"
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover shadow-sm border-2 border-teal-100"
                         onError={(e) => {
                           e.target.src = defaultUser;
                         }}
                       />
 
-                      <div className="sm:ml-5 mt-3 sm:mt-0">
-                        <h4 className="font-bold text-base xs:text-lg sm:text-xl text-slate-900">
+                      <div className="sm:ml-4 mt-3 sm:mt-0">
+                        <h4 className="font-bold text-base sm:text-lg text-slate-900">
                           {item.name}
                         </h4>
 
-                        <p className="text-gray-500 text-xs sm:text-base">
+                        <p className="text-slate-500 text-xs sm:text-sm">
                           {item.designation}
                         </p>
 
-                        <div className="flex justify-center sm:justify-start text-yellow-400 mt-1.5 sm:mt-2 gap-1 text-xs sm:text-base">
+                        <div className="flex justify-center sm:justify-start text-amber-400 mt-1.5 gap-1 text-xs sm:text-sm">
                           {[...Array(item.rating || 5)].map(
                             (_, index) => (
                               <FaStar key={index} />
@@ -140,7 +141,7 @@ const Testimonials = () => {
               ))}
             </Swiper>
           ) : (
-            <div className="text-center text-gray-500 py-10 sm:py-20 text-xs sm:text-base">
+            <div className="text-center text-slate-500 py-10 sm:py-16 text-xs sm:text-base">
               {t("testimonials.noTestimonials")}
             </div>
           )}

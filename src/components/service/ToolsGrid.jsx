@@ -98,21 +98,21 @@ const ToolsGrid = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-slate-50 overflow-hidden">
+    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100 min-h-[50vh] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-8 sm:mb-12 max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
             {t("toolsGrid.title")}
           </h2>
 
-          <p className="mt-4 text-gray-600 text-sm sm:text-base md:text-lg max-w-3xl mx-auto">
+          <p className="mt-2.5 sm:mt-3 text-slate-600 text-xs sm:text-base leading-relaxed">
             {t("toolsGrid.subtitle")}
           </p>
         </motion.div>
@@ -122,32 +122,33 @@ const ToolsGrid = () => {
           {toolsData.map((tool, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{
                 duration: 0.5,
                 delay: index * 0.05,
               }}
-              whileHover={{ y: -8 }}
+              whileHover={{ y: -4 }}
               className="
+                group
                 flex
                 flex-col
                 h-full
                 bg-white
-                rounded-3xl
+                rounded-2xl
                 overflow-hidden
                 border
-                border-gray-200
-                shadow-md
-                hover:shadow-2xl
+                border-slate-100
+                shadow-sm
+                hover:shadow-xl
+                hover:border-teal-200
                 transition-all
                 duration-300
-                group
               "
             >
               {/* Image */}
-              <div className="h-64 sm:h-72 overflow-hidden bg-white">
+              <div className="h-48 sm:h-52 overflow-hidden w-full flex-shrink-0">
                 <img
                   src={tool.image}
                   alt={tool.title}
@@ -155,21 +156,20 @@ const ToolsGrid = () => {
                     w-full
                     h-full
                     object-cover
-                    object-center
+                    group-hover:scale-105
                     transition-transform
-                    duration-700
-                    group-hover:scale-110
+                    duration-300
                   "
                 />
               </div>
 
               {/* Content */}
-              <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 min-h-[56px]">
+              <div className="p-5 sm:p-6 flex flex-col flex-1">
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
                   {tool.title}
                 </h3>
 
-                <p className="text-gray-600 leading-7 text-sm sm:text-base flex-grow">
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                   {tool.description}
                 </p>
               </div>

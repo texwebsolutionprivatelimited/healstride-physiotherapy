@@ -183,8 +183,8 @@ const Profile = () => {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-slate-50 py-6 sm:py-10 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-[600px] bg-slate-50 py-10 sm:py-16 lg:py-20 border-b border-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}

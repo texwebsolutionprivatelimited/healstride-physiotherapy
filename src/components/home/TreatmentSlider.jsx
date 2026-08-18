@@ -48,36 +48,36 @@ const TreatmentSlider = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-slate-50 py-8 sm:py-12 lg:py-16 overflow-hidden">
+    <section className="bg-slate-50 py-10 sm:py-16 lg:py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-6 sm:mb-10"
+          className="text-center mb-8 sm:mb-12"
         >
-          <p className="text-teal-600 uppercase tracking-widest sm:tracking-widest font-semibold text-xs sm:text-sm">
+          <p className="text-teal-600 uppercase tracking-wider font-semibold text-xs sm:text-sm">
             {t("treatmentSlider.badge")}
           </p>
 
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold mt-2 sm:mt-3 text-slate-900 leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2 text-slate-900 leading-tight">
             {t("treatmentSlider.title")}
           </h2>
 
-          <p className="text-gray-600 mt-2 sm:mt-4 max-w-3xl mx-auto text-xs sm:text-base leading-relaxed sm:leading-7">
+          <p className="text-slate-600 mt-2.5 sm:mt-3 max-w-2xl mx-auto text-xs sm:text-base leading-relaxed">
             {t("treatmentSlider.subtitle")}
           </p>
         </motion.div>
 
-        {/* Slider */}
+        {/* Slider Container */}
         <div className="w-full max-w-full overflow-hidden">
           <Swiper
             modules={[Autoplay]}
-            spaceBetween={16}
+            spaceBetween={24}
             loop={true}
-            speed={800}
+            speed={700}
             autoplay={{
               delay: 3500,
               disableOnInteraction: false,
@@ -97,70 +97,87 @@ const TreatmentSlider = () => {
                 spaceBetween: 24,
               },
             }}
+            className="pb-4"
           >
-          {treatmentsData.map((item, index) => (
-            <SwiperSlide key={index}>
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                }}
-                whileHover={{ y: -6 }}
-                className="group bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={t(item.titleKey)}
-                    className="
-                      h-44
-                      xs:h-52
-                      sm:h-64
-                      lg:h-72
-                      w-full
-                      object-cover
-                      group-hover:scale-110
-                      transition
-                      duration-700
-                    "
-                  />
+            {treatmentsData.map((item, index) => (
+              <SwiperSlide key={index} className="h-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 35 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                  }}
+                  whileHover={{ y: -4 }}
+                  className="
+                    group
+                    h-full
+                    flex
+                    flex-col
+                    bg-white
+                    rounded-2xl
+                    overflow-hidden
+                    border
+                    border-slate-100
+                    shadow-sm
+                    hover:shadow-xl
+                    transition-all
+                    duration-300
+                  "
+                >
+                  {/* Image Container */}
+                  <div className="relative overflow-hidden h-48 sm:h-52 w-full flex-shrink-0">
+                    <img
+                      src={item.image}
+                      alt={t(item.titleKey)}
+                      className="
+                        w-full
+                        h-full
+                        object-cover
+                        group-hover:scale-105
+                        transition-transform
+                        duration-300
+                      "
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+                    <h3 className="absolute bottom-3.5 left-4 right-4 text-white text-lg sm:text-xl font-bold drop-shadow-sm">
+                      {t(item.titleKey)}
+                    </h3>
+                  </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
+                  {/* Content Container (Equal Height & Vertically Aligned Button) */}
+                  <div className="p-5 sm:p-6 flex flex-col flex-1">
+                    <p className="text-slate-600 leading-relaxed text-xs sm:text-sm line-clamp-3">
+                      {t(item.descKey)}
+                    </p>
 
-                  <h3 className="absolute bottom-3 sm:bottom-5 left-3 sm:left-5 text-white text-base xs:text-lg sm:text-2xl font-bold">
-                    {t(item.titleKey)}
-                  </h3>
-                </div>
-
-                <div className="p-4 sm:p-6">
-                  <p className="text-gray-600 leading-relaxed sm:leading-7 text-xs sm:text-base line-clamp-3 sm:line-clamp-none">
-                    {t(item.descKey)}
-                  </p>
-
-                  <a
-                    href="/services"
-                    className="
-                      mt-3
-                      sm:mt-5
-                      inline-block
-                      text-teal-600
-                      font-semibold
-                      hover:text-teal-800
-                      transition
-                      text-xs
-                      sm:text-base
-                    "
-                  >
-                    {t("treatmentSlider.learnMore")}
-                  </a>
-                </div>
-              </motion.div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                    <div className="mt-auto pt-4">
+                      <a
+                        href="/services"
+                        className="
+                          inline-flex
+                          items-center
+                          gap-1.5
+                          text-teal-600
+                          font-semibold
+                          hover:text-teal-700
+                          transition-colors
+                          text-xs
+                          sm:text-sm
+                          group/link
+                        "
+                      >
+                        <span className="group-hover/link:translate-x-1 transition-transform duration-200 inline-block">
+                          {t("treatmentSlider.learnMore")}
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

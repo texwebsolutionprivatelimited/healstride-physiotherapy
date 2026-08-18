@@ -11,7 +11,7 @@ const GalleryPage = () => {
       titleKey: "galleryPage.cat1Title",
       descKey: "galleryPage.cat1Desc",
       path: "/gallery/clinic",
-      icon: <Image size={28} />,
+      icon: <Image size={24} />,
       image:
         "https://images.unsplash.com/photo-1576091160550-2173dba999ef",
     },
@@ -19,7 +19,7 @@ const GalleryPage = () => {
       titleKey: "galleryPage.cat2Title",
       descKey: "galleryPage.cat2Desc",
       path: "/gallery/machine",
-      icon: <Activity size={28} />,
+      icon: <Activity size={24} />,
       image:
         "https://images.unsplash.com/photo-1580281657527-47f249e8f4df",
     },
@@ -27,7 +27,7 @@ const GalleryPage = () => {
       titleKey: "galleryPage.cat3Title",
       descKey: "galleryPage.cat3Desc",
       path: "/gallery/treatment",
-      icon: <Stethoscope size={28} />,
+      icon: <Stethoscope size={24} />,
       image:
         "https://images.unsplash.com/photo-1516549655169-df83a0774514",
     },
@@ -36,13 +36,12 @@ const GalleryPage = () => {
   return (
     <section
       className="
-        py-8
-        sm:py-12
-        lg:py-16
-        min-h-screen
+        py-10
+        sm:py-16
+        lg:py-20
+        min-h-[60vh]
         bg-cover
         bg-center
-        bg-fixed
         relative
       "
       style={{
@@ -50,154 +49,96 @@ const GalleryPage = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/40 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-slate-50/80 backdrop-blur-sm"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 30
-          }}
-          animate={{
-            opacity: 1,
-            y: 0
-          }}
-          transition={{
-            duration: 0.6
-          }}
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12"
         >
-          <p className="
-            uppercase
-            tracking-[5px]
-            text-teal-600
-            font-semibold
-          ">
+          <p className="uppercase tracking-wider text-teal-600 font-semibold text-xs sm:text-sm">
             {t("galleryPage.badge")}
           </p>
 
-          <h1 className="
-            text-4xl
-            md:text-5xl
-            font-bold
-            mt-4
-            text-slate-800
-          ">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-2 text-slate-900 leading-tight">
             {t("galleryPage.title")}
           </h1>
 
-          <p className="
-            text-gray-600
-            mt-5
-            max-w-2xl
-            mx-auto
-          ">
+          <p className="text-slate-600 mt-2.5 sm:mt-3 max-w-2xl mx-auto text-xs sm:text-base leading-relaxed">
             {t("galleryPage.subtitle")}
           </p>
         </motion.div>
 
         {/* Cards */}
-        <div className="
-          grid
-          sm:grid-cols-2
-          lg:grid-cols-3
-          gap-8
-        ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {categories.map((item, index) => (
             <Link
               key={index}
               to={item.path}
+              className="h-full block"
             >
               <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 40
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0
-                }}
-                viewport={{
-                  once: true
-                }}
-                transition={{
-                  delay: index * 0.15
-                }}
-                whileHover={{
-                  y: -12
-                }}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -4 }}
                 className="
                   group
-                  bg-white/90
-                  backdrop-blur
-                  rounded-3xl
+                  h-full
+                  flex
+                  flex-col
+                  bg-white
+                  rounded-2xl
                   overflow-hidden
-                  shadow-xl
+                  border
+                  border-slate-100
+                  shadow-sm
+                  hover:shadow-xl
+                  hover:border-teal-200
+                  transition-all
+                  duration-300
                 "
               >
                 {/* Image */}
-                <div className="
-                  overflow-hidden
-                  relative
-                ">
+                <div className="relative overflow-hidden h-52 sm:h-60 w-full flex-shrink-0">
                   <img
                     src={item.image}
                     alt={t(item.titleKey)}
                     className="
                       w-full
-                      h-72
+                      h-full
                       object-cover
-                      group-hover:scale-110
-                      transition
-                      duration-500
+                      group-hover:scale-105
+                      transition-transform
+                      duration-300
                     "
                   />
-
-                  <div className="
-                    absolute
-                    inset-0
-                    bg-black/20
-                    opacity-0
-                    group-hover:opacity-100
-                    transition
-                  "></div>
+                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors duration-300"></div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <div className="
-                    flex
-                    items-center
-                    gap-3
-                    text-teal-600
-                    mb-3
-                  ">
+                <div className="p-5 sm:p-6 flex flex-col flex-1">
+                  <div className="flex items-center gap-2.5 text-teal-600 mb-2">
                     {item.icon}
-
-                    <h3 className="
-                      text-2xl
-                      font-bold
-                      text-slate-800
-                    ">
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                       {t(item.titleKey)}
                     </h3>
                   </div>
 
-                  <p className="
-                    text-gray-600
-                    leading-7
-                  ">
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                     {t(item.descKey)}
                   </p>
 
-                  <button className="
-                    mt-5
-                    text-teal-600
-                    font-semibold
-                  ">
-                    {t("galleryPage.viewGallery")}
-                  </button>
+                  <div className="mt-auto pt-4">
+                    <span className="inline-flex items-center gap-1 text-teal-600 font-semibold text-xs sm:text-sm group-hover:text-teal-700 transition-colors">
+                      <span>{t("galleryPage.viewGallery")}</span>
+                      <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             </Link>

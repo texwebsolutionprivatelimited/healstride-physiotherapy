@@ -19,6 +19,16 @@ const Navbar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
@@ -84,8 +94,14 @@ const Navbar = () => {
     );
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white shadow-md">
-      <div className="max-w-7xl mx-auto h-14 xs:h-16 md:h-20 px-4 sm:px-6 lg:px-8">
+    <nav
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-slate-100/80"
+          : "bg-white border-b border-slate-100 shadow-sm"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto h-16 sm:h-20 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-full">
 
           {/* Logo */}

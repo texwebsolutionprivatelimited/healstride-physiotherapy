@@ -39,7 +39,7 @@ const Doctors = () => {
     return (
       <div
         className="
-          min-h-screen
+          py-20
           flex
           items-center
           justify-center
@@ -56,11 +56,11 @@ const Doctors = () => {
   return (
     <section
       className="
-        py-8
-        sm:py-12
-        lg:py-16
-        bg-gray-50
-        min-h-screen
+        py-10
+        sm:py-16
+        lg:py-20
+        bg-slate-50
+        min-h-[60vh]
       "
     >
       <div
@@ -76,11 +76,12 @@ const Doctors = () => {
         <div className="text-center">
           <h1
             className="
-              text-3xl
-              sm:text-4xl
-              lg:text-5xl
+              text-2xl
+              sm:text-3xl
+              lg:text-4xl
               font-bold
               text-slate-900
+              leading-tight
             "
           >
             {t("doctorsPage.title")}
@@ -88,13 +89,14 @@ const Doctors = () => {
 
           <p
             className="
-              mt-3
-              sm:mt-4
-              text-sm
+              mt-2.5
+              sm:mt-3
+              text-xs
               sm:text-base
-              text-gray-600
+              text-slate-600
               max-w-2xl
               mx-auto
+              leading-relaxed
             "
           >
             {t("doctorsPage.subtitle")}
@@ -109,9 +111,10 @@ const Doctors = () => {
             sm:grid-cols-2
             lg:grid-cols-3
             gap-6
-            sm:gap-8
-            mt-10
+            lg:gap-8
+            mt-8
             sm:mt-12
+            items-stretch
           "
         >
           {doctors.length === 0 ? (
@@ -119,7 +122,7 @@ const Doctors = () => {
               className="
                 col-span-full
                 text-center
-                text-gray-500
+                text-slate-500
                 py-10
               "
             >
@@ -130,35 +133,34 @@ const Doctors = () => {
               <div
                 key={doctor.id}
                 className="
+                  group
                   bg-white
                   rounded-2xl
-                  sm:rounded-3xl
-                  shadow-md
+                  shadow-sm
                   hover:shadow-xl
+                  hover:border-teal-200
                   transition-all
                   duration-300
                   overflow-hidden
                   border
-                  border-gray-100
+                  border-slate-100
                   flex
                   flex-col
                   h-full
                 "
               >
                 {/* Image */}
-                <div className="overflow-hidden">
+                <div className="overflow-hidden h-64 sm:h-72 w-full flex-shrink-0">
                   <img
                     src={doctor.image || "/default-user.png"}
                     alt={doctor.name}
                     className="
                       w-full
-                      h-64
-                      sm:h-72
-                      lg:h-80
+                      h-full
                       object-cover
-                      hover:scale-105
-                      transition
-                      duration-500
+                      group-hover:scale-105
+                      transition-transform
+                      duration-300
                     "
                   />
                 </div>
@@ -167,8 +169,8 @@ const Doctors = () => {
                 <div className="p-5 sm:p-6 flex flex-col flex-1">
                   <h2
                     className="
-                      text-xl
-                      sm:text-2xl
+                      text-lg
+                      sm:text-xl
                       font-bold
                       text-slate-900
                     "
@@ -179,9 +181,9 @@ const Doctors = () => {
                   <p
                     className="
                       text-teal-600
-                      mt-2
-                      text-sm
-                      sm:text-base
+                      mt-1
+                      text-xs
+                      sm:text-sm
                       font-semibold
                     "
                   >
@@ -190,32 +192,36 @@ const Doctors = () => {
 
                   <p
                     className="
-                      text-gray-600
-                      mt-3
-                      text-sm
-                      sm:text-base
+                      text-slate-600
+                      mt-2
+                      text-xs
+                      sm:text-sm
                       line-clamp-2
+                      leading-relaxed
                     "
                   >
                     {doctor.specialization}
                   </p>
 
-                  <Link
-                    to={`/doctors/${doctor.slug}`}
-                    className="
-                      inline-flex
-                      items-center
-                      mt-5
-                      sm:mt-6
-                      text-teal-600
-                      font-semibold
-                      text-sm
-                      sm:text-base
-                      hover:text-teal-700
-                    "
-                  >
-                    {t("doctorsPage.viewProfile")}
-                  </Link>
+                  <div className="mt-auto pt-4">
+                    <Link
+                      to={`/doctors/${doctor.slug}`}
+                      className="
+                        inline-flex
+                        items-center
+                        gap-1
+                        text-teal-600
+                        font-semibold
+                        text-xs
+                        sm:text-sm
+                        hover:text-teal-700
+                        transition-colors
+                      "
+                    >
+                      <span>{t("doctorsPage.viewProfile")}</span>
+                      <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))
