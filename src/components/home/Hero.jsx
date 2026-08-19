@@ -13,9 +13,9 @@ const Hero = () => {
       className="
         relative
         w-full
-        min-h-[520px]
-        sm:min-h-[600px]
-        lg:min-h-[680px]
+        min-h-[420px]
+        sm:min-h-[480px]
+        lg:min-h-[520px]
         flex
         items-center
         justify-center
@@ -27,9 +27,9 @@ const Hero = () => {
         backgroundPosition: "center",
       }}
     >
-      {/* Overlay: Reduced opacity for better image visibility while retaining strong text contrast */}
-      <div className="absolute inset-0 bg-slate-950/40" />
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-900/45 to-teal-950/30" />
+      {/* Overlay: Balanced opacity for therapist/patient background visibility with high contrast text */}
+      <div className="absolute inset-0 bg-slate-950/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/40 to-teal-950/25" />
 
       {/* Content Container */}
       <div
@@ -41,9 +41,9 @@ const Hero = () => {
           px-4
           sm:px-6
           lg:px-8
-          py-12
-          sm:py-16
-          lg:py-24
+          py-9
+          sm:py-12
+          lg:py-14
           flex
           flex-col
           items-center
@@ -57,20 +57,20 @@ const Hero = () => {
             mx-auto
             text-center
           "
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
         >
           {/* Clinic Name */}
           <p
             className="
               text-teal-300
               font-extrabold
-              text-lg
-              xs:text-xl
-              sm:text-3xl
-              md:text-4xl
-              lg:text-5xl
+              text-base
+              xs:text-lg
+              sm:text-2xl
+              md:text-3xl
+              lg:text-4xl
               leading-tight
               mb-2
               sm:mb-3
@@ -89,8 +89,8 @@ const Hero = () => {
               text-xl
               xs:text-2xl
               sm:text-3xl
-              md:text-4xl
-              lg:text-5xl
+              md:text-[38px]
+              lg:text-[45px]
               leading-snug
               sm:leading-tight
               drop-shadow-md
@@ -105,7 +105,7 @@ const Hero = () => {
           <p
             className="
               mt-3
-              sm:mt-5
+              sm:mt-4
               text-slate-100
               text-xs
               xs:text-sm
@@ -130,7 +130,7 @@ const Hero = () => {
               flex
               flex-col
               sm:flex-row
-              gap-3
+              gap-3.5
               sm:gap-4
               justify-center
               items-center
@@ -150,7 +150,7 @@ const Hero = () => {
                 sm:w-auto
                 sm:min-w-[200px]
                 h-12
-                sm:h-14
+                sm:h-13
                 bg-teal-600
                 hover:bg-teal-700
                 active:bg-teal-800
@@ -164,8 +164,9 @@ const Hero = () => {
                 items-center
                 justify-center
                 gap-2.5
-                shadow-lg
-                hover:shadow-teal-900/30
+                shadow-md
+                hover:shadow-teal-900/25
+                hover:-translate-y-0.5
                 transition-all
                 duration-200
               "
@@ -182,7 +183,7 @@ const Hero = () => {
                 sm:w-auto
                 sm:min-w-[200px]
                 h-12
-                sm:h-14
+                sm:h-13
                 border
                 border-white/70
                 bg-white/15
@@ -198,7 +199,8 @@ const Hero = () => {
                 items-center
                 justify-center
                 gap-2.5
-                shadow-md
+                shadow-sm
+                hover:-translate-y-0.5
                 transition-all
                 duration-200
               "
@@ -207,6 +209,19 @@ const Hero = () => {
               <span>{t("hero.callNow")}</span>
             </a>
           </motion.div>
+
+          {/* Trust Indicators Row */}
+          <div className="mt-6 sm:mt-9 flex flex-wrap items-center justify-center gap-x-3.5 sm:gap-x-6 gap-y-1.5 text-[11px] xs:text-xs sm:text-sm font-medium text-slate-200/90 drop-shadow-sm">
+            <span className="flex items-center gap-1.5">
+              <span className="text-teal-400 font-bold">✓</span> Experienced Physiotherapists
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-teal-400 font-bold">✓</span> Personalized Treatment
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="text-teal-400 font-bold">✓</span> 5,000+ Patients Treated
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>

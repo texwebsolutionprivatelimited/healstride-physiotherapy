@@ -5,6 +5,7 @@ import { db, auth } from "../../firebase/firebase";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FaCheck, FaLock, FaCalendarAlt, FaClock, FaUser, FaPhoneAlt, FaStethoscope, FaCommentDots } from "react-icons/fa";
 
 const AppointmentForm = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const AppointmentForm = () => {
   const [user, setUser] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [touched, setTouched] = useState({});
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,14 +34,41 @@ const AppointmentForm = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    
+    // For phone input, strip non-numeric characters and limit to 10 digits
+    if (name === "phone") {
+      const numericValue = value.replace(/\D/g, "").slice(0, 10);
+      setFormData((prev) => ({ ...prev, phone: numericValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
+
+  const handleBlur = (e) => {
+    setTouched((prev) => ({ ...prev, [e.target.name]: true }));
+  };
+
+  const isPhoneValid = formData.phone.length === 10;
+  const isNameValid = formData.name.trim().length > 0;
+  const isConditionValid = formData.condition.length > 0;
+  const isDateValid = formData.date.length > 0;
+  const isTimeValid = formData.time.length > 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setTouched({
+      name: true,
+      phone: true,
+      condition: true,
+      date: true,
+      time: true,
+    });
+
+    if (!isNameValid || !isPhoneValid || !isConditionValid || !isDateValid || !isTimeValid) {
+      return;
+    }
 
     if (!user) {
       navigate("/login");
@@ -52,7 +81,7 @@ const AppointmentForm = () => {
       await addDoc(collection(db, "appointments"), {
         userId: user.uid,
         name: formData.name,
-        phone: formData.phone,
+        phone: formData.phone.startsWith("+91") ? formData.phone : `+91${formData.phone}`,
         condition: formData.condition,
         date: formData.date,
         time: formData.time,
@@ -61,10 +90,8 @@ const AppointmentForm = () => {
         profileImage: user.photoURL || "",
         googleName: user.displayName || "",
         status: "pending",
-
         notificationCreatedAt: serverTimestamp(),
         notificationRead: false,
-
         createdAt: serverTimestamp(),
       });
 
@@ -78,10 +105,11 @@ const AppointmentForm = () => {
         time: "",
         message: "",
       });
+      setTouched({});
 
       setTimeout(() => {
         setSubmitted(false);
-      }, 4000);
+      }, 5000);
     } catch (error) {
       console.error(error);
       alert(t("common.error"));
@@ -92,27 +120,27 @@ const AppointmentForm = () => {
 
   return (
     <section
-      className="relative py-10 sm:py-16 lg:py-20 overflow-hidden bg-cover bg-center bg-no-repeat min-h-[70vh]"
+      className="relative py-8 sm:py-12 lg:py-16 overflow-hidden bg-cover bg-center bg-no-repeat min-h-[70vh]"
       style={{
         backgroundImage: "url('/appointment.jpg')",
       }}
     >
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-slate-950/75"></div>
+      {/* Dark Gradient Overlay for optimal contrast & image visibility */}
+      <div className="absolute inset-0 bg-slate-950/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-teal-950/45"></div>
 
-      {/* Decorative Blur Effects */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-teal-500/20 blur-3xl rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-cyan-500/20 blur-3xl rounded-full pointer-events-none"></div>
+      {/* Decorative Soft Glow Effects */}
+      <div className="absolute top-0 left-1/4 w-80 h-80 bg-teal-500/15 blur-3xl rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-cyan-500/15 blur-3xl rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-xl mx-auto"
         >
-          {/* Heading */}
+          {/* Section Hero Heading */}
           <div className="text-center mb-6 sm:mb-8">
             <span
               className="
@@ -134,264 +162,331 @@ const AppointmentForm = () => {
               {t("appointmentForm.badge")}
             </span>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mt-2 leading-tight">
+            <h1 className="text-[30px] xs:text-[34px] sm:text-[38px] lg:text-[44px] font-bold text-white mt-2 leading-tight drop-shadow-sm">
               {t("appointmentForm.title")}
-            </h2>
+            </h1>
 
-            <p className="text-slate-200 mt-2.5 sm:mt-3 max-w-xl mx-auto text-xs sm:text-base leading-relaxed">
+            <p className="text-slate-200 mt-2 sm:mt-3 max-w-lg mx-auto text-xs xs:text-sm sm:text-base leading-relaxed drop-shadow-xs">
               {t("appointmentForm.subtitle")}
             </p>
           </div>
 
           {/* Login Notice */}
           {!user && (
-            <div className="mb-6 bg-amber-500/20 backdrop-blur-md border border-amber-400/30 text-amber-200 rounded-xl p-4 text-xs sm:text-sm text-center">
+            <div className="mb-6 bg-amber-500/20 backdrop-blur-md border border-amber-400/40 text-amber-100 rounded-2xl p-4 text-xs sm:text-sm text-center shadow-sm">
               {t("appointmentForm.loginNotice")}
             </div>
           )}
 
-          {/* Success Message */}
+          {/* Success Banner */}
           {submitted && (
-            <div className="mb-6 bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 rounded-xl p-4 text-center">
-              <h4 className="font-semibold text-emerald-300 text-sm sm:text-base">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-2xl p-5 text-center shadow-md"
+            >
+              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2.5 text-lg font-bold">
+                <FaCheck />
+              </div>
+              <h4 className="font-bold text-emerald-900 text-base sm:text-lg">
                 {t("appointmentForm.submittedTitle")}
               </h4>
-
-              <p className="text-emerald-200 mt-1 text-xs sm:text-sm">
+              <p className="text-emerald-700 mt-1 text-xs sm:text-sm leading-relaxed">
                 {t("appointmentForm.submittedDesc")}
               </p>
-            </div>
+            </motion.div>
           )}
 
-          {/* Form Container */}
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl p-5 sm:p-8 lg:p-10">
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4 sm:space-y-5"
-            >
+          {/* Clean White Healthcare Booking Card */}
+          <div className="bg-white border border-slate-100 rounded-[20px] shadow-xl shadow-slate-950/10 p-5 xs:p-6 sm:p-8">
+            <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
+              
               {/* Full Name */}
-              <input
-                type="text"
-                name="name"
-                placeholder={t("appointmentForm.namePlaceholder")}
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="
-                  w-full
-                  bg-white/10
-                  border
-                  border-white/20
-                  rounded-xl
-                  px-4
-                  py-3
-                  text-white
-                  placeholder:text-slate-300
-                  focus:ring-2
-                  focus:ring-teal-400
-                  outline-none
-                  text-xs
-                  sm:text-sm
-                "
-              />
+              <div>
+                <label htmlFor="name" className="block text-slate-800 font-semibold text-xs sm:text-sm mb-1.5">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    placeholder="Enter your full name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required
+                    className={`
+                      w-full
+                      h-12 sm:h-13
+                      bg-slate-50/70
+                      border
+                      ${touched.name && !isNameValid ? "border-red-400 bg-red-50/20 focus:ring-red-400/20" : "border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"}
+                      rounded-xl
+                      px-4
+                      text-slate-900
+                      placeholder:text-slate-400
+                      focus:bg-white
+                      focus:ring-2
+                      outline-none
+                      transition-all
+                      duration-200
+                      text-xs sm:text-sm
+                    `}
+                  />
+                </div>
+                {touched.name && !isNameValid && (
+                  <p className="mt-1 text-xs text-red-500 font-medium">Please enter your full name.</p>
+                )}
+              </div>
 
-              {/* Phone Number */}
-              <input
-                type="tel"
-                name="phone"
-                placeholder={t("appointmentForm.phonePlaceholder")}
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="
-                  w-full
-                  bg-white/10
-                  border
-                  border-white/20
-                  rounded-xl
-                  px-4
-                  py-3
-                  text-white
-                  placeholder:text-slate-300
-                  focus:ring-2
-                  focus:ring-teal-400
-                  outline-none
-                  text-xs
-                  sm:text-sm
-                "
-              />
+              {/* Phone Number with +91 Prefix */}
+              <div>
+                <label htmlFor="phone" className="block text-slate-800 font-semibold text-xs sm:text-sm mb-1.5">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3.5 bg-slate-100 border border-r-0 border-slate-200 text-slate-700 text-xs sm:text-sm font-bold rounded-l-xl flex-shrink-0">
+                    +91
+                  </span>
+                  <input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    inputMode="numeric"
+                    maxLength={10}
+                    placeholder="Enter 10-digit mobile number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required
+                    className={`
+                      w-full
+                      h-12 sm:h-13
+                      bg-slate-50/70
+                      border
+                      ${touched.phone && !isPhoneValid ? "border-red-400 bg-red-50/20 focus:ring-red-400/20" : "border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"}
+                      rounded-r-xl
+                      px-4
+                      text-slate-900
+                      placeholder:text-slate-400
+                      focus:bg-white
+                      focus:ring-2
+                      outline-none
+                      transition-all
+                      duration-200
+                      text-xs sm:text-sm
+                    `}
+                  />
+                </div>
+                {touched.phone && !isPhoneValid && (
+                  <p className="mt-1 text-xs text-red-500 font-medium">Please enter a valid 10-digit phone number.</p>
+                )}
+              </div>
 
-              {/* Condition */}
-              <select
-                name="condition"
-                value={formData.condition}
-                onChange={handleChange}
-                required
-                className="
-                  w-full
-                  bg-white/10
-                  border
-                  border-white/20
-                  rounded-xl
-                  px-4
-                  py-3
-                  text-white
-                  focus:ring-2
-                  focus:ring-teal-400
-                  outline-none
-                  text-xs
-                  sm:text-sm
-                "
-              >
-                <option value="" className="text-slate-900 bg-white">
-                  {t("appointmentForm.selectCondition")}
-                </option>
+              {/* Condition / Treatment Dropdown */}
+              <div>
+                <label htmlFor="condition" className="block text-slate-800 font-semibold text-xs sm:text-sm mb-1.5">
+                  Condition / Treatment <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="condition"
+                  name="condition"
+                  value={formData.condition}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  className={`
+                    w-full
+                    h-12 sm:h-13
+                    bg-slate-50/70
+                    border
+                    ${touched.condition && !isConditionValid ? "border-red-400 bg-red-50/20 focus:ring-red-400/20" : "border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"}
+                    rounded-xl
+                    px-4
+                    text-slate-900
+                    focus:bg-white
+                    focus:ring-2
+                    outline-none
+                    transition-all
+                    duration-200
+                    text-xs sm:text-sm
+                  `}
+                >
+                  <option value="" className="text-slate-500">
+                    Select treatment ▼
+                  </option>
+                  <option value="Knee Pain">{t("conditionsList.kneePain") || "Knee Pain"}</option>
+                  <option value="Back Pain">{t("conditionsList.backPain") || "Back Pain"}</option>
+                  <option value="Neck Pain">{t("conditionsList.neckPain") || "Neck Pain"}</option>
+                  <option value="Shoulder Pain">{t("conditionsList.shoulderPain") || "Shoulder Pain"}</option>
+                  <option value="Sciatica">{t("conditionsList.sciatica") || "Sciatica"}</option>
+                  <option value="Frozen Shoulder">{t("conditionsList.frozenShoulder") || "Frozen Shoulder"}</option>
+                  <option value="Sports Injury">{t("conditionsList.sportsInjury") || "Sports Injury"}</option>
+                  <option value="Stroke Rehab">{t("conditionsList.strokeRehab") || "Stroke Rehabilitation"}</option>
+                  <option value="Post Surgery Rehab">{t("conditionsList.postSurgeryRehab") || "Post-Surgery Rehabilitation"}</option>
+                  <option value="Plantar Fasciitis">{t("conditionsList.plantarFasciitis") || "Plantar Fasciitis"}</option>
+                  <option value="Other">Other</option>
+                </select>
+                {touched.condition && !isConditionValid && (
+                  <p className="mt-1 text-xs text-red-500 font-medium">Please select a treatment.</p>
+                )}
+              </div>
 
-                <option value="Knee Pain" className="text-slate-900 bg-white">
-                  {t("conditionsList.kneePain")}
-                </option>
-
-                <option value="Back Pain" className="text-slate-900 bg-white">
-                  {t("conditionsList.backPain")}
-                </option>
-
-                <option value="Neck Pain" className="text-slate-900 bg-white">
-                  {t("conditionsList.neckPain")}
-                </option>
-
-                <option value="Shoulder Pain" className="text-slate-900 bg-white">
-                  {t("conditionsList.shoulderPain")}
-                </option>
-
-                <option value="Sciatica" className="text-slate-900 bg-white">
-                  {t("conditionsList.sciatica")}
-                </option>
-
-                <option value="Sports Injury" className="text-slate-900 bg-white">
-                  {t("conditionsList.sportsInjury")}
-                </option>
-
-                <option value="Stroke Rehab" className="text-slate-900 bg-white">
-                  {t("conditionsList.strokeRehab")}
-                </option>
-
-                <option value="Frozen Shoulder" className="text-slate-900 bg-white">
-                  {t("conditionsList.frozenShoulder")}
-                </option>
-
-                <option value="Post Surgery Rehab" className="text-slate-900 bg-white">
-                  {t("conditionsList.postSurgeryRehab")}
-                </option>
-
-                <option value="Plantar Fasciitis" className="text-slate-900 bg-white">
-                  {t("conditionsList.plantarFasciitis")}
-                </option>
-              </select>
-
-              {/* Date & Time */}
+              {/* Preferred Date & Preferred Time */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  required
-                  className="
-                    w-full
-                    bg-white/10
-                    border
-                    border-white/20
-                    rounded-xl
-                    px-4
-                    py-3
-                    text-white
-                    outline-none
-                    focus:ring-2
-                    focus:ring-teal-400
-                    text-xs
-                    sm:text-sm
-                  "
-                />
+                {/* Date */}
+                <div>
+                  <label htmlFor="date" className="block text-slate-800 font-semibold text-xs sm:text-sm mb-1.5">
+                    Preferred Date <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="date"
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required
+                    className={`
+                      w-full
+                      h-12 sm:h-13
+                      bg-slate-50/70
+                      border
+                      ${touched.date && !isDateValid ? "border-red-400 bg-red-50/20 focus:ring-red-400/20" : "border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"}
+                      rounded-xl
+                      px-4
+                      text-slate-900
+                      focus:bg-white
+                      focus:ring-2
+                      outline-none
+                      transition-all
+                      duration-200
+                      text-xs sm:text-sm
+                    `}
+                  />
+                  {touched.date && !isDateValid && (
+                    <p className="mt-1 text-xs text-red-500 font-medium">Please select a date.</p>
+                  )}
+                </div>
 
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
+                {/* Time */}
+                <div>
+                  <label htmlFor="time" className="block text-slate-800 font-semibold text-xs sm:text-sm mb-1.5">
+                    Preferred Time <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="time"
+                    type="time"
+                    name="time"
+                    value={formData.time}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required
+                    className={`
+                      w-full
+                      h-12 sm:h-13
+                      bg-slate-50/70
+                      border
+                      ${touched.time && !isTimeValid ? "border-red-400 bg-red-50/20 focus:ring-red-400/20" : "border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"}
+                      rounded-xl
+                      px-4
+                      text-slate-900
+                      focus:bg-white
+                      focus:ring-2
+                      outline-none
+                      transition-all
+                      duration-200
+                      text-xs sm:text-sm
+                    `}
+                  />
+                  {touched.time && !isTimeValid && (
+                    <p className="mt-1 text-xs text-red-500 font-medium">Please select a time.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Additional Information */}
+              <div>
+                <label htmlFor="message" className="block text-slate-800 font-semibold text-xs sm:text-sm mb-1.5">
+                  Additional Information <span className="text-slate-400 font-normal">(Optional)</span>
+                </label>
+                <textarea
+                  id="message"
+                  rows={3}
+                  name="message"
+                  placeholder="Tell us about your symptoms or anything the physiotherapist should know..."
+                  value={formData.message}
                   onChange={handleChange}
-                  required
                   className="
                     w-full
-                    bg-white/10
+                    bg-slate-50/70
                     border
-                    border-white/20
+                    border-slate-200
                     rounded-xl
                     px-4
                     py-3
-                    text-white
-                    outline-none
+                    text-slate-900
+                    placeholder:text-slate-400
+                    focus:bg-white
+                    focus:border-teal-500
                     focus:ring-2
-                    focus:ring-teal-400
-                    text-xs
-                    sm:text-sm
+                    focus:ring-teal-500/20
+                    resize-none
+                    outline-none
+                    transition-all
+                    duration-200
+                    text-xs sm:text-sm
                   "
                 />
               </div>
 
-              {/* Additional Message */}
-              <textarea
-                rows="4"
-                name="message"
-                placeholder={t("appointmentForm.msgPlaceholder")}
-                value={formData.message}
-                onChange={handleChange}
-                className="
-                  w-full
-                  bg-white/10
-                  border
-                  border-white/20
-                  rounded-xl
-                  px-4
-                  py-3
-                  text-white
-                  placeholder:text-slate-300
-                  resize-none
-                  outline-none
-                  focus:ring-2
-                  focus:ring-teal-400
-                  text-xs
-                  sm:text-sm
-                "
-              />
-
               {/* Submit Button */}
               <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.005 }}
+                whileTap={{ scale: 0.985 }}
                 type="submit"
                 disabled={loading}
                 className="
                   w-full
+                  h-13 sm:h-14
+                  min-h-[52px]
                   bg-teal-600
                   hover:bg-teal-700
                   active:bg-teal-800
                   text-white
-                  py-3.5
+                  font-bold
                   rounded-xl
-                  font-semibold
                   shadow-md
                   hover:shadow-lg
-                  disabled:opacity-50
+                  disabled:opacity-60
+                  disabled:cursor-not-allowed
                   transition-all
                   duration-200
-                  text-xs
-                  xs:text-sm
-                  sm:text-base
+                  text-sm sm:text-base
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  mt-2
                 "
               >
-                {loading
-                  ? t("appointmentForm.bookingLoading")
-                  : t("appointmentForm.bookingBtn")}
+                {loading ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    <span>Booking Appointment...</span>
+                  </>
+                ) : (
+                  <span>{t("appointmentForm.bookingBtn")}</span>
+                )}
               </motion.button>
+
+              {/* Security Badge */}
+              <p className="text-center text-[11px] sm:text-xs text-slate-500 mt-3 flex items-center justify-center gap-1.5">
+                <FaLock className="text-slate-400 text-xs" />
+                <span>Your information is secure and will only be used to schedule your appointment.</span>
+              </p>
+
             </form>
           </div>
         </motion.div>

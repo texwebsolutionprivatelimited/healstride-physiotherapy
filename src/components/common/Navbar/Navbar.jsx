@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { UserCircle } from "lucide-react";
@@ -18,6 +18,7 @@ const Navbar = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -58,6 +59,13 @@ const Navbar = () => {
     }
   };
 
+  const isActive = (path) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname === path || location.pathname.startsWith(path + "/");
+  };
+
   const getNavigationLabel = (item) => {
     if (item.key) {
       return t(item.key);
@@ -81,7 +89,7 @@ const Navbar = () => {
     }
   };
 
-  const ProfileIcon = ({ size = 40 }) =>
+  const ProfileIcon = ({ size = 36 }) =>
     user?.photoURL ? (
       <img
         src={user.photoURL}
@@ -101,7 +109,7 @@ const Navbar = () => {
           : "bg-white border-b border-slate-100 shadow-sm"
       }`}
     >
-      <div className="max-w-7xl mx-auto h-16 sm:h-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto h-14 sm:h-16 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-full">
 
           {/* Logo */}
@@ -112,16 +120,16 @@ const Navbar = () => {
           >
             <Link
               to="/"
-              className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 min-w-0"
+              className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 min-w-0"
             >
               <img
                 src={logo}
                 alt="HealStride Logo"
                 className="
-                  h-9 w-9
-                  xs:h-10 xs:w-10
-                  sm:h-12 sm:w-12
-                  md:h-14 md:w-14
+                  h-8 w-8
+                  xs:h-9 xs:w-9
+                  sm:h-10 sm:w-10
+                  md:h-11 md:w-11
                   object-contain
                   flex-shrink-0
                 "
@@ -133,16 +141,16 @@ const Navbar = () => {
                     text-base
                     sm:text-lg
                     md:text-xl
-                    lg:text-2xl
                     font-bold
                     text-teal-700
                     truncate
+                    leading-tight
                   "
                 >
                   HealStride
                 </h1>
 
-                <p className="hidden lg:block text-xs text-gray-500">
+                <p className="hidden lg:block text-[11px] text-gray-500 leading-none mt-0.5">
                   {t("navbar.tagline")}
                 </p>
               </div>
@@ -150,30 +158,35 @@ const Navbar = () => {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center gap-8">
-            {NAVIGATION.map((item) => (
-              <motion.li
-                key={item.id}
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  to={item.path}
-                  className="
-                    font-medium
-                    text-gray-700
-                    hover:text-teal-700
-                    transition
-                  "
+          <ul className="hidden lg:flex items-center gap-1.5 sm:gap-2">
+            {NAVIGATION.map((item) => {
+              const active = isActive(item.path);
+              return (
+                <motion.li
+                  key={item.id}
+                  whileHover={{ y: -1 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  {getNavigationLabel(item)}
-                </Link>
-              </motion.li>
-            ))}
+                  <Link
+                    to={item.path}
+                    className={`
+                      px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all duration-200 block
+                      ${
+                        active
+                          ? "bg-teal-700 text-white shadow-sm"
+                          : "text-gray-700 hover:text-teal-700 hover:bg-teal-50"
+                      }
+                    `}
+                  >
+                    {getNavigationLabel(item)}
+                  </Link>
+                </motion.li>
+              );
+            })}
           </ul>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
 
             {/* Language Switcher */}
             <LanguageSwitcher />
@@ -184,12 +197,14 @@ const Navbar = () => {
               className="
                 bg-teal-700
                 text-white
-                px-5
-                py-2.5
+                px-4
+                py-2
                 rounded-xl
                 hover:bg-teal-800
                 transition
-                font-medium
+                font-semibold
+                text-sm
+                shadow-sm
               "
             >
               {t("navbar.bookAppointment")}
@@ -203,12 +218,13 @@ const Navbar = () => {
                   border
                   border-teal-700
                   text-teal-700
-                  px-5
-                  py-2.5
+                  px-4
+                  py-2
                   rounded-xl
                   hover:bg-teal-50
                   transition
-                  font-medium
+                  font-semibold
+                  text-sm
                 "
               >
                 {t("navbar.login")}
@@ -223,7 +239,7 @@ const Navbar = () => {
                   transition
                 "
               >
-                <ProfileIcon size={42} />
+                <ProfileIcon size={36} />
               </button>
             )}
           </div>
@@ -240,11 +256,11 @@ const Navbar = () => {
               className="
                 bg-teal-700
                 text-white
-                px-4
-                py-2
+                px-3.5
+                py-1.5
                 rounded-lg
-                text-sm
-                font-medium
+                text-xs
+                font-semibold
               "
             >
               {t("navbar.bookAppointment")}
@@ -253,7 +269,7 @@ const Navbar = () => {
             {/* Tablet Menu Button */}
             <button
               onClick={() => setOpen(!open)}
-              className="text-teal-700 text-2xl"
+              className="text-teal-700 text-xl p-1"
               aria-label="Toggle Navigation"
             >
               {open ? <FaTimes /> : <FaBars />}
@@ -267,7 +283,7 @@ const Navbar = () => {
               className="
                 text-teal-700
                 text-xl
-                p-2
+                p-1.5
               "
               aria-label="Toggle Navigation"
             >
@@ -291,35 +307,35 @@ const Navbar = () => {
               border-t
               shadow-lg
               px-4
-              py-5
+              py-4
               max-h-[80vh]
               overflow-y-auto
             "
           >
 
             {/* Navigation Links */}
-            <ul className="flex flex-col gap-1">
-              {NAVIGATION.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    to={item.path}
-                    onClick={() => setOpen(false)}
-                    className="
-                      block
-                      py-3
-                      px-3
-                      rounded-lg
-                      text-gray-700
-                      font-medium
-                      hover:bg-teal-50
-                      hover:text-teal-700
-                      transition
-                    "
-                  >
-                    {getNavigationLabel(item)}
-                  </Link>
-                </li>
-              ))}
+            <ul className="flex flex-col gap-1.5">
+              {NAVIGATION.map((item) => {
+                const active = isActive(item.path);
+                return (
+                  <li key={item.id}>
+                    <Link
+                      to={item.path}
+                      onClick={() => setOpen(false)}
+                      className={`
+                        block py-2.5 px-3.5 rounded-lg font-semibold text-sm transition-all duration-200
+                        ${
+                          active
+                            ? "bg-teal-700 text-white shadow-sm"
+                            : "text-gray-700 hover:bg-teal-50 hover:text-teal-700"
+                        }
+                      `}
+                    >
+                      {getNavigationLabel(item)}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
 
             {/* Mobile Language Switcher */}
@@ -336,9 +352,10 @@ const Navbar = () => {
                 mt-4
                 bg-teal-700
                 text-white
-                py-3
+                py-2.5
                 rounded-xl
-                font-medium
+                font-semibold
+                text-sm
               "
             >
               {t("navbar.bookAppointment")}
@@ -352,14 +369,15 @@ const Navbar = () => {
                 className="
                   block
                   w-full
-                  mt-3
+                  mt-2.5
                   text-center
                   border
                   border-teal-700
                   text-teal-700
-                  py-3
+                  py-2.5
                   rounded-xl
-                  font-medium
+                  font-semibold
+                  text-sm
                 "
               >
                 {t("navbar.login")}
@@ -379,15 +397,15 @@ const Navbar = () => {
                     items-center
                     justify-center
                     gap-3
-                    p-3
+                    p-2.5
                     rounded-xl
                     bg-gray-50
                     hover:bg-gray-100
                   "
                 >
-                  <ProfileIcon size={40} />
+                  <ProfileIcon size={36} />
 
-                  <span className="font-semibold text-gray-800">
+                  <span className="font-semibold text-gray-800 text-sm">
                     {t("navbar.myProfile")}
                   </span>
                 </button>
@@ -400,13 +418,14 @@ const Navbar = () => {
                   }}
                   className="
                     w-full
-                    mt-3
+                    mt-2.5
                     border
                     border-red-500
                     text-red-500
-                    py-3
+                    py-2.5
                     rounded-xl
-                    font-medium
+                    font-semibold
+                    text-sm
                   "
                 >
                   {t("navbar.logout")}

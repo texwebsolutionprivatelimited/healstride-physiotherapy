@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const GoogleMap = () => {
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50">
+    <section className="py-6 sm:py-8 lg:py-10 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div

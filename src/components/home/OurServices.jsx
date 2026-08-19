@@ -64,7 +64,7 @@ const OurServices = () => {
   return (
     <section
       id="services"
-      className="py-8 sm:py-12 lg:py-16 bg-gradient-to-b from-white to-teal-50"
+      className="py-6 sm:py-8 lg:py-10 bg-gradient-to-b from-white to-teal-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Heading */}
@@ -73,7 +73,7 @@ const OurServices = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="text-center mb-6 sm:mb-12"
+          className="text-center mb-6 sm:mb-8"
         >
           <p className="uppercase tracking-[3px] sm:tracking-[6px] text-teal-600 font-semibold text-xs sm:text-sm">
             {t("ourServices.badge")}

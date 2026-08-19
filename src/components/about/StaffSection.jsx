@@ -44,7 +44,7 @@ const StaffSection = () => {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-6 sm:py-8 lg:py-10 bg-white">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Section Heading */}

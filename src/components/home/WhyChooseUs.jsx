@@ -46,10 +46,10 @@ const WhyChooseUs = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-white">
+    <section className="py-6 sm:py-8 lg:py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-12">
+        <div className="text-center mb-6 sm:mb-8">
           <p className="uppercase tracking-wider text-teal-600 font-semibold text-xs sm:text-sm">
             {t("whyChooseUs.badge")}
           </p>
@@ -66,39 +66,38 @@ const WhyChooseUs = () => {
         </div>
 
         {/* Feature Benefit Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 items-stretch">
           {featuresData.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
               viewport={{ once: true }}
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -3 }}
               className="
                 group
-                h-full
                 flex
                 flex-col
                 bg-white
                 rounded-2xl
-                p-6
+                p-5
                 border
                 border-slate-100
                 shadow-sm
                 hover:shadow-md
-                hover:border-teal-200
+                hover:border-teal-200/80
                 transition-all
-                duration-300
+                duration-250
               "
             >
               {/* Icon Badge */}
-              <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-300 flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg mb-3 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-250 flex-shrink-0">
                 {item.icon}
               </div>
 
               {/* Title */}
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5 leading-snug">
                 {t(item.titleKey)}
               </h3>
 

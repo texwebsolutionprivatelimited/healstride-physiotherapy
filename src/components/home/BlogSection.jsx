@@ -50,7 +50,7 @@ const BlogSection = ({
   return (
     <section
       id="blogs"
-      className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100 overflow-hidden"
+      className="py-6 sm:py-8 lg:py-10 bg-slate-50 border-b border-slate-100 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}

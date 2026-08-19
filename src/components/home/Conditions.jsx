@@ -27,7 +27,7 @@ const Conditions = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-white border-b border-slate-100 overflow-hidden">
+    <section className="py-6 sm:py-8 lg:py-10 bg-white border-b border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.p
@@ -63,11 +63,11 @@ const Conditions = () => {
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-14 mt-6 sm:mt-12 items-start">
           {/* LEFT SIDE - CONDITIONS */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="grid grid-cols-2 gap-2.5 xs:gap-3.5 sm:gap-6"
+            transition={{ duration: 0.6 }}
+            className="grid grid-cols-2 gap-3 sm:gap-3.5"
           >
             {conditionsData.map((item, index) => {
               const Icon = item.icon;
@@ -78,27 +78,28 @@ const Conditions = () => {
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{
-                    duration: 0.4,
-                    delay: index * 0.04,
+                    duration: 0.35,
+                    delay: index * 0.03,
                   }}
-                  whileHover={{ y: -5 }}
-                  className="group bg-white rounded-xl xs:rounded-2xl sm:rounded-3xl p-3 xs:p-4 sm:p-6 shadow-md sm:shadow-lg border border-gray-100 hover:border-teal-500 transition duration-300 flex flex-col justify-between"
+                  whileHover={{ y: -3 }}
+                  className="group bg-white rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-slate-100 shadow-xs hover:shadow-md hover:border-teal-200 transition-all duration-200 flex flex-col justify-start"
                 >
-                  <div>
-                    <div className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-teal-100 flex items-center justify-center text-teal-600 text-sm xs:text-base sm:text-xl group-hover:bg-teal-600 group-hover:text-white transition">
-                      <Icon />
-                    </div>
-
-                    <h3 className="mt-2.5 sm:mt-4 text-xs xs:text-sm sm:text-lg font-semibold text-slate-900 leading-snug">
-                      {translatedCondition}
-                    </h3>
+                  {/* Icon Container (36-40px) */}
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-sm sm:text-base group-hover:bg-teal-600 group-hover:text-white transition-colors duration-200 flex-shrink-0 mb-2 sm:mb-2.5">
+                    <Icon />
                   </div>
 
-                  <p className="mt-1 text-[11px] sm:text-xs text-gray-500 line-clamp-1">
+                  {/* Title (15-16px) */}
+                  <h3 className="text-[15px] sm:text-base font-semibold text-slate-900 leading-snug">
+                    {translatedCondition}
+                  </h3>
+
+                  {/* Description (12-13px) */}
+                  <p className="mt-1 text-[12px] sm:text-[13px] text-slate-500 leading-normal line-clamp-2">
                     {t("conditions.treatmentFor", {
                       condition: translatedCondition,
                     })}

@@ -14,7 +14,7 @@ const GalleryPreview = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-slate-50 border-b border-slate-100">
+    <section className="py-6 sm:py-8 lg:py-10 bg-slate-50 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -22,7 +22,7 @@ const GalleryPreview = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-6 sm:mb-8"
         >
           <p className="text-teal-600 uppercase tracking-wider font-semibold text-xs sm:text-sm">
             {t("galleryPreview.badge")}
@@ -38,38 +38,38 @@ const GalleryPreview = () => {
         </motion.div>
 
         {/* Balanced Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
           {/* Left Feature Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md h-[240px] sm:h-[320px] lg:h-[496px]"
+            className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md h-[260px] sm:h-[360px] lg:h-full min-h-[260px] sm:min-h-[360px] lg:min-h-[450px]"
           >
             <img
               src={gallery6}
               alt="HealStride Physiotherapy Clinic Facility"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
             />
-            <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors duration-300" />
+            <div className="absolute inset-0 bg-slate-950/15 group-hover:bg-slate-950/5 transition-colors duration-300" />
           </motion.div>
 
           {/* Middle Column Stack */}
-          <div className="flex flex-col gap-4 sm:gap-6">
+          <div className="flex flex-col gap-4 sm:gap-6 h-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md h-[200px] sm:h-[236px]"
+              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md flex-1 min-h-[180px] sm:min-h-[213px]"
             >
               <img
                 src={gallery2}
                 alt="Targeted Dry Needling Therapy Session"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-slate-950/15 group-hover:bg-slate-950/5 transition-colors duration-300" />
             </motion.div>
 
             <motion.div
@@ -77,32 +77,32 @@ const GalleryPreview = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md h-[200px] sm:h-[236px]"
+              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md flex-1 min-h-[180px] sm:min-h-[213px]"
             >
               <img
                 src={gallery3}
                 alt="Advanced Electrotherapy Equipment"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-slate-950/15 group-hover:bg-slate-950/5 transition-colors duration-300" />
             </motion.div>
           </div>
 
           {/* Right Column Stack */}
-          <div className="flex flex-col gap-4 sm:gap-6 sm:col-span-2 lg:col-span-1">
+          <div className="flex flex-col gap-4 sm:gap-6 sm:col-span-2 lg:col-span-1 h-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md h-[200px] sm:h-[236px]"
+              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md flex-1 min-h-[180px] sm:min-h-[213px]"
             >
               <img
                 src={gallery4}
                 alt="Patient Reception & Consultation Area"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-slate-950/15 group-hover:bg-slate-950/5 transition-colors duration-300" />
             </motion.div>
 
             <motion.div
@@ -110,14 +110,14 @@ const GalleryPreview = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md h-[200px] sm:h-[236px]"
+              className="group relative overflow-hidden rounded-2xl border border-slate-100 shadow-sm hover:shadow-md flex-1 min-h-[180px] sm:min-h-[213px]"
             >
               <img
                 src={gallery5}
                 alt="Guided Rehabilitation & Exercise Area"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-slate-950/15 group-hover:bg-slate-950/5 transition-colors duration-300" />
             </motion.div>
           </div>
         </div>
@@ -128,7 +128,7 @@ const GalleryPreview = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex justify-center mt-8 sm:mt-12"
+          className="flex justify-center mt-6 sm:mt-8"
         >
           <Link
             to="/gallery"

@@ -20,7 +20,7 @@ const AnimatedBackground = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="hidden md:block absolute top-28 left-6 lg:left-12 text-teal-500/15"
+        className="hidden md:block absolute top-28 left-6 lg:left-12 text-teal-600/22"
       >
         <HeartPulse size={44} />
       </motion.div>
@@ -36,7 +36,7 @@ const AnimatedBackground = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="hidden md:block absolute top-44 right-8 lg:right-16 text-teal-500/15"
+        className="hidden md:block absolute top-44 right-8 lg:right-16 text-teal-600/22"
       >
         <Activity size={40} />
       </motion.div>
@@ -52,7 +52,7 @@ const AnimatedBackground = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="hidden lg:block absolute bottom-36 left-12 text-teal-400/15"
+        className="hidden lg:block absolute bottom-36 left-12 text-teal-600/22"
       >
         <Stethoscope size={50} />
       </motion.div>
@@ -61,13 +61,13 @@ const AnimatedBackground = () => {
       <motion.div
         animate={{
           scale: [1, 1.15, 1],
-          opacity: [0.1, 0.2, 0.1],
+          opacity: [0.15, 0.25, 0.15],
         }}
         transition={{
           duration: 5,
           repeat: Infinity,
         }}
-        className="hidden lg:block absolute bottom-24 right-16 text-teal-500/15"
+        className="hidden lg:block absolute bottom-24 right-16 text-teal-600/22"
       >
         <Cross size={36} />
       </motion.div>

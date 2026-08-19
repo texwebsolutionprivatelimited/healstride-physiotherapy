@@ -38,7 +38,7 @@ const LoadingScreen = () => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.1 }}
           className="mt-6 text-4xl md:text-6xl font-bold text-white"
         >
           HealStride
@@ -48,7 +48,7 @@ const LoadingScreen = () => {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.9 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.2 }}
           className="mt-3 text-teal-200 tracking-widest text-sm md:text-base"
         >
           Recover • Restore • Revive
@@ -61,7 +61,7 @@ const LoadingScreen = () => {
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{
-              duration: 2.5,
+              duration: 0.95,
               ease: "easeInOut",
             }}
           />

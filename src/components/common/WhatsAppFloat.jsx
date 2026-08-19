@@ -10,7 +10,7 @@ const WhatsAppFloat = () => {
         duration: 0.5,
         delay: 0.8,
       }}
-      className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 max-w-[calc(100vw-32px)]"
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 max-w-[calc(100vw-32px)]"
     >
       <a
         href="https://wa.me/91XXXXXXXXXX"

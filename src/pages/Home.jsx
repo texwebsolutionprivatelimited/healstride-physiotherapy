@@ -14,13 +14,10 @@ import WhatsAppFloat from "../components/common/WhatsAppFloat";
 import ReviewCTA from "./ReviewCTA";
 import FloatingIcons from "../components/FloatingIcons";
 
-
-
-
 const Home = () => {
   return (
     <>
-    <FloatingIcons />
+      <FloatingIcons />
       <Hero />
       <GoogleRating />
       <TreatmentSlider />
@@ -36,10 +33,7 @@ const Home = () => {
       />
       <Testimonials />
       <WhatsAppFloat />
-
       <ReviewCTA />
-
-
     </>
   );
 };

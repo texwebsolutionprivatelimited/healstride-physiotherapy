@@ -81,7 +81,7 @@ const GoogleRating = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-white py-10 sm:py-16 lg:py-20 border-b border-slate-100">
+    <section className="bg-teal-50/30 py-8 sm:py-10 lg:py-14 border-y border-slate-100/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -89,9 +89,9 @@ const GoogleRating = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-6 sm:mb-9"
         >
-          <p className="text-teal-600 font-semibold uppercase tracking-wider text-xs sm:text-sm">
+          <p className="text-teal-700 font-semibold uppercase tracking-wider text-xs sm:text-sm">
             {t("googleRating.badge")}
           </p>
 
@@ -105,53 +105,54 @@ const GoogleRating = () => {
         </motion.div>
 
         {/* Equal Height Grid Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 items-stretch">
           {statsData.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.5,
-                delay: index * 0.1,
+                duration: 0.4,
+                delay: index * 0.06,
               }}
               viewport={{ once: true }}
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -3 }}
               className="
                 bg-white
                 rounded-2xl
-                p-5
-                sm:p-6
-                lg:p-8
+                p-3.5
+                sm:p-5
+                lg:p-6
                 border
                 border-slate-100
                 shadow-sm
                 hover:shadow-md
-                hover:border-teal-200
+                hover:border-teal-200/80
                 transition-all
-                duration-300
+                duration-250
                 flex
                 flex-col
                 items-center
                 justify-center
                 text-center
                 h-full
-                min-h-[160px]
-                sm:min-h-[190px]
+                min-h-[135px]
+                sm:min-h-[160px]
               "
             >
-              {/* Icon Container */}
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-3 sm:mb-4 flex-shrink-0">
+              {/* Icon Container (40-44px) */}
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center mb-2 sm:mb-2.5 flex-shrink-0 text-base sm:text-xl">
                 {item.icon}
               </div>
 
-              {/* Stat Number */}
-              <h3 className="text-2xl xs:text-3xl sm:text-4xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+              {/* Stat Number (Strongest Element) */}
+              <h3 className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight flex items-center gap-0.5 sm:gap-1">
                 <AnimatedCounter value={item.number} />
+                {item.number === "4.9" && <span className="text-amber-400 text-base sm:text-2xl">★</span>}
               </h3>
 
-              {/* Stat Label */}
-              <p className="mt-1.5 text-xs sm:text-sm font-medium text-slate-600 leading-snug">
+              {/* Stat Label (13-14px) */}
+              <p className="mt-1 text-[13px] sm:text-sm font-semibold text-slate-600 leading-snug">
                 {t(item.titleKey)}
               </p>
             </motion.div>
