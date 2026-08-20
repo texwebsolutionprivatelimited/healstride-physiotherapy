@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 const AdminLogin = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState(import.meta.env.VITE_ADMIN_EMAIL || "");
-  const [password, setPassword] = useState(import.meta.env.VITE_ADMIN_PASSWORD || "");
+  const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
 

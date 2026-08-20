@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "./assets/images/logo.png";
+import RoleSelection from "./pages/RoleSelection";
 
 import LoadingScreen from "./components/common/LoadingScreen";
 import Navbar from "./components/common/Navbar/Navbar";
@@ -131,6 +132,13 @@ function App() {
 
         <Route path="/review" element={<ReviewForm />} />
 
+
+        {/* Login Role Selection */}
+
+<Route
+  path="/login-selection"
+  element={<RoleSelection />}
+ />
         {/* User Login */}
         <Route path="/login" element={<Login />} />
 

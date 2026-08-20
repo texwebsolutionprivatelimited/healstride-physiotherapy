@@ -54,40 +54,50 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-6 text-teal-400 sm:text-white">
-              {t("footer.quickLinks")}
-            </h3>
+<div>
+  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-6 text-teal-400 sm:text-white">
+    {t("footer.quickLinks")}
+  </h3>
 
-            <ul className="space-y-2.5 sm:space-y-3 text-gray-300 text-xs sm:text-base">
-              <li>
-                <Link to="/" className="hover:text-teal-400 transition">
-                  {t("navbar.home")}
-                </Link>
-              </li>
+  <ul className="space-y-2.5 sm:space-y-3 text-gray-300 text-xs sm:text-base">
+    <li>
+      <Link to="/" className="hover:text-teal-400 transition">
+        {t("navbar.home")}
+      </Link>
+    </li>
 
-              <li>
-                <Link to="/about" className="hover:text-teal-400 transition">
-                  {t("navbar.about")}
-                </Link>
-              </li>
+    <li>
+      <Link to="/about" className="hover:text-teal-400 transition">
+        {t("navbar.about")}
+      </Link>
+    </li>
 
-              <li>
-                <Link
-                  to="/services"
-                  className="hover:text-teal-400 transition"
-                >
-                  {t("navbar.services")}
-                </Link>
-              </li>
+    <li>
+      <Link
+        to="/services"
+        className="hover:text-teal-400 transition"
+      >
+        {t("navbar.services")}
+      </Link>
+    </li>
 
-              <li>
-                <Link to="/contact" className="hover:text-teal-400 transition">
-                  {t("navbar.contact")}
-                </Link>
-              </li>
-            </ul>
-          </div>
+    <li>
+      <Link to="/contact" className="hover:text-teal-400 transition">
+        {t("navbar.contact")}
+      </Link>
+    </li>
+
+    {/* Admin Panel */}
+    <li>
+      <Link
+        to="/adminlogin"
+        className="hover:text-teal-400 transition"
+      >
+        Admin Panel
+      </Link>
+    </li>
+  </ul>
+</div>
 
           {/* Treatments */}
           <div>

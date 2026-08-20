@@ -31,24 +31,24 @@ const AdminLayout = () => {
 
   const menuItems = [
     {
-      name: "Dashboard",
-      icon: <LayoutDashboard size={18} />,
-      path: "/admin",
-    },
-    {
       name: "Appointments",
       icon: <CalendarDays size={18} />,
       path: "/admin/appointments",
     },
     {
-      name: "Gallery",
-      icon: <ImageIcon size={18} />,
-      path: "/admin/gallery",
+      name: "Blogs",
+      icon: <FileText size={18} />,
+      path: "/admin/blogs",
     },
     {
-      name: "Testimonials",
-      icon: <MessageSquare size={18} />,
-      path: "/admin/testimonials",
+      name: "Dashboard",
+      icon: <LayoutDashboard size={18} />,
+      path: "/admin",
+    },
+    {
+      name: "Doctor Profile",
+      icon: <UserRound size={18} />,
+      path: "/admin/doctor-profile",
     },
     {
       name: "FAQ",
@@ -56,18 +56,11 @@ const AdminLayout = () => {
       path: "/admin/faq",
     },
     {
-      name: "Doctor Profile",
-      icon: <UserRound size={18} />,
-      path: "/admin/doctor-profile",
+      name: "Gallery",
+      icon: <ImageIcon size={18} />,
+      path: "/admin/gallery",
     },
-    { name: "Staff", 
-      icon: <UsersRound size={18} />, 
-      path: "/admin/staff" },
-    {
-      name: "Blogs",
-      icon: <FileText size={18} />,
-      path: "/admin/blogs",
-    },
+    
     {
       name: "Services",
       icon: <BriefcaseBusiness size={18} />,
@@ -78,6 +71,16 @@ const AdminLayout = () => {
       icon: <Settings size={18} />,
       path: "/admin/settings",
     },
+    { name: "Staff", 
+      icon: <UsersRound size={18} />, 
+      path: "/admin/staff" 
+    },
+    {
+      name: "Testimonials",
+      icon: <MessageSquare size={18} />,
+      path: "/admin/testimonials",
+    },
+    
   ];
 
   const getButtonClass = (path) => {
