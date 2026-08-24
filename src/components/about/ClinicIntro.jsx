@@ -19,17 +19,17 @@ const ClinicIntro = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           {/* Image */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="w-full"
-          >
+  initial={{ opacity: 0, x: -40 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="w-full flex justify-center lg:justify-start"
+>
             <img
-              src={drRashidImage}
-              alt="Dr. MD Rashid - Lead Physiotherapist"
-              className="w-full h-[280px] sm:h-[380px] lg:h-[460px] object-cover rounded-2xl shadow-sm border border-slate-100"
-            />
+  src={drRashidImage}
+  alt="Dr. MD Rashid - Lead Physiotherapist"
+  className="w-[90%] sm:w-[85%] lg:w-[82%] h-[260px] sm:h-[340px] lg:h-[420px] object-cover rounded-2xl shadow-sm border border-slate-100"
+/>
           </motion.div>
 
           {/* Content */}
@@ -49,8 +49,13 @@ const ClinicIntro = () => {
             </h2>
 
             <p className="mt-3 sm:mt-4 text-slate-600 leading-relaxed text-xs sm:text-base">
-              {t("clinicIntro.desc")}
-            </p>
+  Hello, I'm Dr. MD Rashid, the Lead Physiotherapist at HealStride
+  Physiotherapy & Wellness Centre. I am dedicated to helping my patients
+  overcome pain, recover mobility, and improve their quality of life through
+  evidence-based physiotherapy treatments. At HealStride, I combine modern
+  technology, expert care, and personalized treatment plans to ensure faster
+  recovery and long-term wellness.
+</p>
 
             {/* Features */}
             <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">

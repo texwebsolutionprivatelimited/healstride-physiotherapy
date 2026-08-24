@@ -38,7 +38,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="#"
+                href="https://www.instagram.com/healstride.physio/"
                 className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-teal-600 hover:bg-teal-500 flex items-center justify-center transition duration-300 hover:scale-110 text-xs sm:text-base"
                 aria-label="Instagram"
               >
@@ -69,10 +69,14 @@ const Footer = () => {
     </li>
 
     <li>
-      <Link to="/about" className="hover:text-teal-400 transition">
-        {t("navbar.about")}
-      </Link>
-    </li>
+  <Link
+    to="/about"
+    onClick={() => window.scrollTo(0, 0)}
+    className="hover:text-teal-400 transition"
+  >
+    {t("navbar.about")}
+  </Link>
+</li>
 
     <li>
       <Link
@@ -125,7 +129,7 @@ const Footer = () => {
             <div className="space-y-3 sm:space-y-5 text-gray-300 text-xs sm:text-base">
               <div className="flex gap-2.5 sm:gap-3 items-start">
                 <FaPhoneAlt className="text-teal-400 mt-1 shrink-0 text-xs sm:text-base" />
-                <span>+91 95692 74008</span>
+                <span>+91 82525 80389</span>
               </div>
 
               <div className="flex gap-2.5 sm:gap-3 items-start">

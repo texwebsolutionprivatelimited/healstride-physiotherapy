@@ -46,6 +46,7 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminDoctorProfile from "./components/admin/AdminDoctorProfile";
 import Appointments from "./components/admin/Appointments";
 import AdminSettings from "./components/admin/AdminSettings";
 import AdminLogin from "./components/admin/AdminLogin";
@@ -206,6 +207,11 @@ function App() {
             path="appointments"
             element={<Appointments />}
           />
+
+          <Route
+  path="doctor-profile"
+  element={<AdminDoctorProfile />}
+/>
 
           <Route
             path="gallery"
