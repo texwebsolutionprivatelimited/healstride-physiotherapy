@@ -219,7 +219,7 @@ const Hero = () => {
               <span className="text-teal-400 font-bold">✓</span> Personalized Treatment
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-teal-400 font-bold">✓</span> 5,000+ Patients Treated
+              <span className="text-teal-400 font-bold">✓</span> 2500+ Patients Treated
             </span>
           </div>
         </motion.div>

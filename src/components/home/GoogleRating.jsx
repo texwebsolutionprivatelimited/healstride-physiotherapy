@@ -11,12 +11,12 @@ import {
 const statsData = [
   {
     icon: <FaUsers size={26} />,
-    number: "5000+",
+    number: "2500+",
     titleKey: "googleRating.statHappyPatients",
   },
   {
     icon: <FaCalendarAlt size={26} />,
-    number: "8+",
+    number: "5+",
     titleKey: "googleRating.statYearsExperience",
   },
   {
@@ -26,7 +26,7 @@ const statsData = [
   },
   {
     icon: <FaHeartbeat size={26} />,
-    number: "10000+",
+    number: "5000+",
     titleKey: "googleRating.statSuccessfulTreatments",
   },
 ];

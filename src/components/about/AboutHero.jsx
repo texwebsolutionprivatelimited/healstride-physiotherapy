@@ -177,7 +177,7 @@ const AboutHero = () => {
             "
           >
             <h3 className="text-2xl sm:text-3xl font-extrabold text-teal-300">
-              5000+
+              2500+
             </h3>
             <p className="text-slate-200 text-xs sm:text-sm mt-1">
               {t("aboutHero.happyPatients")}

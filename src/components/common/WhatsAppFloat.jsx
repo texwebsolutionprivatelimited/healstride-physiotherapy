@@ -162,7 +162,11 @@ const WhatsAppFloat = () => {
                   </h3>
 
                   <p className="text-sm mt-1">
-                    +91 82525 80389
+                    Dr. Rashid: +91 82077 03781
+                  </p>
+
+                  <p className="text-sm mt-1">
+                    Wazul: +91 82525 80389
                   </p>
                 </div>
               </div>
@@ -217,8 +221,10 @@ const WhatsAppFloat = () => {
                   </h3>
 
                   <p className="text-sm mt-1 leading-relaxed">
-                    Monday - Saturday: 9:00 AM - 8:00 PM
-                  </p>
+  Morning: 9:00 AM – 12:00 PM
+  <br />
+  Evening: 5:00 PM – 9:00 PM
+</p>
                 </div>
               </div>
             </div>
