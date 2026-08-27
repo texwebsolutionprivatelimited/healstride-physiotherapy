@@ -92,7 +92,6 @@ export const uploadImage = async (file, folder = "uploads") => {
       if (response.ok) {
         const data = await response.json();
         if (data && data.url) {
-          console.log("Image uploaded to ImageKit CDN:", data.url);
           return data.url;
         }
       } else {
@@ -111,7 +110,6 @@ export const uploadImage = async (file, folder = "uploads") => {
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
       if (downloadURL) {
-        console.log("Image uploaded to Firebase Storage:", downloadURL);
         return downloadURL;
       }
     } catch (err) {
@@ -120,6 +118,5 @@ export const uploadImage = async (file, folder = "uploads") => {
   }
 
   // 3. Complete Fallback: Base64 string
-  console.log("Using Base64 fallback for image upload");
   return base64Data;
 };

@@ -109,7 +109,7 @@ const Navbar = () => {
           : "bg-white border-b border-slate-100 shadow-sm"
       }`}
     >
-      <div className="max-w-[1600px] mx-auto h-14 sm:h-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto h-12 sm:h-13.5 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-full">
 
           {/* Logo */}
@@ -126,10 +126,10 @@ const Navbar = () => {
                 src={logo}
                 alt="HealStride Logo"
                 className="
-                  h-8 w-8
-                  xs:h-9 xs:w-9
-                  sm:h-10 sm:w-10
-                  md:h-11 md:w-11
+                  h-7 w-7
+                  xs:h-8 xs:w-8
+                  sm:h-8.5 sm:w-8.5
+                  md:h-9 md:w-9
                   object-contain
                   flex-shrink-0
                 "
@@ -138,9 +138,9 @@ const Navbar = () => {
               <div className="min-w-0">
                 <h1
                   className="
-                    text-base
-                    sm:text-lg
-                    md:text-xl
+                    text-sm
+                    sm:text-base
+                    md:text-lg
                     font-bold
                     text-teal-700
                     truncate
@@ -150,7 +150,7 @@ const Navbar = () => {
                   HealStride
                 </h1>
 
-                <p className="hidden lg:block text-[11px] text-gray-500 leading-none mt-0.5">
+                <p className="hidden lg:block text-[10px] text-gray-500 leading-none mt-0.5">
                   {t("navbar.tagline")}
                 </p>
               </div>
@@ -158,19 +158,19 @@ const Navbar = () => {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center gap-1.5 sm:gap-2">
+          <ul className="hidden lg:flex items-center gap-2 lg:gap-2.5 xl:gap-5 2xl:gap-8">
             {NAVIGATION.map((item) => {
               const active = isActive(item.path);
               return (
                 <motion.li
                   key={item.id}
-                  whileHover={{ y: -1 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
                   transition={{ duration: 0.2 }}
                 >
                   <Link
                     to={item.path}
                     className={`
-                      px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all duration-200 block
+                      px-3 py-1.5 lg:px-3.5 xl:px-4 xl:py-1.5 rounded-lg text-xs xl:text-sm font-semibold transition-all duration-200 block whitespace-nowrap
                       ${
                         active
                           ? "bg-teal-700 text-white shadow-sm"
@@ -186,7 +186,7 @@ const Navbar = () => {
           </ul>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5 lg:gap-3 xl:gap-5 2xl:gap-6 flex-shrink-0">
 
             {/* Language Switcher */}
             <LanguageSwitcher />
@@ -197,14 +197,23 @@ const Navbar = () => {
               className="
                 bg-teal-700
                 text-white
-                px-4
-                py-2
-                rounded-xl
+                px-3
+                py-1.5
+                lg:px-3.5
+                xl:px-4
+                xl:py-1.5
+                rounded-lg
                 hover:bg-teal-800
-                transition
+                hover:scale-105
+                hover:shadow-md
+                transition-all
+                duration-300
+                transform
+                active:scale-95
                 font-semibold
-                text-sm
+                text-xs xl:text-sm
                 shadow-sm
+                whitespace-nowrap
               "
             >
               {t("navbar.bookAppointment")}
@@ -218,13 +227,23 @@ const Navbar = () => {
                   border
                   border-teal-700
                   text-teal-700
-                  px-4
-                  py-2
-                  rounded-xl
-                  hover:bg-teal-50
-                  transition
+                  px-3
+                  py-1.5
+                  lg:px-3.5
+                  xl:px-4
+                  xl:py-1.5
+                  rounded-lg
+                  hover:bg-teal-700
+                  hover:text-white
+                  hover:scale-105
+                  hover:shadow-md
+                  transition-all
+                  duration-300
+                  transform
+                  active:scale-95
                   font-semibold
-                  text-sm
+                  text-xs xl:text-sm
+                  whitespace-nowrap
                 "
               >
                 {t("navbar.login")}
@@ -234,12 +253,17 @@ const Navbar = () => {
                 onClick={() => navigate("/profile")}
                 className="
                   rounded-full
-                  hover:ring-2
-                  hover:ring-teal-500
-                  transition
+                  hover:scale-110
+                  hover:ring-4
+                  hover:ring-teal-500/40
+                  hover:shadow-md
+                  transition-all
+                  duration-300
+                  transform
+                  flex-shrink-0
                 "
               >
-                <ProfileIcon size={36} />
+                <ProfileIcon size={32} />
               </button>
             )}
           </div>

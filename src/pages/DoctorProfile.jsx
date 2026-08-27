@@ -45,7 +45,7 @@ const DoctorProfile = () => {
           });
         }
       } catch (error) {
-        console.log(error);
+        console.error("Failed to load doctor profile:", error.message || error);
       } finally {
         setLoading(false);
       }

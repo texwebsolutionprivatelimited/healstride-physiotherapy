@@ -149,7 +149,7 @@ function AdminSettings() {
           });
         }
       } catch (error) {
-        console.log(error);
+        console.error("Failed to save settings:", error.message || error);
       } finally {
         setLoading(false);
       }

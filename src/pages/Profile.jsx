@@ -84,10 +84,7 @@ const Profile = () => {
 
         setAppointments(appointmentData);
       } catch (error) {
-        console.log(
-          "Appointment Fetch Error:",
-          error
-        );
+        console.error("Appointment Fetch Error:", error.message || error);
       }
     });
 
@@ -131,10 +128,7 @@ const Profile = () => {
         "Photo uploaded successfully"
       );
     } catch (error) {
-      console.log(
-        "Upload Error:",
-        error
-      );
+      console.error("Upload Error:", error.message || error);
 
       toast.error(
         "Upload failed"
@@ -156,7 +150,7 @@ const Profile = () => {
 
       toast.success(t("common.success"));
     } catch (e) {
-      console.log(e);
+      console.error("Save profile error:", e.message || e);
       toast.error(t("common.error"));
     } finally {
       setSaving(false);
@@ -344,12 +338,15 @@ const Profile = () => {
 
             <div className="mt-5 space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label htmlFor="profile-name" className="text-sm font-medium text-gray-700">
                   {t("profile.fullName")}
                 </label>
 
                 <input
+                  id="profile-name"
                   type="text"
+                  name="displayName"
+                  autoComplete="name"
                   value={displayName}
                   onChange={(e) =>
                     setDisplayName(
@@ -362,12 +359,14 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label htmlFor="profile-photo-url" className="text-sm font-medium text-gray-700">
                   {t("profile.photoURL")}
                 </label>
 
                 <input
+                  id="profile-photo-url"
                   type="text"
+                  name="photoURL"
                   value={photoURL}
                   onChange={(e) =>
                     setPhotoURL(
@@ -379,12 +378,14 @@ const Profile = () => {
                 />
 
                 <div className="mt-4">
-                  <label className="text-sm font-medium text-gray-700">
+                  <label htmlFor="profile-file-upload" className="text-sm font-medium text-gray-700">
                     Upload Photo
                   </label>
 
                   <input
+                    id="profile-file-upload"
                     type="file"
+                    name="profileFile"
                     accept="image/*"
                     onChange={handleImageUpload}
                     disabled={uploading}
@@ -425,12 +426,15 @@ const Profile = () => {
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label htmlFor="profile-email" className="text-sm font-medium text-gray-700">
                   {t("profile.email")}
                 </label>
 
                 <input
+                  id="profile-email"
                   type="email"
+                  name="email"
+                  autoComplete="email"
                   value={user.email}
                   disabled
                   className="w-full mt-1 border rounded-lg px-3 py-2 bg-gray-50 text-gray-500"

@@ -197,13 +197,15 @@ const ReviewForm = () => {
           <div className="space-y-4 sm:space-y-6">
             {/* Name */}
             <div>
-              <label className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
+              <label htmlFor="review-name" className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
                 {t("reviewForm.fullNameLabel")}
               </label>
 
               <input
+                id="review-name"
                 type="text"
                 name="name"
+                autoComplete="name"
                 placeholder={t(
                   "reviewForm.fullNamePlaceholder"
                 )}
@@ -233,13 +235,15 @@ const ReviewForm = () => {
 
             {/* Occupation */}
             <div>
-              <label className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
+              <label htmlFor="review-designation" className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
                 {t("reviewForm.occupationLabel")}
               </label>
 
               <input
+                id="review-designation"
                 type="text"
                 name="designation"
+                autoComplete="organization-title"
                 placeholder={t(
                   "reviewForm.occupationPlaceholder"
                 )}
@@ -300,12 +304,14 @@ const ReviewForm = () => {
 
             {/* Review */}
             <div>
-              <label className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
+              <label htmlFor="review-text" className="block text-white mb-1.5 sm:mb-2 font-medium text-sm sm:text-base">
                 {t("reviewForm.feedbackLabel")}
               </label>
 
               <textarea
+                id="review-text"
                 name="review"
+                autoComplete="off"
                 rows="4"
                 required
                 placeholder={t(

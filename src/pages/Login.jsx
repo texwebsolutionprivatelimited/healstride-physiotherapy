@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import  {
-  signInWithPopup,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth, googleProvider } from "../firebase/firebase";
+import { auth } from "../firebase/firebase";
+import { handleGoogleAuth } from "../utils/googleAuth";
 import { useNavigate, Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -40,30 +40,10 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
-
-      const result = await signInWithPopup(
-        auth,
-        googleProvider
-      );
-
-      console.log(
-        "Google Login Success:",
-        result.user
-      );
-
-      localStorage.setItem("role", "user");
-
-      navigate("/");
-    } catch (error) {
-      console.error("Google Login Error:");
-      console.error(error.code);
-      console.error(error.message);
-      console.error(error);
-
-      alert(
-        error.message ||
-          "Google Login Failed"
-      );
+      const res = await handleGoogleAuth();
+      if (res) {
+        navigate("/");
+      }
     } finally {
       setLoading(false);
     }
@@ -113,8 +93,6 @@ const Login = () => {
 
       navigate("/");
     } catch (error) {
-      console.error(error);
-
       alert(
         error.message ||
           "Invalid Email or Password"
@@ -194,6 +172,8 @@ const Login = () => {
     <input
       id="email"
       type="email"
+      name="email"
+      autoComplete="username"
       placeholder={t("auth.emailPlaceholder")}
       required
       value={formData.email}
@@ -230,6 +210,8 @@ const Login = () => {
       <input
         id="password"
         type={showPassword ? "text" : "password"}
+        name="password"
+        autoComplete="current-password"
         placeholder={t("auth.passwordPlaceholder")}
         required
         value={formData.password}

@@ -32,9 +32,7 @@ const [password, setPassword] = useState("");
 
       navigate("/admin");
     } catch (err) {
-      console.log("Firebase Error:", err);
-      console.log("Error Code:", err.code);
-      console.log("Error Message:", err.message);
+      console.error("Admin Login error:", err.code || err.message);
 
       setError(err.code);
     } finally {
@@ -74,12 +72,15 @@ const [password, setPassword] = useState("");
         <form onSubmit={handleLogin} className="space-y-5">
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="admin-email" className="block text-sm font-medium text-gray-700 mb-2">
               Email
             </label>
 
             <input
+              id="admin-email"
               type="email"
+              name="email"
+              autoComplete="username"
               placeholder="Enter email"
               className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
               value={email}
@@ -89,13 +90,16 @@ const [password, setPassword] = useState("");
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="admin-password" className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
 
             <div className="relative">
               <input
+                id="admin-password"
                 type={showPassword ? "text" : "password"}
+                name="password"
+                autoComplete="current-password"
                 placeholder="Enter password"
                 className="w-full border border-gray-300 rounded-xl p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 value={password}

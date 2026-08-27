@@ -26,7 +26,7 @@ const Doctors = () => {
 
         setDoctors(data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to load doctors:", error.message || error);
       } finally {
         setLoading(false);
       }

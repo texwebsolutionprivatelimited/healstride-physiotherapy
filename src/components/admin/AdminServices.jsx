@@ -446,13 +446,15 @@ const confirmEdit = () => {
 
             {/* SERVICE NAME */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="service-title" className="block text-sm font-medium text-slate-700 mb-1">
                 Service Name *
               </label>
 
               <input
+                id="service-title"
                 type="text"
                 name="title"
+                autoComplete="off"
                 value={form.title}
                 onChange={handleChange}
                 placeholder="Physiotherapy"
@@ -471,13 +473,15 @@ const confirmEdit = () => {
 
             {/* SLUG */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="service-slug" className="block text-sm font-medium text-slate-700 mb-1">
                 URL Slug
               </label>
 
               <input
+                id="service-slug"
                 type="text"
                 name="slug"
+                autoComplete="off"
                 value={form.slug}
                 onChange={handleChange}
                 placeholder="physiotherapy"
@@ -496,13 +500,15 @@ const confirmEdit = () => {
 
             {/* DURATION */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="service-duration" className="block text-sm font-medium text-slate-700 mb-1">
                 Duration
               </label>
 
               <input
+                id="service-duration"
                 type="text"
                 name="duration"
+                autoComplete="off"
                 value={form.duration}
                 onChange={handleChange}
                 placeholder="45 Minutes"
@@ -521,12 +527,14 @@ const confirmEdit = () => {
 
             {/* ICON */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="service-icon" className="block text-sm font-medium text-slate-700 mb-1">
                 Home Page Icon
               </label>
 
               <select
+                id="service-icon"
                 name="icon"
+                autoComplete="off"
                 value={form.icon}
                 onChange={handleChange}
                 className="
@@ -569,12 +577,14 @@ const confirmEdit = () => {
 
             {/* DESCRIPTION */}
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="service-description" className="block text-sm font-medium text-slate-700 mb-1">
                 Service Description *
               </label>
 
               <textarea
+                id="service-description"
                 name="description"
+                autoComplete="off"
                 value={form.description}
                 onChange={handleChange}
                 placeholder="Personalized rehabilitation programs to restore movement and reduce pain."

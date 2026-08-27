@@ -86,7 +86,7 @@ const Appointments = () => {
 
       (error) => {
 
-        console.log(error);
+        console.error(error);
 
       }
 
@@ -159,7 +159,7 @@ const Appointments = () => {
 
     catch (error) {
 
-      console.log(error);
+      console.error(error);
 
     }
   };
@@ -188,7 +188,7 @@ const Appointments = () => {
 
     catch (error) {
 
-      console.log(error);
+      console.error(error);
 
     }
 
@@ -297,7 +297,7 @@ const confirmAndEdit = () => {
 
       catch (error) {
 
-        console.log(error);
+        console.error(error);
 
       }
 

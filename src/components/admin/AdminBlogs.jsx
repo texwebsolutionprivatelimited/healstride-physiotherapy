@@ -374,7 +374,7 @@ const AdminBlogs = () => {
 
           } catch (error) {
 
-            console.log(error);
+            console.error("Failed to save blog post:", error.message || error);
 
           }
 

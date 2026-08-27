@@ -365,6 +365,7 @@
     "loginBtn": "Login",
     "or": "OR",
     "googleLogin": "Continue with Google",
+    "pleaseWait": "Please wait...",
     "secureNotice": "Secure login powered by Google Authentication",
     "noAccount": "Don't have an account?",
     "signUp": "Sign Up",
@@ -373,7 +374,11 @@
     "fullNamePlaceholder": "Full Name",
     "creatingAccount": "Creating Account...",
     "haveAccount": "Already have an account?",
-    "accountCreated": "Account created successfully"
+    "accountCreated": "Account created successfully",
+    "welcomeBackMsg": "Welcome back! Signing you in...",
+    "welcomeNewMsg": "Account created successfully! Welcome to HealStride.",
+    "accountExistsDiffCred": "An account already exists with this email. Please sign in using your existing login method.",
+    "popupBlocked": "Please allow popups to continue with Google."
   },
   "profile": {
     "dashboardTitle": "My Dashboard",

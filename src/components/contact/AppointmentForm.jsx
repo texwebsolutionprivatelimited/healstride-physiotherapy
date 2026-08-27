@@ -211,6 +211,7 @@ const AppointmentForm = () => {
                     id="name"
                     type="text"
                     name="name"
+                    autoComplete="name"
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={handleChange}
@@ -253,6 +254,7 @@ const AppointmentForm = () => {
                     id="phone"
                     type="tel"
                     name="phone"
+                    autoComplete="tel"
                     inputMode="numeric"
                     maxLength={10}
                     placeholder="Enter 10-digit mobile number"

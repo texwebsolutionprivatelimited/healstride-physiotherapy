@@ -46,7 +46,7 @@ const AdminGallery = () => {
 
       setImages(data);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch gallery:", error.message || error);
     }
   };
 
@@ -69,7 +69,7 @@ const AdminGallery = () => {
         url: uploadedUrl,
       }));
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch gallery:", error.message || error);
     } finally {
       setLoading(false);
     }
@@ -148,7 +148,7 @@ const AdminGallery = () => {
 
       fetchImages();
     } catch (error) {
-      console.log(error);
+      console.error("Failed to delete gallery item:", error.message || error);
     }
   };
 

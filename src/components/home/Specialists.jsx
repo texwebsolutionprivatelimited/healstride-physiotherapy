@@ -39,7 +39,7 @@ const Specialists = ({ limit = 3 }) => {
         // Show only first "limit" doctors
         setDoctors(limit ? data.slice(0, limit) : data);
       } catch (error) {
-        console.log(error);
+        console.error("Failed to load specialists:", error.message || error);
       } finally {
         setLoading(false);
       }

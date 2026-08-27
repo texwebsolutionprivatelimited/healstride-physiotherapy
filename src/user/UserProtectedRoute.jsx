@@ -9,7 +9,6 @@ const UserProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-          console.log("UserProtectedRoute User:", currentUser);
       setUser(currentUser);
       setLoading(false);
     });

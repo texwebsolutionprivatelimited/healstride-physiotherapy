@@ -36,7 +36,7 @@ const GalleryCategory = ({ category, title, titleKey, defaultTitle }) => {
 
       setImages(data);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to load gallery items:", error.message || error);
     } finally {
       setLoading(false);
     }

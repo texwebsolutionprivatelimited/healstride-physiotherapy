@@ -220,47 +220,65 @@ const FAQSection = () => {
             onSubmit={handleQuestionSubmit}
             className="space-y-4"
           >
-            <input
-              type="text"
-              placeholder={t("faqSection.namePlaceholder")}
-              required
-              value={questionForm.name}
-              onChange={(e) =>
-                setQuestionForm({
-                  ...questionForm,
-                  name: e.target.value,
-                })
-              }
-              className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
-            />
+            <div>
+              <label htmlFor="faq-name" className="sr-only">Your Name</label>
+              <input
+                id="faq-name"
+                type="text"
+                name="name"
+                autoComplete="name"
+                placeholder={t("faqSection.namePlaceholder")}
+                required
+                value={questionForm.name}
+                onChange={(e) =>
+                  setQuestionForm({
+                    ...questionForm,
+                    name: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
 
-            <input
-              type="email"
-              placeholder={t("faqSection.emailPlaceholder")}
-              required
-              value={questionForm.email}
-              onChange={(e) =>
-                setQuestionForm({
-                  ...questionForm,
-                  email: e.target.value,
-                })
-              }
-              className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
-            />
+            <div>
+              <label htmlFor="faq-email" className="sr-only">Your Email</label>
+              <input
+                id="faq-email"
+                type="email"
+                name="email"
+                autoComplete="email"
+                placeholder={t("faqSection.emailPlaceholder")}
+                required
+                value={questionForm.email}
+                onChange={(e) =>
+                  setQuestionForm({
+                    ...questionForm,
+                    email: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
 
-            <textarea
-              rows="5"
-              placeholder={t("faqSection.questionPlaceholder")}
-              required
-              value={questionForm.question}
-              onChange={(e) =>
-                setQuestionForm({
-                  ...questionForm,
-                  question: e.target.value,
-                })
-              }
-              className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
-            />
+            <div>
+              <label htmlFor="faq-question" className="sr-only">Your Question</label>
+              <textarea
+                id="faq-question"
+                name="question"
+                autoComplete="off"
+                rows="5"
+                placeholder={t("faqSection.questionPlaceholder")}
+                required
+                value={questionForm.question}
+                onChange={(e) =>
+                  setQuestionForm({
+                    ...questionForm,
+                    question: e.target.value,
+                  })
+                }
+                className="w-full border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
+              />
+            </div>
 
             <button
               type="submit"

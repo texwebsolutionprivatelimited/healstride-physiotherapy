@@ -46,14 +46,14 @@ const LanguageSwitcher = ({ variant = "default" }) => {
   }
 
   return (
-    <div className="inline-flex items-center gap-1 bg-gray-100 p-1 rounded-xl border border-gray-200">
+    <div className="inline-flex items-center gap-1 bg-gray-100 p-1 rounded-xl border border-gray-200 shadow-sm">
       <button
         type="button"
         onClick={() => changeLanguage("en")}
-        className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 ${
+        className={`px-3 py-1 text-xs font-bold rounded-lg transition-all duration-200 transform hover:scale-105 ${
           currentLang === "en"
             ? "bg-teal-700 text-white shadow-sm"
-            : "text-gray-600 hover:text-teal-700"
+            : "text-gray-600 hover:text-teal-700 hover:bg-gray-200/60"
         }`}
         aria-label="Switch to English"
       >
@@ -63,10 +63,10 @@ const LanguageSwitcher = ({ variant = "default" }) => {
       <button
         type="button"
         onClick={() => changeLanguage("hi")}
-        className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all duration-200 ${
+        className={`px-3 py-1 text-xs font-bold rounded-lg transition-all duration-200 transform hover:scale-105 ${
           currentLang === "hi"
             ? "bg-teal-700 text-white shadow-sm"
-            : "text-gray-600 hover:text-teal-700"
+            : "text-gray-600 hover:text-teal-700 hover:bg-gray-200/60"
         }`}
         aria-label="Switch to Hindi"
       >
