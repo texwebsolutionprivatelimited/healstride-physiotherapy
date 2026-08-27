@@ -129,12 +129,12 @@ const Footer = () => {
             <div className="space-y-3 sm:space-y-5 text-gray-300 text-xs sm:text-base">
               <div className="flex gap-2.5 sm:gap-3 items-start">
                 <FaPhoneAlt className="text-teal-400 mt-1 shrink-0 text-xs sm:text-base" />
-                <span>+91 82525 80389</span>
+                <span>+91 82525 80389<br/> +91 82077 03781</span>
               </div>
 
               <div className="flex gap-2.5 sm:gap-3 items-start">
                 <FaEnvelope className="text-teal-400 mt-1 shrink-0 text-xs sm:text-base" />
-                <span className="break-all">healstride@gmail.com</span>
+                <span className="break-all">mdrashidmuz7277@gmail.com</span>
               </div>
 
               <div className="flex gap-2.5 sm:gap-3 items-start">

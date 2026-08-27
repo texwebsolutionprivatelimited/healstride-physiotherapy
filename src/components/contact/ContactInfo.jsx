@@ -19,7 +19,8 @@ const ContactInfo = () => {
           href="tel:+919569274008"
           className="text-gray-600 hover:text-teal-600 transition"
         >
-          +91 9569274008
+          <div>+91 82077 03781</div>
+<div>+91 82525 80389</div>
         </a>
       ),
     },
@@ -28,10 +29,10 @@ const ContactInfo = () => {
       titleKey: "contactInfo.email",
       content: (
         <a
-          href="mailto:info@healstride.com"
+          href="mailto:mdrashidmuz7277@gmail.com"
           className="text-gray-600 hover:text-teal-600 transition break-all"
         >
-          info@healstride.com
+          mdrashidmuz7277@gmail.com
         </a>
       ),
     },
@@ -42,7 +43,7 @@ const ContactInfo = () => {
         <p className="text-gray-600 text-sm sm:text-base leading-7">
           HealStride Physiotherapy & Wellness Centre
           <br />
-          Bhopal, Madhya Pradesh, India
+          LIG 85, New Subhash Nagar, Near Gurudwaran Raisen Road, Bhopal-462023
         </p>
       ),
     },
@@ -56,16 +57,13 @@ const ContactInfo = () => {
           </p>
 
           <p className="font-medium text-slate-800 mt-1">
-            9:00 AM - 8:00 PM
+            Morning 9:00 AM - 12:00 PM
           </p>
 
-          <p className="mt-3 text-gray-600 text-sm sm:text-base">
-            {t("contactInfo.sun")}
+          <p className="font-medium text-slate-800 mt-1">
+            Evening 5:00 PM - 9:00 PM
           </p>
 
-          <p className="font-medium text-red-500">
-            {t("contactInfo.closed")}
-          </p>
         </>
       ),
     },

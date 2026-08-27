@@ -156,7 +156,7 @@ const AboutHero = () => {
             "
           >
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-              8+
+            5+
             </h3>
             <p className="text-slate-200 text-xs sm:text-sm mt-1">
               {t("aboutHero.yearsExp")}
